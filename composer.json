@@ -14,6 +14,7 @@
         "laravel/ui": "^4.5",
         "livewire/livewire": "^2.12",
         "mckenziearts/laravel-notify": "^2.5",
+        "ramsey/uuid": "^4.7",
         "spatie/laravel-ignition": "1.6"
     },
     "require-dev": {

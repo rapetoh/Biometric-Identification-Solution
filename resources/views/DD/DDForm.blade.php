@@ -33,7 +33,7 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center">
-            <a href="{{ route('home') }}">
+                <a href="{{ route('home') }}">
                     <div class="nav-item d-flex align-items-center heading">
                         <img src="{{ asset('img/empreinte-digitale.png') }}" class="w-px-20 h-auto rounded-circle">
                         <h4 style="color: red; font-weight: bold;">&nbsp;&nbsp;&nbspID</h4>
@@ -269,16 +269,18 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="Numéro de la personne à prévenir 1" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
+                                    <input type="text" class="form-control" id="nomPersonnePrevenir" name="nomPersonnePrevenir" placeholder="Nom de la personne à prévenir " />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir">Nom personne à prévenir </label>
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
+                                    <input type="tel" class="form-control" id="numPersonnePrevenir" name="numPersonnePrevenir" placeholder="Numéro de la personne à prévenir " />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir">Numéro personne à prévenir </label>
                                 </div>
                             </div>
+                           
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control" id="profession" name="profession" placeholder="Profession" />
@@ -386,7 +388,7 @@
                                 </div>
                                 <div class="form-floating form-floating-outline" id="deathCertUploadDiv" style="display: none;">
                                     <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="deathCertFile" name="deathCertFile">
-                                    <label  for="deathCertFile">Téléchargez le certificat de décès du conjoint</label>
+                                    <label for="deathCertFile">Téléchargez le certificat de décès du conjoint</label>
                                 </div>
                             </div>
 

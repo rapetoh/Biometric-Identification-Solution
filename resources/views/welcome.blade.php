@@ -189,7 +189,7 @@
             Tâches d'inscription
             <br>
             <br>
-            <a href="{{ route('ddForm.index') }}">
+            <a href="{{ route('ddForm.create') }}">
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fa-solid fa-address-card" style="margin-right: 25px; color: green;"></i>Nouvelle inscription
