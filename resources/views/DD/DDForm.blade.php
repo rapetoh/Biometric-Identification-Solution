@@ -162,235 +162,362 @@
                 <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Démographiques du citoyen</h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
-                    <form id="formAccountSettings" style="max-width: 80%;" class="p-4" method="POST" onsubmit="return false">
+                    <form id="formAccountSettings" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">
+                        @csrf
                         <div class="row mt-2 gy-4">
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" />
+                                    <input type="text" class="form-control @error('nom') is-invalid @enderror" value="{{ old('nom') }}" id="nom" name="nom" placeholder="Nom" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom</label>
+                                    @error('nom')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prénom" />
+                                    <input type="text" class="form-control @error('prenom') is-invalid @enderror" value="{{ old('prenom') }}" id="prenom" name="prenom" placeholder="Prénom" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom</label>
+                                    @error('prenom')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <select class="form-control" id="sexe" name="sexe">
+                                    <select class="form-control @error('sexe') is-invalid @enderror" id="sexe" name="sexe">
                                         <option value="">Sélectionner le sexe</option>
-                                        <option value="Masculin">Masculin</option>
-                                        <option value="Féminin">Féminin</option>
+                                        <option value="Masculin" {{ old('sexe') == 'Masculin' ? 'selected' : '' }}>Masculin</option>
+                                        <option value="Féminin" {{ old('sexe') == 'Féminin' ? 'selected' : '' }}>Féminin</option>
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="sexe">Sexe</label>
+                                    @error('sexe')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <!-- Champ Nom de jeune fille, caché initialement -->
                             <div class="col-md-4" id="nomJeuneFilleDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="nomJeuneFille" name="nomJeuneFille" placeholder="Nom de jeune fille" />
+                                    <input type="text" class="form-control @error('nomJeuneFille') is-invalid @enderror" value="{{ old('nomJeuneFille') }}" id="nomJeuneFille" name="nomJeuneFille" placeholder="Nom de jeune fille" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomJeuneFille">Nom de jeune fille (facultatif)</label>
+                                    @error('nomJeuneFille')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="date" class="form-control" id="dateNaissance" name="dateNaissance" />
+                                    <input type="date" class="form-control @error('dateNaissance') is-invalid @enderror" value="{{ old('dateNaissance') }}" id="dateNaissance" name="dateNaissance" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="dateNaissance">Date de naissance</label>
+                                    @error('dateNaissance')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="paysVilleNaissance" name="paysVilleNaissance" placeholder="Pays/Ville de naissance" />
+                                    <input type="text" class="form-control @error('paysVilleNaissance') is-invalid @enderror" value="{{ old('paysVilleNaissance') }}" id="paysVilleNaissance" name="paysVilleNaissance" placeholder="Pays/Ville de naissance" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleNaissance">Pays/Ville de naissance</label>
+                                    @error('paysVilleNaissance')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="paysVilleResidence" name="paysVilleResidence" placeholder="Pays/Ville de résidence" />
+                                    <input type="text" class="form-control @error('paysVilleResidence') is-invalid @enderror" value="{{ old('paysVilleResidence') }}" id="paysVilleResidence" name="paysVilleResidence" placeholder="Pays/Ville de résidence" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleResidence">Pays/Ville de résidence</label>
+                                    @error('paysVilleResidence')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="quartierResidence" name="quartierResidence" placeholder="Quartier de résidence" />
+                                    <input type="text" class="form-control @error('quartierResidence') is-invalid @enderror" value="{{ old('quartierResidence') }}" id="quartierResidence" name="quartierResidence" placeholder="Quartier de résidence" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="quartierResidence">Quartier de résidence</label>
+                                    @error('quartierResidence')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <select class="form-control" id="statutMatrimonial" name="statutMatrimonial">
-                                        <option value="">Sélectionner le statut matrimonial</option>
-                                        <option value="Célibataire">Célibataire</option>
-                                        <option value="Marié(e)">Marié(e)</option>
-                                        <option value="Divorcé(e)">Divorcé(e)</option>
-                                        <option value="Veuf(ve)">Veuf(ve)</option>
+                                    <select class="form-control @error('statutMatrimonial') is-invalid @enderror" id="statutMatrimonial" name="statutMatrimonial">
+                                        <<option value="">Sélectionner le statut matrimonial</option>
+                                            <option value="Célibataire" {{ old('statutMatrimonial') == 'Célibataire' ? 'selected' : '' }}>Célibataire</option>
+                                            <option value="Marié(e)" {{ old('statutMatrimonial') == 'Marié(e)' ? 'selected' : '' }}>Marié(e)</option>
+                                            <option value="Divorcé(e)" {{ old('statutMatrimonial') == 'Divorcé(e)' ? 'selected' : '' }}>Divorcé(e)</option>
+                                            <option value="Veuf(ve)" {{ old('statutMatrimonial') == 'Veuf(ve)' ? 'selected' : '' }}>Veuf(ve)</option>
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="statutMatrimonial">Statut matrimonial</label>
+                                    @error('statutMatrimonial')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <!-- Champ Nom & Prénoms du conjoint, caché initialement -->
                             <div class="col-md-4" id="nomPrenomsConjointDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="nomPrenomsConjoint" name="nomPrenomsConjoint" placeholder="Nom & Prénoms du conjoint" />
+                                    <input type="text" class="form-control @error('nomPrenomsConjoint') is-invalid @enderror" value="{{ old('nomPrenomsConjoint') }}" id="nomPrenomsConjoint" name="nomPrenomsConjoint" placeholder="Nom & Prénoms du conjoint" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPrenomsConjoint">Nom & Prénoms du conjoint (facultatif)</label>
+                                    @error('nomPrenomsConjoint')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
+
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control" id="tel1" name="tel1" placeholder="Téléphone 1" />
+                                    <input type="tel" class="form-control @error('tel1') is-invalid @enderror" value="{{ old('tel1') }}" id="tel1" name="tel1" placeholder="Téléphone 1" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel1">TEL1</label>
+                                    @error('tel1')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control" id="tel2" name="tel2" placeholder="Téléphone 2" />
+                                    <input type="tel" class="form-control @error('tel2') is-invalid @enderror" value="{{ old('tel2') }}" id="tel2" name="tel2" placeholder="Téléphone 2" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">TEL2</label>
+                                    @error('tel2')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="email" class="form-control" id="mail" name="mail" placeholder="Email" />
+                                    <input type="email" class="form-control @error('mail') is-invalid @enderror" value="{{ old('mail') }}" id="mail" name="mail" placeholder="Email" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="mail">Mail</label>
+                                    @error('mail')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="nomPersonnePrevenir" name="nomPersonnePrevenir" placeholder="Nom de la personne à prévenir " />
+                                    <input type="text" class="form-control @error('nomPersonnePrevenir') is-invalid @enderror" value="{{ old('nomPersonnePrevenir') }}" id="nomPersonnePrevenir" name="nomPersonnePrevenir" placeholder="Nom de la personne à prévenir " />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir">Nom personne à prévenir </label>
+                                    @error('nomPersonnePrevenir')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control" id="numPersonnePrevenir" name="numPersonnePrevenir" placeholder="Numéro de la personne à prévenir " />
+                                    <input type="tel" class="form-control @error('numPersonnePrevenir') is-invalid @enderror" value="{{ old('numPersonnePrevenir') }}" id="numPersonnePrevenir" name="numPersonnePrevenir" placeholder="Numéro de la personne à prévenir " />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir">Numéro personne à prévenir </label>
+                                    @error('numPersonnePrevenir')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
-                           
+
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="profession" name="profession" placeholder="Profession" />
+                                    <input type="text" class="form-control @error('profession') is-invalid @enderror" value="{{ old('profession') }}" id="profession" name="profession" placeholder="Profession" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession</label>
+                                    @error('profession')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <select class="form-control" id="secteurEmploi" name="secteurEmploi">
+                                    <select class="form-control @error('secteurEmploi') is-invalid @enderror" id="secteurEmploi" name="secteurEmploi">
                                         <option value="">Sélectionner un secteur</option>
-                                        <option value="Primaire">Secteur Primaire (Agriculture, Mines, etc.)</option>
-                                        <option value="Secondaire">Secteur Secondaire (Manufacture, Construction, etc.)</option>
-                                        <option value="Tertiaire">Secteur Tertiaire (Services, Éducation, Santé, etc.)</option>
-                                        <option value="Quaternaire">Secteur Quaternaire (Information, Recherche, etc.)</option>
-                                        <option value="Autre">Autres</option>
+                                        <option value="Primaire" {{ old('secteurEmploi') == 'Primaire' ? 'selected' : '' }}>Secteur Primaire (Agriculture, Mines, etc.)</option>
+                                        <option value="Secondaire" {{ old('secteurEmploi') == 'Secondaire' ? 'selected' : '' }}>Secteur Secondaire (Manufacture, Construction, etc.)</option>
+                                        <option value="Tertiaire" {{ old('secteurEmploi') == 'Tertiaire' ? 'selected' : '' }}>Secteur Tertiaire (Services, Éducation, Santé, etc.)</option>
+                                        <option value="Quaternaire" {{ old('secteurEmploi') == 'Quaternaire' ? 'selected' : '' }}>Secteur Quaternaire (Information, Recherche, etc.)</option>
+                                        <option value="Autre" {{ old('secteurEmploi') == 'Autre' ? 'selected' : '' }}>Autres</option>
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="secteurEmploi">Secteur d'emploi</label>
+                                    @error('secteurEmploi')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <!-- Champ caché qui s'affiche seulement si "Autre" est sélectionné -->
                             <div class="col-md-4" id="autreSecteurDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" />
+                                    <input type="text" class="form-control @error('autreSecteur') is-invalid @enderror" value="{{ old('autreSecteur') }}" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur</label>
+                                    @error('autreSecteur')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <select class="form-control" id="groupeSanguin" name="groupeSanguin">
+                                    <select class="form-control @error('groupeSanguin') is-invalid @enderror" id="groupeSanguin" name="groupeSanguin">
                                         <option value="">Sélectionner un groupe sanguin</option>
-                                        <option value="A+">A+</option>
-                                        <option value="A-">A-</option>
-                                        <option value="B+">B+</option>
-                                        <option value="B-">B-</option>
-                                        <option value="AB+">AB+</option>
-                                        <option value="AB-">AB-</option>
-                                        <option value="O+">O+</option>
-                                        <option value="O-">O-</option>
+                                        <option value="A+" {{ old('groupeSanguin') == 'A+' ? 'selected' : '' }}>A+</option>
+                                        <option value="A-" {{ old('groupeSanguin') == 'A-' ? 'selected' : '' }}>A-</option>
+                                        <option value="B+" {{ old('groupeSanguin') == 'B+' ? 'selected' : '' }}>B+</option>
+                                        <option value="B-" {{ old('groupeSanguin') == 'B-' ? 'selected' : '' }}>B-</option>
+                                        <option value="AB+" {{ old('groupeSanguin') == 'AB+' ? 'selected' : '' }}>AB+</option>
+                                        <option value="AB-" {{ old('groupeSanguin') == 'AB-' ? 'selected' : '' }}>AB-</option>
+                                        <option value="O+" {{ old('groupeSanguin') == 'O+' ? 'selected' : '' }}>O+</option>
+                                        <option value="O-" {{ old('groupeSanguin') == 'O-' ? 'selected' : '' }}>O-</option>
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="groupeSanguin">Groupe sanguin</label>
+                                    @error('groupeSanguin')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
                                 </div>
                             </div>
 
                             <div class="col-md-4">
                                 <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives</h6><br>
+
+                                <!-- CNI -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="cniCheckbox" value="CNI">
+                                    <input class="form-check-input" type="checkbox" id="cniCheckbox" name="cniCheckbox" value="checked" {{ old('cniCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="cniCheckbox">CNI</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="cniUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="cniFile" name="cniFile">
+                                <div class="form-floating form-floating-outline" id="cniUploadDiv" style="{{ old('cniCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="cniFile" name="cniFile">
                                     <label for="cniFile">Téléchargez votre CNI</label>
+                                    @error('cniFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Passeport -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="passportCheckbox" value="Passeport">
+                                    <input class="form-check-input" type="checkbox" id="passportCheckbox" name="passportCheckbox" value="checked" {{ old('passportCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="passportCheckbox">Passeport</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="passportUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="passportFile" name="passportFile">
+                                <div class="form-floating form-floating-outline" id="passportUploadDiv" style ="{{ old('passportCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="passportFile" name="passportFile">
                                     <label for="passportFile">Téléchargez votre passeport</label>
+                                    @error('passportFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Acte de Naissance -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="birthCertCheckbox" value="Acte de Naissance">
+                                    <input class="form-check-input" type="checkbox" id="birthCertCheckbox" name="birthCertCheckbox" value="checked" {{ old('birthCertCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="birthCertCheckbox">Acte de naissance</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="birthCertUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="birthCertFile" name="birthCertFile">
+                                <div class="form-floating form-floating-outline" id="birthCertUploadDiv" style="{{ old('birthCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="birthCertFile" name="birthCertFile">
                                     <label for="birthCertFile">Téléchargez votre acte de naissance</label>
+                                    @error('birthCertFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Certificat de Mariage -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="marriageCertCheckbox" value="Certificat de mariage">
+                                    <input class="form-check-input" type="checkbox" id="marriageCertCheckbox" name="marriageCertCheckbox" value="checked" {{ old('marriageCertCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="marriageCertCheckbox">Certificat de mariage</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="marriageCertUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="marriageCertFile" name="marriageCertFile">
+                                <div class="form-floating form-floating-outline" id="marriageCertUploadDiv" style="{{ old('marriageCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="marriageCertFile" name="marriageCertFile">
                                     <label for="marriageCertFile">Téléchargez votre certificat de mariage</label>
+                                    @error('marriageCertFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Certificat de Nationalité -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="nationalityCertCheckbox" value="Certificat de nationalité">
+                                    <input class="form-check-input" type="checkbox" id="nationalityCertCheckbox" name="nationalityCertCheckbox" value="checked" {{ old('nationalityCertCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="nationalityCertCheckbox">Certificat de nationalité</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="nationalityCertUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="nationalityCertFile" name="nationalityCertFile">
+                                <div class="form-floating form-floating-outline" id="nationalityCertUploadDiv" style="{{ old('nationalityCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="nationalityCertFile" name="nationalityCertFile">
                                     <label for="nationalityCertFile">Téléchargez votre certificat de nationalité</label>
+                                    @error('nationalityCertFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Certificat de Divorce -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="divorceCertCheckbox" value="Certificat de divorce">
+                                    <input class="form-check-input" type="checkbox" id="divorceCertCheckbox" name="divorceCertCheckbox" value="checked" {{ old('divorceCertCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="divorceCertCheckbox">Certificat de divorce</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="divorceCertUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="divorceCertFile" name="divorceCertFile">
+                                <div class="form-floating form-floating-outline" id="divorceCertUploadDiv" style="{{ old('divorceCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="divorceCertFile" name="divorceCertFile">
                                     <label for="divorceCertFile">Téléchargez votre certificat de divorce</label>
+                                    @error('divorceCertFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
+                                <!-- Certificat de Décès du Conjoint -->
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" id="deathCertCheckbox" value="Certificat de décès du conjoint">
+                                    <input class="form-check-input" type="checkbox" id="deathCertCheckbox" name="deathCertCheckbox" value="checked" {{ old('deathCertCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="deathCertCheckbox">Certificat de décès du conjoint</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="deathCertUploadDiv" style="display: none;">
-                                    <input style="margin-top: 15px; margin-bottom: 15px;" type="file" class="form-control" id="deathCertFile" name="deathCertFile">
+                                <div class="form-floating form-floating-outline" id="deathCertUploadDiv" style="{{ old('deathCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                    <input type="file" class="form-control" id="deathCertFile" name="deathCertFile">
                                     <label for="deathCertFile">Téléchargez le certificat de décès du conjoint</label>
+                                    @error('deathCertFile')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
+
 
 
                         </div>
@@ -409,6 +536,15 @@
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
+                checkbox.addEventListener('change', function() {
+                    const uploadDiv = document.getElementById(this.id + 'UploadDiv');
+                    uploadDiv.style.display = this.checked ? 'block' : 'none';
+                });
+            });
+        });
+
         document.addEventListener("DOMContentLoaded", function() {
             function updateOnlineStatus() {
                 if (navigator.onLine) {

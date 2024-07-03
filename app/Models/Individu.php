@@ -10,6 +10,6 @@ class Individu extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom', 'prenom', 'telephone'
+        'NIU','nom', 'prenom', 'telephone'
     ];
 }

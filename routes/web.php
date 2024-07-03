@@ -6,6 +6,7 @@ use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
+use App\Http\Controllers\DonneesBiometriquesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +43,7 @@ Route::controller(AgentController::class)->group(function(){
 });
 
 Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('auth');
+
+
+Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('auth');
 

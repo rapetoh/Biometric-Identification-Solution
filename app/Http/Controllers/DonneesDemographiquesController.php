@@ -52,32 +52,40 @@ class DonneesDemographiquesController extends Controller
             'quartierResidence' => 'required|string|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
             'nomPrenomsConjoint' => 'nullable|string|max:255',
-            'tel1' => 'required|string|max:255',
-            'tel2' => 'nullable|string|max:255',
+            'tel1' => 'required|string|min:8|max:8',
+            'tel2' => 'nullable|string|min:8|max:8',
             'mail' => 'required|email|max:255|unique:donnees_demographiques,mail',
             'numPersonnePrevenir' => 'required|string|max:255',
-            'nomPersonnePrevenir' => 'nullable|string|max:255',
+            'nomPersonnePrevenir' => 'required|string|max:255',
             'profession' => 'required|string|max:255',
             'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
             'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
             'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
-            'cniCheckbox' => 'nullable|accepted',
-            'passportCheckbox' => 'nullable|accepted',
-            'birthCertCheckbox' => 'nullable|accepted',
-            'marriageCertCheckbox' => 'nullable|accepted',
-            'nationalityCertCheckbox' => 'nullable|accepted',
-            'divorceCertCheckbox' => 'nullable|accepted',
-            'deathCertCheckbox' => 'nullable|accepted',
-            'cniFile' => 'nullable|file|max:10240', // Taille maximale de fichier en ko
-            'passportFile' => 'nullable|file|max:10240',
-            'birthCertFile' => 'nullable|file|max:10240',
-            'marriageCertFile' => 'nullable|file|max:10240',
-            'nationalityCertFile' => 'nullable|file|max:10240',
-            'divorceCertFile' => 'nullable|file|max:10240',
-            'deathCertFile' => 'nullable|file|max:10240',
         ]);
 
+
+        $cniCheckbox = $request->has('cniCheckbox');
+        $passportCheckbox = $request->has('passportCheckbox');
+        $birthCertCheckbox = $request->has('birthCertCheckbox');
+        $marriageCertCheckbox = $request->has('marriageCertCheckbox');
+        $nationalityCertCheckbox = $request->has('nationalityCertCheckbox');
+        $divorceCertCheckbox = $request->has('divorceCertCheckbox');
+        $deathCertCheckbox = $request->has('deathCertCheckbox');
+
+
+
+
+        notify()->success('Validation terminée avec succès!', 'Succès');
         $pieces_justificatives = [];
+
+        $cniCheckbox ?  $pieces_justificatives[] = 'CNI' : '';
+        $passportCheckbox ?  $pieces_justificatives[] = 'Passport' : '';
+        $birthCertCheckbox ?  $pieces_justificatives[] = 'Acte de naissance' : '';
+        $marriageCertCheckbox ?  $pieces_justificatives[] = 'Acte de mariage' : '';
+        $nationalityCertCheckbox ?  $pieces_justificatives[] = 'Acte de nationalité' : '';
+        $divorceCertCheckbox ?  $pieces_justificatives[] = 'Acte de divorce' : '';
+        $deathCertCheckbox ?  $pieces_justificatives[] = 'Acte de décès' : '';
+
 
         // Définir les correspondances entre les noms de cases à cocher et les noms des documents
         $documents = [
@@ -90,11 +98,12 @@ class DonneesDemographiquesController extends Controller
             'deathCertCheckbox' => 'Certificat de Décès du Conjoint'
         ];
 
-        foreach ($documents as $checkbox => $docName) {
-            if ($request->has($checkbox)) {
-                $pieces_justificatives[] = $docName;
-            }
-        }
+        // foreach ($documents as $checkbox => $docName) {
+        //     if ($request->has($checkbox)) {
+        //         $pieces_justificatives[] = $docName;
+        //     }
+        // }
+
 
         $imploded_pieces = implode(', ', $pieces_justificatives);
 
@@ -102,24 +111,28 @@ class DonneesDemographiquesController extends Controller
         $NIU = Uuid::uuid4();
         $NIU_int = hexdec(substr($NIU, 0, 16));
 
+
         $ref_Enr = Uuid::uuid4()->toString();
+        $ref_Enr_short = substr($ref_Enr, 0, 25);
+
 
         // Récupération des données du formulaire
         $data = $request->only([
             'nom', 'prenom', 'nomJeuneFille', 'sexe', 'dateNaissance', 'paysVilleNaissance',
             'paysVilleResidence', 'quartierResidence', 'statutMatrimonial', 'nomPrenomsConjoint',
-            'tel1', 'tel2', 'mail', 'numPersonnePrevenir1', 'nomPersonnePrevenir2',
+            'tel1', 'tel2', 'mail', 'numPersonnePrevenir', 'nomPersonnePrevenir',
             'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
         ]);
          
+
         
-        $folderName = $NIU;
+        $folderName = str($NIU_int);
         $folderPath = storage_path('app/' . $folderName);
         
+        notify()->success('Paperasse terminée avec succès!', 'Succès');
         
         try {
            
-
             // Assurez-vous que le dossier existe ou créez-le
             if (!file_exists($folderPath)) {
                 mkdir($folderPath, 0777, true);
@@ -152,14 +165,13 @@ class DonneesDemographiquesController extends Controller
             if ($request->hasFile('passportFile')) {
                 $passportFile = $request->file('passportFile')->storeAs($folderName, 'passport.' . $request->passportFile->extension(), 'local');
             }
+            notify()->success('Fichiers enrégistrés avec succès!', 'Succès');
         } catch (\Exception $e) {
             report($e);
 
-            notify()->error('L\'enregistrement des pièces a échoué. ' + $e->getMessage() + '.', 'Erreur');
+            notify()->error('L\'enregistrement des pièces a échoué. ' . $e->getMessage() . '.', 'Erreur');
             return redirect()->back()->withErrors($e->getMessage());
         }
-
-
 
 
         try {
@@ -183,10 +195,10 @@ class DonneesDemographiquesController extends Controller
                     'tel1' => $data['tel1'],
                     'tel2' => $data['tel2'],
                     'mail' => $data['mail'],
-                    'numero_personne_a_prevenir1' => $data['numPersonnePrevenir1'],
-                    'numero_personne_a_prevenir2' => $data['numPersonnePrevenir1'],
-                    'nom_personne_a_prevenir1' => $data['nomPersonnePrevenir2'],
-                    'nom_personne_a_prevenir2' => $data['nomPersonnePrevenir2'],
+                    'numero_personne_a_prevenir1' => $data['numPersonnePrevenir'],
+                    'numero_personne_a_prevenir2' => $data['numPersonnePrevenir'],
+                    'nom_personne_a_prevenir1' => $data['nomPersonnePrevenir'],
+                    'nom_personne_a_prevenir2' => $data['nomPersonnePrevenir'],
                     'DOB' => $data['dateNaissance'],
                     'nom_prenom_conjoint' => $data['nomPrenomsConjoint'],
                     'pays_ville_naissance' => $data['paysVilleNaissance'],
@@ -198,7 +210,7 @@ class DonneesDemographiquesController extends Controller
                     //'autre_secteur' => $data['autreSecteur'],
                     'groupe_sanguin' => $data['groupeSanguin'],
                     'pieces_justificatives' => $imploded_pieces,
-                    'ref_enrolement' => $ref_Enr,
+                    'ref_enrolement' => $ref_Enr_short,
                     'idAgent' => auth()->user()->idAgent,
                     'nom_de_jeune_fille' => $data['nomJeuneFille'],
                 ]
@@ -207,19 +219,19 @@ class DonneesDemographiquesController extends Controller
             DonneesBiometriques::create(
                 [
                     'NIU' => $NIU_int,
-                    'ref_enrolement' => $ref_Enr,
+                    'ref_enrolement' => $ref_Enr_short,
                     'idAgent' => auth()->user()->idAgent,
                 ]
             );
 
-            $DB = DonneesBiometriques::where('ref_enrolement', $ref_Enr);
+            $DB = DonneesBiometriques::where('ref_enrolement', $ref_Enr_short);
 
-            $DD = DonneesDemographiques::where('ref_enrolement', $ref_Enr);
+            $DD = DonneesDemographiques::where('ref_enrolement', $ref_Enr_short);
 
             SessionEnrollement::create(
                 [
                     'NIU' => $NIU_int,
-                    'ref_enrolement' => $ref_Enr,
+                    'ref_enrolement' => $ref_Enr_short,
                     'est_validee' => 0,
                     'idAgent' => auth()->user()->idAgent,
                     'idDDemo' => $DD->idDDemo,
@@ -233,12 +245,13 @@ class DonneesDemographiquesController extends Controller
                 ]
             );
 
-            return redirect()->route('')->with('refEnr', $ref_Enr);
+            notify()->success('Individu enrégistré avec succès!', 'Succès');
+            return redirect()->route('dbForm.create')->with('refEnr', $ref_Enr_short);
         } catch (\Exception $e) {
 
             report($e);
 
-            notify()->error('L\'enregistrement des données démographiques a échoué. ' + $e->getMessage() + '.', 'Erreur');
+            notify()->error('L\'enregistrement des données démographiques a échoué. ' . $e->getMessage() . '.', 'Erreur');
             return redirect()->back()->withErrors($e->getMessage());
         }
     }

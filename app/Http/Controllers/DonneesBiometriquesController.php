@@ -23,7 +23,7 @@ class DonneesBiometriquesController extends Controller
      */
     public function create()
     {
-        //
+        return view('DD.DBForm');
     }
 
     /**
