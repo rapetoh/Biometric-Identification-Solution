@@ -10,7 +10,7 @@ class DonneesDemographiques extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom', 'nom_de_jeune_fille', 'prenom', 'sexe', 'statut_matrimonial', 'nom_prenom_conjoint', 'DOB', 'pays_ville_naissance', 'pays_ville_residence', 'quartier_residence', 'profession', 'secteur_emploi', 'mail', 'tel1', 'tel2', 'groupe_sanguin', 'pièces_justificatives', 'nom_personne_a_prevenir1', 'nom_personne_a_prevenir2', 'n_personne_a_prevenir1', 'n_personne_a_prevenir2', 'ref_enrolement', 'idAgent', 'NIU'
+        'nom', 'nom_de_jeune_fille', 'prenom', 'sexe', 'statut_matrimonial', 'nom_prenom_conjoint', 'DOB', 'pays_ville_naissance', 'pays_ville_residence', 'quartier_residence', 'profession', 'secteur_emploi', 'mail', 'tel1', 'tel2', 'groupe_sanguin', 'pieces_justificatives', 'nom_personne_a_prevenir1', 'nom_personne_a_prevenir2', 'numero_personne_a_prevenir1', 'numero_personne_a_prevenir2', 'ref_enrolement', 'idAgent', 'NIU'
     ];
 
     public function individu()

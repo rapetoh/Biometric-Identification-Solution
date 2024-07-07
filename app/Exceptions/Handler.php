@@ -7,7 +7,24 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-
+    public function render($request, Throwable $exception)
+    {
+        if ($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            if ($request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Unauthenticated.'
+                ], 401);
+            }
+            return redirect()->guest('login');
+        }
+        
+        if ($exception instanceof \Illuminate\Validation\ValidationException) {
+            return parent::render($request, $exception);
+        }
+        // Vous pouvez ajouter des conditions spécifiques pour différents types d'erreurs
+        // ou traiter toutes les erreurs de la même manière
+        return response()->view('errorPage', ['error' => $exception->getMessage()], 500);
+    }
 
     //     public function render($request, Throwable $exception)
     // {

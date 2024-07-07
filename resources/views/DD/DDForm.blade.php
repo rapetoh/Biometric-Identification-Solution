@@ -159,16 +159,16 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Démographiques du citoyen</h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Démographiques du citoyen  &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
-                    <form id="formAccountSettings" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">
+                    <form id="formAccountSettings" enctype="multipart/form-data" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">
                         @csrf
                         <div class="row mt-2 gy-4">
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('nom') is-invalid @enderror" value="{{ old('nom') }}" id="nom" name="nom" placeholder="Nom" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom *</label>
                                     @error('nom')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -180,7 +180,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('prenom') is-invalid @enderror" value="{{ old('prenom') }}" id="prenom" name="prenom" placeholder="Prénom" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom *</label>
                                     @error('prenom')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -196,7 +196,7 @@
                                         <option value="Masculin" {{ old('sexe') == 'Masculin' ? 'selected' : '' }}>Masculin</option>
                                         <option value="Féminin" {{ old('sexe') == 'Féminin' ? 'selected' : '' }}>Féminin</option>
                                     </select>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="sexe">Sexe</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="sexe">Sexe *</label>
                                     @error('sexe')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -209,7 +209,7 @@
                             <div class="col-md-4" id="nomJeuneFilleDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('nomJeuneFille') is-invalid @enderror" value="{{ old('nomJeuneFille') }}" id="nomJeuneFille" name="nomJeuneFille" placeholder="Nom de jeune fille" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomJeuneFille">Nom de jeune fille (facultatif)</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomJeuneFille">Nom de jeune fille</label>
                                     @error('nomJeuneFille')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -222,7 +222,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="date" class="form-control @error('dateNaissance') is-invalid @enderror" value="{{ old('dateNaissance') }}" id="dateNaissance" name="dateNaissance" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="dateNaissance">Date de naissance</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="dateNaissance">Date de naissance *</label>
                                     @error('dateNaissance')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -234,7 +234,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('paysVilleNaissance') is-invalid @enderror" value="{{ old('paysVilleNaissance') }}" id="paysVilleNaissance" name="paysVilleNaissance" placeholder="Pays/Ville de naissance" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleNaissance">Pays/Ville de naissance</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleNaissance">Pays-Ville de naissance *</label>
                                     @error('paysVilleNaissance')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -246,7 +246,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('paysVilleResidence') is-invalid @enderror" value="{{ old('paysVilleResidence') }}" id="paysVilleResidence" name="paysVilleResidence" placeholder="Pays/Ville de résidence" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleResidence">Pays/Ville de résidence</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleResidence">Pays-Ville de résidence *</label>
                                     @error('paysVilleResidence')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -258,7 +258,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('quartierResidence') is-invalid @enderror" value="{{ old('quartierResidence') }}" id="quartierResidence" name="quartierResidence" placeholder="Quartier de résidence" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="quartierResidence">Quartier de résidence</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="quartierResidence">Quartier de résidence *</label>
                                     @error('quartierResidence')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -276,7 +276,7 @@
                                             <option value="Divorcé(e)" {{ old('statutMatrimonial') == 'Divorcé(e)' ? 'selected' : '' }}>Divorcé(e)</option>
                                             <option value="Veuf(ve)" {{ old('statutMatrimonial') == 'Veuf(ve)' ? 'selected' : '' }}>Veuf(ve)</option>
                                     </select>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="statutMatrimonial">Statut matrimonial</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="statutMatrimonial">Statut matrimonial *</label>
                                     @error('statutMatrimonial')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -289,7 +289,7 @@
                             <div class="col-md-4" id="nomPrenomsConjointDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('nomPrenomsConjoint') is-invalid @enderror" value="{{ old('nomPrenomsConjoint') }}" id="nomPrenomsConjoint" name="nomPrenomsConjoint" placeholder="Nom & Prénoms du conjoint" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPrenomsConjoint">Nom & Prénoms du conjoint (facultatif)</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPrenomsConjoint">Nom & Prénoms du conjoint</label>
                                     @error('nomPrenomsConjoint')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -301,7 +301,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="form-control @error('tel1') is-invalid @enderror" value="{{ old('tel1') }}" id="tel1" name="tel1" placeholder="Téléphone 1" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel1">TEL1</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel1">N° de téléphone 1</label>
                                     @error('tel1')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -313,7 +313,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="form-control @error('tel2') is-invalid @enderror" value="{{ old('tel2') }}" id="tel2" name="tel2" placeholder="Téléphone 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">TEL2</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">N° de téléphone 1</label>
                                     @error('tel2')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -336,9 +336,22 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control @error('nomPersonnePrevenir') is-invalid @enderror" value="{{ old('nomPersonnePrevenir') }}" id="nomPersonnePrevenir" name="nomPersonnePrevenir" placeholder="Nom de la personne à prévenir " />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir">Nom personne à prévenir </label>
-                                    @error('nomPersonnePrevenir')
+                                    <input type="text" class="form-control @error('nomPersonnePrevenir1') is-invalid @enderror" value="{{ old('nomPersonnePrevenir') }}" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1 </label>
+                                    @error('nomPersonnePrevenir1')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="form-control @error('numPersonnePrevenir1') is-invalid @enderror" value="{{ old('numPersonnePrevenir') }}" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 " />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
+                                    @error('numPersonnePrevenir1')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -348,9 +361,21 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control @error('numPersonnePrevenir') is-invalid @enderror" value="{{ old('numPersonnePrevenir') }}" id="numPersonnePrevenir" name="numPersonnePrevenir" placeholder="Numéro de la personne à prévenir " />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir">Numéro personne à prévenir </label>
-                                    @error('numPersonnePrevenir')
+                                    <input type="text" class="form-control @error('nomPersonnePrevenir2') is-invalid @enderror" value="{{ old('nomPersonnePrevenir2') }}" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
+                                    @error('nomPersonnePrevenir2')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="form-control @error('numPersonnePrevenir2') is-invalid @enderror" value="{{ old('numPersonnePrevenir2') }}" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir </label>
+                                    @error('numPersonnePrevenir2')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -361,7 +386,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('profession') is-invalid @enderror" value="{{ old('profession') }}" id="profession" name="profession" placeholder="Profession" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession *</label>
                                     @error('profession')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -379,7 +404,7 @@
                                         <option value="Quaternaire" {{ old('secteurEmploi') == 'Quaternaire' ? 'selected' : '' }}>Secteur Quaternaire (Information, Recherche, etc.)</option>
                                         <option value="Autre" {{ old('secteurEmploi') == 'Autre' ? 'selected' : '' }}>Autres</option>
                                     </select>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="secteurEmploi">Secteur d'emploi</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="secteurEmploi">Secteur d'emploi *</label>
                                     @error('secteurEmploi')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -392,7 +417,7 @@
                             <div class="col-md-4" id="autreSecteurDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('autreSecteur') is-invalid @enderror" value="{{ old('autreSecteur') }}" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur *</label>
                                     @error('autreSecteur')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -414,7 +439,7 @@
                                         <option value="O+" {{ old('groupeSanguin') == 'O+' ? 'selected' : '' }}>O+</option>
                                         <option value="O-" {{ old('groupeSanguin') == 'O-' ? 'selected' : '' }}>O-</option>
                                     </select>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="groupeSanguin">Groupe sanguin</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="groupeSanguin">Groupe sanguin *</label>
                                     @error('groupeSanguin')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -424,7 +449,7 @@
                             </div>
 
                             <div class="col-md-4">
-                                <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives</h6><br>
+                                <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives *</h6><br>
 
                                 <!-- CNI -->
                                 <div class="form-check">
@@ -525,6 +550,9 @@
                             <button type="submit" style="background-color: green" class="btn btn-primary me-2">SUIVANT</button>
                             <button type="reset" class="btn btn-outline-secondary">EFFACER</button>
                         </div>
+                        <br>
+                        <br>
+                        <h6 style="color: gray; font-weight: 300; font-size: 10px;">* : les informations marquées de ce symbole doivent être obligatoirement fournies</h6>
                     </form>
                 </div>
                 <!-- /Account -->

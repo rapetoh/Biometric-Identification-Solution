@@ -1,0 +1,109 @@
+
+.carte {
+    cursor: pointer;
+    transition: border 0.3s;
+    border: 2px solid transparent;
+}
+
+.carte:hover {
+    border: 2px solid lightgreen;
+}
+
+.carte.selected {
+    border: 2px solid green;
+}
+
+
+.container1 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.container1 h1 {
+    font-size: 40px;
+    letter-spacing: 2px;
+    color: red;
+    text-transform: uppercase;
+    margin-bottom: 50px;
+    filter: drop-shadow(0 0 20px red) drop-shadow(0 0 60px red);
+    animation: textEffect 0.5s steps(1) infinite;
+}
+
+@keyframes textEffect {
+
+    0%,
+    100% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+.scanning {
+    position: relative;
+    background: url('../img/image.png');
+    background-size: 300px;
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 300px;
+}
+
+.scanning::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/image-cover.png');
+    background-size: 300px;
+}
+
+.scanning::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: red;
+    border-radius: 5px;
+    filter: drop-shadow(0 0 20px red) drop-shadow(0 0 60px red);
+}
+
+/* Animation class */
+.animate::before {
+    animation: scanning 3s ease-in-out infinite;
+}
+
+.animate::after {
+    animation: scanLine 3s ease-in-out infinite;
+}
+
+@keyframes scanning {
+
+    0%,
+    100% {
+        height: 0%;
+    }
+
+    50% {
+        height: 100%;
+    }
+}
+
+@keyframes scanLine {
+
+    0%,
+    100% {
+        top: 0%;
+    }
+
+    50% {
+        top: 100%;
+    }
+}

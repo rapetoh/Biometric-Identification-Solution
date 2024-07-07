@@ -58,7 +58,7 @@ class Agent extends Authenticatable
 
     public function sessionsEnrolement()
     {
-        return $this->hasMany(SessionEnrollement::class, 'idAgent', 'idAgent');
+        return $this->hasMany(SessionEnrolement::class, 'idAgent', 'idAgent');
     }
 
     public function donneesDemographiques()

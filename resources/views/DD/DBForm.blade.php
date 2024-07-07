@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,6 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/solid.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/empreinte.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" />
     <title>Document</title>
     @notifyCss
@@ -17,6 +19,7 @@
 </head>
 
 <body>
+
     @include('notify::components.notify')
 
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -106,36 +109,7 @@
                                 <span class="align-middle">Acceuil</span>
                             </a>
                         </li>
-                        <!-- @if (auth()->user()->isAdmin == true)
-                        <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Ajouter un agent</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('agents.index') }}">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Liste des agents</span>
-                            </a>
-                        </li>
-                        @endif -->
 
-                        <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <i class='mdi mdi-cog-outline me-1 mdi-20px'></i>
-                                <span class="align-middle">Settings</span>
-                            </a>
-                        </li> -->
-                        <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <span class="d-flex align-items-center align-middle">
-                                    <i class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"></i>
-                                    <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                </span>
-                            </a>
-                        </li> -->
                         <li>
                             <div class="dropdown-divider my-1"></div>
                         </li>
@@ -159,15 +133,81 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Démographiques du citoyen</h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
-                    <form id="formAccountSettings" style="max-width: 80%;" class="p-4" method="POST" onsubmit="return false">
-                        {{ $refEnr }}
-                        <div class="mt-4">
-                            <button type="submit" style="background-color: green" class="btn btn-primary me-2">SUIVANT</button>
-                            <button type="reset" class="btn btn-outline-secondary">EFFACER</button>
-                        </div>
+                    <form id="fingerprintForm" style="max-width: 80%;" class="p-4" method="POST">
+                        @if(session('refEnr'))
+                        {{session('refEnr')}}
+                        @endif
+
+                        <div class="container">
+                            <div style="margin-right: 90px;" class="columns-1">
+                                Statut
+                                <br><br>
+                                <div class="row">
+                                    <!-- Pouce -->
+                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                        <div class="card-body">
+                                            <img id="pouce" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
+                                            <span>Pouce</span>
+                                        </div>
+                                    </div>
+                                    <!-- Index -->
+                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                        <div class="card-body">
+                                            <img id="index" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
+                                            <span>Index</span>
+                                        </div>
+                                    </div>
+                                    <!-- Majeur -->
+                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                        <div class="card-body">
+                                            <img id="majeur" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
+                                            <span>Majeur</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <!-- Annulaire -->
+                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                        <div class="card-body">
+                                            <img id="annulaire" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
+                                            <span>Annulaire</span>
+                                        </div>
+                                    </div>
+                                    <!-- Auriculaire -->
+                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                        <div class="card-body">
+                                            <img id="auriculaire" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
+                                            <span>Auriculaire</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="column" style="margin: auto;">
+                                <!-- Contenu de la deuxième colonne -->
+                                <span style="font-size: 17px;">Biométrie</span>
+                                <br>
+                                <br>
+
+                                <div class="center">
+                                    <div class="container1">
+                                        <div id="scanning" class="scanning"></div>
+                                    </div>
+                                </div>
+
+
+                                <div id="messages" style="overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+                                    <p></p>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" id="triggerButton" style="background-color: green" class="btn btn-primary me-2">SUIVANT</button>
+                                    <button type="reset" class="btn btn-outline-secondary">EFFACER</button>
+                                </div>
                     </form>
                 </div>
                 <!-- /Account -->
@@ -179,70 +219,87 @@
 
 
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function updateOnlineStatus() {
+        // Declare the variable in the global scope
+        let selectedFinger = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFingerSelection();
+            monitorNetworkStatus();
+            configureSocketConnection();
+        });
+
+        function setupFingerSelection() {
+            const cards = document.querySelectorAll('.carte');
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    cards.forEach(c => c.classList.remove('selected'));
+                    card.classList.add('selected');
+                    selectedFinger = card.querySelector('img').id;
+                    console.log('Doigt sélectionné:', selectedFinger);
+                });
+            });
+        }
+
+        function monitorNetworkStatus() {
+            const updateOnlineStatus = () => {
+                const onlineMessage = document.getElementById('online-message');
+                const offlineMessage = document.getElementById('offline-message');
+
                 if (navigator.onLine) {
-                    document.getElementById('online-message').style.display = 'block';
-                    document.getElementById('offline-message').style.display = 'none';
+                    onlineMessage.style.display = 'block';
+                    offlineMessage.style.display = 'none';
                 } else {
-                    document.getElementById('online-message').style.display = 'none';
-                    document.getElementById('offline-message').style.display = 'block';
+                    onlineMessage.style.display = 'none';
+                    offlineMessage.style.display = 'block';
                 }
-            }
+            };
 
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
-
-            // Initial check
             updateOnlineStatus();
-        });
+        }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const sexeSelect = document.getElementById('sexe');
-            const nomJeuneFilleDiv = document.getElementById('nomJeuneFilleDiv');
-            const statutMatrimonialSelect = document.getElementById('statutMatrimonial');
-            const nomPrenomsConjointDiv = document.getElementById('nomPrenomsConjointDiv');
+        function configureSocketConnection() {
+            const scanningElement = document.querySelector('.scanning');
+            const socket = io.connect('http://127.0.0.1:5000');
+            const triggerButton = document.getElementById('fingerprintForm');
 
-            // Écouteur d'événements pour le champ Sexe
-            sexeSelect.addEventListener('change', function() {
-                nomJeuneFilleDiv.style.display = (this.value === 'Féminin') ? 'block' : 'none';
+            triggerButton.addEventListener('submit', (event) => {
+                event.preventDefault();
+                console.log('Formulaire soumis, envoi du message au serveur Python');
+                socket.emit('enrollFingerprint', {
+                    message: selectedFinger,
+                    niu: '007'
+                });
             });
 
-            // Écouteur d'événements pour le champ Statut Matrimonial
-            statutMatrimonialSelect.addEventListener('change', function() {
-                nomPrenomsConjointDiv.style.display = (this.value === 'Marié(e)' || this.value === 'Divorcé(e)' || this.value === 'Veuf(ve)') ? 'block' : 'none';
+            socket.on('connect', () => {
+                console.log('Connecté au serveur Python');
             });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            const secteurSelect = document.getElementById('secteurEmploi');
-            const autreSecteurDiv = document.getElementById('autreSecteurDiv');
 
-            secteurSelect.addEventListener('change', function() {
-                if (this.value === 'Autre') {
-                    autreSecteurDiv.style.display = 'block'; // Afficher le champ
-                } else {
-                    autreSecteurDiv.style.display = 'none'; // Cacher le champ
+            socket.on('disconnect', () => {
+                console.log('Déconnecté du serveur Python');
+            });
+
+            socket.on('server_message', (msg) => {
+                const elem = document.getElementById('messages');
+                console.log(typeof msg);
+                console.log(msg);
+                if  (msg == "Démarrage de l'enrôlement..."){
+                    scanningElement.classList.toggle('animate');
+                }
+                elem.innerHTML += `<p>${msg}</p>`;
+                elem.scrollTop = elem.scrollHeight;
+
+                if (msg.startsWith("Enroll done, quality:")) {
+                    scanningElement.classList.toggle('scanning');
                 }
             });
-        });
-        document.addEventListener('DOMContentLoaded', function() {
-            function toggleUploadDiv(checkboxId, divId) {
-                const checkbox = document.getElementById(checkboxId);
-                const div = document.getElementById(divId);
-                checkbox.addEventListener('change', function() {
-                    div.style.display = this.checked ? 'block' : 'none';
-                });
-            }
-
-            toggleUploadDiv('cniCheckbox', 'cniUploadDiv');
-            toggleUploadDiv('passportCheckbox', 'passportUploadDiv');
-            toggleUploadDiv('birthCertCheckbox', 'birthCertUploadDiv');
-            toggleUploadDiv('marriageCertCheckbox', 'marriageCertUploadDiv');
-            toggleUploadDiv('nationalityCertCheckbox', 'nationalityCertUploadDiv');
-            toggleUploadDiv('divorceCertCheckbox', 'divorceCertUploadDiv');
-            toggleUploadDiv('deathCertCheckbox', 'deathCertUploadDiv');
-        });
+        }
     </script>
+    <script src="{{ asset('js/empreinte.js') }}"></script>
+    <script src="{{ asset('js/socket.io.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>

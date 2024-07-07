@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SessionEnrollement extends Model
+class SessionEnrolement extends Model
 {
     use HasFactory;
 
