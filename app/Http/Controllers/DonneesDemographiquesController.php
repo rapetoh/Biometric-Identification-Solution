@@ -291,6 +291,9 @@ class DonneesDemographiquesController extends Controller
                 DB::commit();
                 notify()->success('Individu enrégistré avec succès!', 'Succès');
                 $request->session()->put('refEnr', $ref_Enr_short);
+                $request->session()->put('niu', $folderName);
+                $request->session()->put('nom', $data['nom']);
+                $request->session()->put('prenom', $data['prenom']);
                 return redirect()->route('dbForm.create');
             } catch (\Exception $e) {
     

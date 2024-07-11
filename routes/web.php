@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\CentreEnrolement;
+use App\Http\Controllers\CentreEnrolementController;
 use App\Http\Controllers\DonneesDemographiquesController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PhotoController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
@@ -44,6 +47,10 @@ Route::controller(AgentController::class)->group(function(){
 
 Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('auth');
 
-
 Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('auth');
+
+Route::resource('ce', CentreEnrolementController::class)->middleware('auth');
+
+Route::get('photo', [PhotoController::class, 'createPhoto'])->name('photo');
+Route::post('photo', [PhotoController::class, 'storePhoto'])->name('photo.store');
 

@@ -136,7 +136,8 @@
                 <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
-                    <form id="fingerprintForm" style="max-width: 80%;" class="p-4" method="POST">
+                    <form id="fingerprintForm" style="max-width: 80%;" class="p-4" method="POST" action="{{ route('dbForm.store', ['pouce' => 'pouce','index' => 'index', 'majeur' => 'majeur', 'annulaire' => 'annulaire', 'auriculaire' => 'auriculaire']) }}">
+                    @csrf
                         @if(session('refEnr'))
                         {{session('refEnr')}}
                         @endif
@@ -147,40 +148,40 @@
                                 <br><br>
                                 <div class="row">
                                     <!-- Pouce -->
-                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                    <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
-                                            <img id="pouce" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
-                                            <span>Pouce</span>
+                                            <img id="pouce" src="{{ asset('img/pouce.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <i class="fa-solid fa-circle-check validate-icon" id="pouceIcone" style="display:none;"></i>
                                         </div>
                                     </div>
                                     <!-- Index -->
-                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                    <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
-                                            <img id="index" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
-                                            <span>Index</span>
+                                            <img id="index" src="{{ asset('img/index.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <i class="fa-solid fa-circle-check validate-icon" id="indexIcone" style="display:none;"></i>
                                         </div>
                                     </div>
                                     <!-- Majeur -->
-                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                    <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
-                                            <img id="majeur" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
-                                            <span>Majeur</span>
+                                            <img id="majeur" src="{{ asset('img/majeur.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <i class="fa-solid fa-circle-check validate-icon" id="majeurIcone" style="display:none;"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <!-- Annulaire -->
-                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                    <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
-                                            <img id="annulaire" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
-                                            <span>Annulaire</span>
+                                            <img id="annulaire" src="{{ asset('img/annulaire.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <i class="fa-solid fa-circle-check validate-icon" id="annulaireIcone" style="display:none;"></i>
                                         </div>
                                     </div>
                                     <!-- Auriculaire -->
-                                    <div style="max-width: 120px;" class="card m-4 carte">
+                                    <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
-                                            <img id="auriculaire" src="{{ asset('img/empreinte_non_checked.png') }}" class="w-px-30 h-auto rounded-circle">
-                                            <span>Auriculaire</span>
+                                            <img id="auriculaire" src="{{ asset('img/auriculaire.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <i class="fa-solid fa-circle-check validate-icon" id="auriculaireIcone" style="display:none;"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -200,13 +201,16 @@
                                 </div>
 
 
-                                <div id="messages" style="overflow-y: scroll; border: 1px solid #ccc; padding: 10px;">
+                                <div id="messages" style="border: 1px solid green; text-align:center; border-radius: 10px; padding: 15px;">
                                     <p></p>
                                 </div>
 
                                 <div class="mt-4">
-                                    <button type="submit" id="triggerButton" style="background-color: green" class="btn btn-primary me-2">SUIVANT</button>
-                                    <button type="reset" class="btn btn-outline-secondary">EFFACER</button>
+                                    <div class="mt-4 button-container">
+                                        <button type="button" id="triggerButton" style="background-color: green" class="btn btn-primary mb-2">DEMARRER LE SCAN</button>
+                                        <button type="submit" id="submitButton" style="background-color: green" class="btn btn-primary mt-2">SOUMETTRE LES DONNEES BIOMETRIQUES</button>
+                                    </div>
+
                                 </div>
                     </form>
                 </div>
@@ -228,6 +232,26 @@
             configureSocketConnection();
         });
 
+        function checkAllIconsVisible() {
+            const icons = document.querySelectorAll('.validate-icon');
+            const submitButton = document.getElementById('submitButton');
+            let allVisible = true;
+
+            icons.forEach(icon => {
+                if (window.getComputedStyle(icon).display != 'block') {
+                    allVisible = false;
+                    console.log(icon.id)
+                    console.log(window.getComputedStyle(icon).display)
+                    console.log("allv: "+allVisible);
+                }
+            });
+
+            submitButton.disabled = !allVisible;
+            console.log("sb.d: "+submitButton.disabled)
+        }
+
+
+
         function setupFingerSelection() {
             const cards = document.querySelectorAll('.carte');
 
@@ -239,6 +263,12 @@
                     console.log('Doigt sélectionné:', selectedFinger);
                 });
             });
+
+            const postButton = document.getElementById('submitButton');
+
+            checkAllIconsVisible();
+
+
         }
 
         function monitorNetworkStatus() {
@@ -263,14 +293,15 @@
         function configureSocketConnection() {
             const scanningElement = document.querySelector('.scanning');
             const socket = io.connect('http://127.0.0.1:5000');
-            const triggerButton = document.getElementById('fingerprintForm');
+            const triggerButton = document.getElementById('triggerButton');
+            const niu = "{{ session('niu') }}";
+            console.log(niu);
 
-            triggerButton.addEventListener('submit', (event) => {
-                event.preventDefault();
+            triggerButton.addEventListener('click', (event) => {
                 console.log('Formulaire soumis, envoi du message au serveur Python');
                 socket.emit('enrollFingerprint', {
                     message: selectedFinger,
-                    niu: '007'
+                    niu: niu
                 });
             });
 
@@ -286,15 +317,25 @@
                 const elem = document.getElementById('messages');
                 console.log(typeof msg);
                 console.log(msg);
-                if  (msg == "Démarrage de l'enrôlement..."){
+
+                if (msg == "Démarrage de l'enrôlement...") {
                     scanningElement.classList.toggle('animate');
                 }
-                elem.innerHTML += `<p>${msg}</p>`;
-                elem.scrollTop = elem.scrollHeight;
 
-                if (msg.startsWith("Enroll done, quality:")) {
-                    scanningElement.classList.toggle('scanning');
+                elem.textContent = msg;
+
+                if (!isNaN(msg.substr(-2)) && parseInt(msg.substr(-2)) < 2) {
+                    console.log(msg);
+                    elem.textContent = 'Mauvaise qualité de l\'empreinte OU Scanner introuvable ! Reprenez'
+                    scanningElement.classList.toggle('animate');
+                } else if (msg.startsWith(selectedFinger + " enregistré, qualité")) {
+                    scanningElement.classList.toggle('animate');
+                    const a = document.getElementById(selectedFinger + "Icone")
+                    a.style.display = 'initial';
+
+                    checkAllIconsVisible();
                 }
+
             });
         }
     </script>

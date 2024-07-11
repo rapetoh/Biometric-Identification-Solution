@@ -33,7 +33,7 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center">
-            <a href="{{ route('home') }}">
+                <a href="{{ route('home') }}">
                     <div class="nav-item d-flex align-items-center heading">
                         <img src="{{ asset('img/empreinte-digitale.png') }}" class="w-px-20 h-auto rounded-circle">
                         <h4 style="color: red; font-weight: bold;">&nbsp;&nbsp;&nbspID</h4>
@@ -82,8 +82,10 @@
                         </div>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
+
                         <li>
-                            <a class="dropdown-item pb-2 mb-1" href="javascript:void(0);">
+
+                            <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
                                         <div class="avatar avatar-online">
@@ -108,7 +110,7 @@
                         </li>
                         @if (auth()->user()->isAdmin == true)
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
+                            <a class="dropdown-item" href="{{ route('agents.create') }}">
                                 <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                 <span class="align-middle">Ajouter un agent</span>
                             </a>
@@ -119,23 +121,35 @@
                                 <span class="align-middle">Liste des agents</span>
                             </a>
                         </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.index') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Liste des CE</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.create') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Ajouter un CE</span>
+                            </a>
+                        </li>
                         @endif
 
                         <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <i class='mdi mdi-cog-outline me-1 mdi-20px'></i>
-                                <span class="align-middle">Settings</span>
-                            </a>
-                        </li> -->
+    <a class="dropdown-item" href="javascript:void(0);">
+        <i class='mdi mdi-cog-outline me-1 mdi-20px'></i>
+        <span class="align-middle">Settings</span>
+    </a>
+</li> -->
                         <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <span class="d-flex align-items-center align-middle">
-                                    <i class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"></i>
-                                    <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                </span>
-                            </a>
-                        </li> -->
+    <a class="dropdown-item" href="javascript:void(0);">
+        <span class="d-flex align-items-center align-middle">
+            <i class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"></i>
+            <span class="flex-grow-1 align-middle ms-1">Billing</span>
+            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
+        </span>
+    </a>
+</li> -->
                         <li>
                             <div class="dropdown-divider my-1"></div>
                         </li>
@@ -148,6 +162,7 @@
                                 </button>
                             </form>
                         </li>
+
                     </ul>
                 </li>
                 <!--/ User -->

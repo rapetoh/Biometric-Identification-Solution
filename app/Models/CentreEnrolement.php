@@ -9,6 +9,8 @@ class CentreEnrolement extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'idCentre';
+
     protected $table = 'centre_enrolement';
     
     protected $fillable = [

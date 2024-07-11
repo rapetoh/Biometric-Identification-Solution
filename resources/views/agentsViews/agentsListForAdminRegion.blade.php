@@ -81,7 +81,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                         <li>
-                            <a class="dropdown-item pb-2 mb-1" href="javascript:void(0);">
+    
+                            <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
                                         <div class="avatar avatar-online">
@@ -112,9 +113,21 @@
                             </a>
                         </li>
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
+                            <a class="dropdown-item" href="{{ route('agents.index') }}">
                                 <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                 <span class="align-middle">Liste des agents</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.index') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Liste des CE</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.create') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Ajouter un CE</span>
                             </a>
                         </li>
                         @endif

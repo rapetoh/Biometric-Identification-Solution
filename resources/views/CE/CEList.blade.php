@@ -38,7 +38,6 @@
                         <h4 style="color: green; font-weight: bold;">Togo</h4>
                     </div>
                 </a>
-
             </div>
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -63,12 +62,14 @@
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">ID: {{ auth()->user()->idAgent }}</p>
                     </div>
+
                 </li>
 
                 <li class="nav-item lh-1 me-3">
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">Mail: {{ auth()->user()->mail }}</p>
                     </div>
+
                 </li>
 
                 <!-- User -->
@@ -166,83 +167,58 @@
 
     </nav>
 
-    <div class="container">
-        <div class="column">
-            <!-- Contenu de la première colonne -->
-            Tâches opérationnelles
-            <br>
-            <br>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; color: green;"></i>Synchroniser les données
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 25px; color: green;"></i>Charger les dossiers pré-inscrits
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-user" style="margin-right: 25px"></i>This is some text within a card body.
-                    </div>
-                </div>
-            </a>
+    <div class="agents-list">
+        <div class="card">
+            <h5 class="card-header">Liste des Centres d'Enrôlement -- Région: {{ auth()->user()->region->nom }}</h5>
+            <div class="table-responsive text-nowrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Nom du centre</th>
+                            <th>Adresse</th>
+                            <th>Télephone</th>
+                            <th>Commune</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach ($ces as $ce)
+                        <tr>
+                            <td>
+                                <span class="fw-medium" style="font-weight: bold">{{ $ce->nom ? $ce->nom : 'Non spécifiée' }}</span>
+                            </td>
+                            <td>
+                                {{ $ce->adresse ? $ce->adresse : 'Non spécifiée' }}
+                            </td>
+                            <td>
+                                {{ $ce->telephone ? $ce->telephone : 'Non spécifiée' }}
+                            </td>
+                            <td>
+                                <span class="badge rounded-pill bg-label-info me-1">{{$ce->commune}}</span>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button type="button" class="btn m-auto dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ route('ce.edit', $ce->idCentre) }}"> <i style="color: green;" class="fa-solid fa-pencil ms-4 me-2"></i>Modifier</a>
+                                        <form action="{{ route('ce.destroy', $ce->idCentre) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce centre ?');"><i style="color: red;" class="fa-solid fa-trash me-2"></i> Suppprimer</a></button>
+                                        </form>
 
 
-        </div>
-        <div class="column">
-            <!-- Contenu de la deuxième colonne -->
-            Tâches d'inscription
-            <br>
-            <br>
-            <a href="{{ route('ddForm.create') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-address-card" style="margin-right: 25px; color: green;"></i>Nouvelle inscription
-                    </div>
-                </div>
-            </a>
-            <a href="{{ route('photo') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-person-circle-question" style="margin-right: 25px; color: green;"></i>NIU perdu
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Tableau de bord
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="column">
-            <!-- Contenu de la troisième colonne -->
-            Informations
-            <br>
-            <br>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
 
+
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 

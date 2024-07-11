@@ -83,7 +83,8 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                         <li>
-                            <a class="dropdown-item pb-2 mb-1" href="javascript:void(0);">
+    
+                            <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
                                         <div class="avatar avatar-online">
@@ -108,7 +109,7 @@
                         </li>
                         @if (auth()->user()->isAdmin == true)
                         <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
+                            <a class="dropdown-item" href="{{ route('agents.create') }}">
                                 <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                 <span class="align-middle">Ajouter un agent</span>
                             </a>
@@ -117,6 +118,18 @@
                             <a class="dropdown-item" href="{{ route('agents.index') }}">
                                 <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
                                 <span class="align-middle">Liste des agents</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.index') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Liste des CE</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('ce.create') }}">
+                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
+                                <span class="align-middle">Ajouter un CE</span>
                             </a>
                         </li>
                         @endif
@@ -160,8 +173,8 @@
         <div class="col-md-12">
             <div class="card mb-4">
                 <br>
-                <h4 class="card-header m-auto" style="color: red; font-weight: 600; font-size: 20px;"> <img style="margin: auto;" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/img/avatars/7.png" alt class="w-px-40 h-auto rounded-circle"><br>Agent: <span style="color:forestgreen; text-transform: uppercase;">{{ $agent->nom }} {{ $agent->prenom }}</span></h4>
-                <div style="max-width: 60%; margin:auto;"><span class="badge rounded-pill bg-label-info me-1"> {{ $agent->telephone }} </span><span class="badge rounded-pill bg-label-info me-1">{{ $agent->mail }}</span><span class="badge rounded-pill bg-label-info me-1">{{ $agent->domicile }}</span></div>
+                <h4 class="card-header m-auto" style="color: red; font-weight: 600; font-size: 20px;"> <img style="margin: auto;" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/img/avatars/7.png" alt class="w-px-50 h-auto rounded-circle"><br>Agent: <span style="color:forestgreen; text-transform: uppercase;">{{ $agent->nom }} {{ $agent->prenom }}</span></h4>
+                <div style="max-width: 60%; margin:auto;"><span class="badge rounded-pill bg-label-success me-1">Télephone: {{ $agent->telephone }} </span><span class="badge rounded-pill bg-label-success me-1">Mail: {{ $agent->mail }}</span><span class="badge rounded-pill bg-label-success me-1">Domicile: {{ $agent->domicile }}</span></div>
                 <!-- Account -->
                 <div class="card-body pt-2">
                     <form id="formAccountSettings" style="max-width: 80%;" class="p-4" method="POST" action="{{ route('agents.updatePass', auth()->user()->idAgent) }}">

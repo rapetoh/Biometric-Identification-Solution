@@ -169,6 +169,7 @@ class AgentController extends Controller
         $admin = $request->has('Admin');
 
         $CE = CentreEnrolement::where('nom', $centreEnrolement);
+        
         try {
 
             $agent = Agent::findOrFail($id);

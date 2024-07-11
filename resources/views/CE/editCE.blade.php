@@ -13,10 +13,12 @@
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" />
     <title>Document</title>
     @notifyCss
+    @livewireStyles
 </head>
 
 <body>
     @include('notify::components.notify')
+
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 
         <!--  Brand demo (display only for navbar-full and hide on below xl) -->
@@ -31,14 +33,13 @@
         <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
             <!-- Search -->
             <div class="navbar-nav align-items-center">
-                <a href="{{ route('home') }}">
+            <a href="{{ route('home') }}">
                     <div class="nav-item d-flex align-items-center heading">
                         <img src="{{ asset('img/empreinte-digitale.png') }}" class="w-px-20 h-auto rounded-circle">
                         <h4 style="color: red; font-weight: bold;">&nbsp;&nbsp;&nbspID</h4>
                         <h4 style="color: green; font-weight: bold;">Togo</h4>
                     </div>
                 </a>
-
             </div>
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -63,12 +64,14 @@
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">ID: {{ auth()->user()->idAgent }}</p>
                     </div>
+
                 </li>
 
                 <li class="nav-item lh-1 me-3">
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">Mail: {{ auth()->user()->mail }}</p>
                     </div>
+
                 </li>
 
                 <!-- User -->
@@ -163,88 +166,87 @@
                 <!--/ User -->
             </ul>
         </div>
-
     </nav>
 
-    <div class="container">
-        <div class="column">
-            <!-- Contenu de la première colonne -->
-            Tâches opérationnelles
-            <br>
-            <br>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; color: green;"></i>Synchroniser les données
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 25px; color: green;"></i>Charger les dossiers pré-inscrits
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-user" style="margin-right: 25px"></i>This is some text within a card body.
-                    </div>
-                </div>
-            </a>
+
+    <div class="row m-auto mt-3" style="max-width: 60%;">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <br>
+                <h4 class="card-header m-auto" style="color: red; font-weight: 600; font-size: 20px;"> <i class="fa-solid fa-building" style="color: green; margin: auto; width: 85px; display: flex; justify-content: center;"></i> <br>Modifier les informations du Centre: <span style="color:forestgreen; text-transform: uppercase;">{{ $ce->nom }}</span></h4>
+                <!-- Account -->
+                <div class="card-body pt-2">
+                    <form id="ceForm" style="max-width: 80%;" class="p-4" method="POST" action="{{ route('ce.update', $ce->idCentre) }}">
+                        @csrf
+                        @method('PUT')
+                        <div class="row mt-2 gy-4">
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom du centre" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom du centre</label>
+                                    @error('nom')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="form-control" id="tel1" name="tel1" placeholder="Téléphone Centre" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel1">Telephone Centre</label>
+                                    @error('tel1')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control" id="adresse" name="adresse" placeholder="Adresse" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="mail">Adresse</label>
+                                    @error('adresse')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control" id="commune" name="commune" placeholder="Commune" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="mail">Commune</label>
+                                    @error('commune')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control" id="region" name="region" placeholder="{{ auth()->user()->region->nom }}" value="{{ auth()->user()->region->nom }}" disabled />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="region">Region</label>
+                                    @error('region')
+                                    <span>{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                        </div>
 
 
-        </div>
-        <div class="column">
-            <!-- Contenu de la deuxième colonne -->
-            Tâches d'inscription
-            <br>
-            <br>
-            <a href="{{ route('ddForm.create') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-address-card" style="margin-right: 25px; color: green;"></i>Nouvelle inscription
-                    </div>
                 </div>
-            </a>
-            <a href="{{ route('photo') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
-                    </div>
+                <div class="ml-6 mb-4">
+                    <button type="submit" style="background-color: green" class="btn btn-primary me-2">VALIDER LES MODIFICATIONS</button>
+                    <button type="reset" class="btn btn-outline-secondary">EFFACER</button>
                 </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-person-circle-question" style="margin-right: 25px; color: green;"></i>NIU perdu
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Tableau de bord
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="column">
-            <!-- Contenu de la troisième colonne -->
-            Informations
-            <br>
-            <br>
-
+                </form>
+            </div>
+            <!-- /Account -->
         </div>
     </div>
+    </div>
+
+
+
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -273,6 +275,7 @@
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
     @notifyJs
+    @livewireScripts
 </body>
 
 </html>

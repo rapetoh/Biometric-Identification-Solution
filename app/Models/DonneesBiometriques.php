@@ -9,6 +9,9 @@ class DonneesBiometriques extends Model
 {
     use HasFactory;
 
+
+    protected $primaryKey = 'idDBio';
+
     protected $fillable = [
         'empreinte_pouce', 'empreinte_index', 'empreinte_majeur', 'empreinte_annulaire', 'empreinte_auriculaire', 'photo', 'ref_enrolement', 'idAgent', 'NIU'
     ];

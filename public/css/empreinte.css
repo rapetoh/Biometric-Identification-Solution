@@ -1,3 +1,58 @@
+.icon-button {
+    background-color: #f3f3f3; /* Légèrement gris */
+    border: none;
+    border-radius: 50%; /* Rend le bouton circulaire */
+    width: 50px; /* Taille du bouton */
+    height: 50px; /* Taille du bouton */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Ombre légère pour un effet 3D */
+    transition: background-color 0.3s;
+    margin: 10px;
+}
+
+.icon-button i {
+    color: #555; /* Couleur de l'icône */
+    font-size: 20px; /* Taille de l'icône */
+}
+
+.icon-button:hover {
+    background-color: #e2e2e2; /* Changement de couleur au survol */
+}
+
+
+
+
+
+
+
+
+
+
+
+.button-container {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement dans le conteneur */
+    flex-wrap: wrap; /* Gérer le passage à la ligne si nécessaire */
+}
+
+.column > span {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+
+.validate-icon {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    color: green;
+    font-size: 20px; 
+    z-index: 10;
+}
 
 .carte {
     cursor: pointer;

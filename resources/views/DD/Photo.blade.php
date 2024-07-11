@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,13 +11,17 @@
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/solid.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/empreinte.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" />
     <title>Document</title>
     @notifyCss
+    @livewireStyles
 </head>
 
 <body>
+
     @include('notify::components.notify')
+
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 
         <!--  Brand demo (display only for navbar-full and hide on below xl) -->
@@ -38,7 +43,6 @@
                         <h4 style="color: green; font-weight: bold;">Togo</h4>
                     </div>
                 </a>
-
             </div>
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
@@ -63,12 +67,14 @@
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">ID: {{ auth()->user()->idAgent }}</p>
                     </div>
+
                 </li>
 
                 <li class="nav-item lh-1 me-3">
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">Mail: {{ auth()->user()->mail }}</p>
                     </div>
+
                 </li>
 
                 <!-- User -->
@@ -80,8 +86,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                         <li>
-    
-                            <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
+                            <a class="dropdown-item pb-2 mb-1" href="javascript:void(0);">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
                                         <div class="avatar avatar-online">
@@ -104,48 +109,7 @@
                                 <span class="align-middle">Acceuil</span>
                             </a>
                         </li>
-                        @if (auth()->user()->isAdmin == true)
-                        <li>
-                            <a class="dropdown-item" href="{{ route('agents.create') }}">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Ajouter un agent</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('agents.index') }}">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Liste des agents</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('ce.index') }}">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Liste des CE</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('ce.create') }}">
-                                <i class="mdi mdi-account-outline me-1 mdi-20px"></i>
-                                <span class="align-middle">Ajouter un CE</span>
-                            </a>
-                        </li>
-                        @endif
 
-                        <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <i class='mdi mdi-cog-outline me-1 mdi-20px'></i>
-                                <span class="align-middle">Settings</span>
-                            </a>
-                        </li> -->
-                        <!-- <li>
-                            <a class="dropdown-item" href="javascript:void(0);">
-                                <span class="d-flex align-items-center align-middle">
-                                    <i class="flex-shrink-0 mdi mdi-credit-card-outline me-1 mdi-20px"></i>
-                                    <span class="flex-grow-1 align-middle ms-1">Billing</span>
-                                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span>
-                                </span>
-                            </a>
-                        </li> -->
                         <li>
                             <div class="dropdown-divider my-1"></div>
                         </li>
@@ -163,108 +127,124 @@
                 <!--/ User -->
             </ul>
         </div>
-
     </nav>
 
-    <div class="container">
-        <div class="column">
-            <!-- Contenu de la première colonne -->
-            Tâches opérationnelles
-            <br>
-            <br>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; color: green;"></i>Synchroniser les données
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-cloud-arrow-down" style="margin-right: 25px; color: green;"></i>Charger les dossiers pré-inscrits
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-user" style="margin-right: 25px"></i>This is some text within a card body.
-                    </div>
-                </div>
-            </a>
 
+    <div class="row m-5">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
+                <!-- Account -->
+                <div class="card-body pt-2">
+                        @csrf
+                        @if(session('refEnr'))
+                        <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>
+                        @endif
+                        @if(session('nom'))
+                        <span class="badge rounded-pill bg-label-info me-3">{{session('nom')}}</span>
+                        @endif
+                        @if(session('prenom'))
+                        <span class="badge rounded-pill bg-label-info me-3">{{session('prenom')}}</span>
+                        @endif
 
-        </div>
-        <div class="column">
-            <!-- Contenu de la deuxième colonne -->
-            Tâches d'inscription
-            <br>
-            <br>
-            <a href="{{ route('ddForm.create') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-address-card" style="margin-right: 25px; color: green;"></i>Nouvelle inscription
-                    </div>
+                        <div class="container">
+                            <div class="column" style="margin: auto;">
+                                <!-- Contenu de la deuxième colonne -->
+                                <span style="font-size: 17px;">Capture de photo</span><br>
+                                <div class="button-container" style="margin: auto;">
+                                    <video style="border: 2px solid transparent; border-radius: 19px;" id="video" width="640" height="480" autoplay></video>
+                                </div><br><br>
+                                <div class="button-container">
+                                    <button id="snap" class="btn icon-button"><i class="fa-solid fa-camera" style="color: #0f8000;"></i></button>
+                                    <canvas id="canvas" style="border: 2px solid transparent; border-radius: 19px; display:none;" width="240" height="180"></canvas>
+                                    <button id="save" class="btn icon-button"><i class="fas fa-save" style="color: #0f8000;"></i></button>
+                                </div>
+                            </div>
                 </div>
-            </a>
-            <a href="{{ route('photo') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-person-circle-question" style="margin-right: 25px; color: green;"></i>NIU perdu
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Tableau de bord
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="column">
-            <!-- Contenu de la troisième colonne -->
-            Informations
-            <br>
-            <br>
-
+                <!-- /Account -->
+            </div>
         </div>
     </div>
 
+
+
+
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            function updateOnlineStatus() {
+        // Declare the variable in the global scope
+
+        document.addEventListener('DOMContentLoaded', () => {
+            monitorNetworkStatus();
+        });
+
+
+
+        function monitorNetworkStatus() {
+            const updateOnlineStatus = () => {
+                const onlineMessage = document.getElementById('online-message');
+                const offlineMessage = document.getElementById('offline-message');
+
                 if (navigator.onLine) {
-                    document.getElementById('online-message').style.display = 'block';
-                    document.getElementById('offline-message').style.display = 'none';
+                    onlineMessage.style.display = 'block';
+                    offlineMessage.style.display = 'none';
                 } else {
-                    document.getElementById('online-message').style.display = 'none';
-                    document.getElementById('offline-message').style.display = 'block';
+                    onlineMessage.style.display = 'none';
+                    offlineMessage.style.display = 'block';
                 }
-            }
+            };
 
             window.addEventListener('online', updateOnlineStatus);
             window.addEventListener('offline', updateOnlineStatus);
-
-            // Initial check
             updateOnlineStatus();
+        }
+
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const snapButton = document.getElementById('snap');
+        const saveButton = document.getElementById('save');
+
+        // Accéder à la webcam
+        navigator.mediaDevices.getUserMedia({
+                video: true
+            })
+            .then(function(stream) {
+                video.srcObject = stream;
+            })
+            .catch(function(error) {
+                console.log("Erreur lors de l'accès à la caméra: ", error);
+            });
+
+        // Capture de la photo
+        snapButton.addEventListener('click', function() {
+            context.drawImage(video, 0, 0, 240, 180);
+            canvas.style.display = 'block'; // Afficher le canvas après la capture
+        });
+
+        // Enregistrer la photo
+        saveButton.addEventListener('click', function() {
+            canvas.toBlob(function(blob) {
+                let formData = new FormData();
+                formData.append('photo', blob, 'photo.png');
+
+                fetch("{{ route('photo.store') }}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Success:', data);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }, 'image/png');
         });
     </script>
+    <script src="{{ asset('js/empreinte.js') }}"></script>
+    <script src="{{ asset('js/socket.io.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
@@ -273,6 +253,7 @@
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
     @notifyJs
+    @livewireScripts
 </body>
 
 </html>
