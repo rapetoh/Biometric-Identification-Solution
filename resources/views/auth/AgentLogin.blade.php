@@ -10,6 +10,10 @@
   </head>
   <body>
 
+  <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
   @include('notify::components.notify')
 
     <main>
@@ -79,6 +83,7 @@
     <!-- Javascript file -->
 
     <script src="{{ asset('js/AgentLogin.js') }}"></script>
+    <script src="{{ asset('js/loading.js') }}"></script>
     <x-notify::notify />
     @notifyJs
   </body>

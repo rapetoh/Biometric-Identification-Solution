@@ -17,6 +17,10 @@
 </head>
 
 <body>
+
+<div id="loader">
+        <div class="spinner"></div>
+    </div>
     @include('notify::components.notify')
 
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -159,7 +163,7 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Démographiques du citoyen  &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Démographiques du citoyen  &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
                     <form id="formAccountSettings" enctype="multipart/form-data" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">
@@ -313,7 +317,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="form-control @error('tel2') is-invalid @enderror" value="{{ old('tel2') }}" id="tel2" name="tel2" placeholder="Téléphone 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">N° de téléphone 1</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">N° de téléphone 2</label>
                                     @error('tel2')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -374,7 +378,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="form-control @error('numPersonnePrevenir2') is-invalid @enderror" value="{{ old('numPersonnePrevenir2') }}" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir </label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2</label>
                                     @error('numPersonnePrevenir2')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -637,6 +641,7 @@
             toggleUploadDiv('deathCertCheckbox', 'deathCertUploadDiv');
         });
     </script>
+    <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>

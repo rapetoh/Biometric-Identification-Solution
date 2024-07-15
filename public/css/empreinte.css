@@ -30,9 +30,6 @@
 
 
 
-
-
-
 .button-container {
     display: flex;
     justify-content: center; /* Centrer horizontalement dans le conteneur */
@@ -42,6 +39,11 @@
 .column > span {
     display: block;
     text-align: center;
+    width: 100%;
+}
+
+.cont > span {
+    display: inline-block;
     width: 100%;
 }
 

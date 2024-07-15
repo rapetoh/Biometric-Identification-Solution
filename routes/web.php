@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\AgentController;
-use App\Http\Controllers\CentreEnrolement;
+use App\Http\Controllers\GoogleController;
+use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\CentreEnrolementController;
 use App\Http\Controllers\DonneesDemographiquesController;
 use App\Http\Controllers\LoginController;
@@ -10,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
 use App\Http\Controllers\DonneesBiometriquesController;
+use App\Http\Controllers\DVcontroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,15 +24,18 @@ use App\Http\Controllers\DonneesBiometriquesController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home')->middleware('auth');
+Route::get('/', [AccueilController::class, 'create'])->name('home')->middleware('auth');
 
 
 Route::get('/error', function () {
     $error = session('error');
     return view('errors.database', compact('error'));
 })->name('errorPage');
+
+
+Route::post('/google/auth', [GoogleController::class, 'redirectToGoogle']);
+Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+Route::post('/google/upload', [GoogleController::class, 'uploadToDrive'])->name('upload.drive')->middleware('auth');
 
 
 Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -46,6 +51,8 @@ Route::controller(AgentController::class)->group(function(){
 });
 
 Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('auth');
+
+Route::resource('dvForm', DVcontroller::class)->middleware('auth');
 
 Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('auth');
 

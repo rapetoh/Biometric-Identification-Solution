@@ -16,6 +16,10 @@
 </head>
 
 <body>
+
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
     @include('notify::components.notify')
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
 
@@ -43,6 +47,11 @@
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
+                <li class="nav-item lh-1 me-3">
+                    <button style=" border-radius: 13px; padding: 7px;">
+                        <i class="fa-solid fa-file-invoice fa-beat fa-lg" style="color: green;"></i>
+                    </button>
+                </li>
 
                 <li class="nav-item lh-1 me-3 online-message" id="online-message">
                     <div style=" border-radius: 13px; padding: 7px;">
@@ -50,6 +59,7 @@
                     </div>
 
                 </li>
+                &nbsp;&nbsp;
 
                 <li class="nav-item lh-1 me-3 offline-message" id="offline-message">
                     <div style="border-radius: 13px; padding: 7px;">
@@ -80,7 +90,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                         <li>
-    
+
                             <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
@@ -172,13 +182,18 @@
             Tâches opérationnelles
             <br>
             <br>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; color: green;"></i>Synchroniser les données
-                    </div>
+
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
+                        @csrf
+                        <button type="submit">
+                            <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; margin-left: -145px; color: green;"></i>Synchroniser les données
+                        </button>
+                    </form>
                 </div>
-            </a>
+            </div>
+
             <a href="">
                 <div class="card mb-4">
                     <div class="card-body">
@@ -186,6 +201,7 @@
                     </div>
                 </div>
             </a>
+
             <a href="">
                 <div class="card mb-4">
                     <div class="card-body">
@@ -193,7 +209,6 @@
                     </div>
                 </div>
             </a>
-
 
         </div>
         <div class="column">
@@ -222,11 +237,13 @@
                     </div>
                 </div>
             </a>
-            <a href="">
+            <a href="{{ route('dvForm.create') }}">
                 <div class="card mb-4">
+                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
                     <div class="card-body">
                         <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
                     </div>
+
                 </div>
             </a>
             <a href="">
@@ -238,11 +255,21 @@
             </a>
         </div>
         <div class="column">
-            <!-- Contenu de la troisième colonne -->
+            <hr style="margin: 20px;">
             Informations
+            <!-- <br>
+            <br> -->
+            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">CE: {{auth()->user()->centreEnrolement->nom}}</span>
+            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">Commune: {{auth()->user()->centreEnrolement->commune}}</span>
+            <hr style="margin: 20px;">Contacts Administrateurs - Région: <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">{{ auth()->user()->region->nom }}</span> <br>
             <br>
-            <br>
-
+            <div class="row">
+                @foreach ($adminAgents as $adminAgent)
+                <H5 style="font-size: 10px;">{{ $loop->index+1 }} -- Nom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->nom}} </span> Prénom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->prenom}} </span>Contact: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->telephone}}</span></H5>
+                <H5 style="font-size: 10px;"></H5>
+                <H5 style="font-size: 10px;"></H5><br><br>
+                @endforeach
+            </div>
         </div>
     </div>
 
@@ -265,6 +292,7 @@
             updateOnlineStatus();
         });
     </script>
+    <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>

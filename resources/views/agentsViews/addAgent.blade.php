@@ -17,6 +17,9 @@
 </head>
 
 <body>
+<div id="loader">
+        <div class="spinner"></div>
+    </div>
     @include('notify::components.notify')
 
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -353,6 +356,7 @@
             toggleUploadDiv('deathCertCheckbox', 'deathCertUploadDiv');
         });
     </script>
+    <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>

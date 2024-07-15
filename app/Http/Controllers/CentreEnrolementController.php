@@ -26,7 +26,7 @@ class CentreEnrolementController extends Controller
      */
     public function create()
     {
-        //
+        return view('CE.addCE');
     }
 
     /**
@@ -37,7 +37,35 @@ class CentreEnrolementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nom' => 'required|string',
+            'tel1' => 'required|min:8|max:8|unique:agents,telephone',
+            'adresse' => 'required|string',
+            'commune' => 'required|string',
+        ]);
+
+        try {
+            CentreEnrolement::create(
+                [
+                    'nom' => $request->nom,
+                    'telephone' => $request->tel1,
+                    'commune' => $request->commune,
+                    'adresse' => $request->adresse,
+                    'idRegion' => auth()->user()->region->idRegion
+                ]
+            );
+
+            notify()->success('Nouveau CE créé avec succès', 'Succès');
+
+            return redirect()->back();
+        } catch (\Exception $e) {
+            // Log the error or handle it as per your needs
+            report($e);
+
+            notify()->error('La création du CE a échoué. ' . $e->getMessage() . '.', 'Erreur');
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+         
     }
 
     /**

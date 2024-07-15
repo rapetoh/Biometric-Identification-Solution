@@ -64,7 +64,7 @@ class DonneesBiometriquesController extends Controller
             );
             DB::commit();
             notify()->success('Empreintes enrégistrées avec succès. ', 'Succès');
-            // return redirect()->route('home');
+            return redirect()->route('photo');
         }
         catch(\Exception $e){
             DB::rollBack();

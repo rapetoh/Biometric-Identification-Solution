@@ -14,7 +14,7 @@ class CentreEnrolement extends Model
     protected $table = 'centre_enrolement';
     
     protected $fillable = [
-        'nom', 'adresse', 'telephone','idRegion',
+        'nom', 'adresse', 'commune', 'telephone','idRegion',
     ];
 
     public function agents(){

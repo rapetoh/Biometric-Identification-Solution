@@ -19,7 +19,9 @@
 </head>
 
 <body>
-
+<div id="loader">
+        <div class="spinner"></div>
+    </div>
     @include('notify::components.notify')
 
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -133,127 +135,134 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-camera fa-lg  "></i></h4>
+                <div style="margin: auto;">
+                    @if(session('refEnr'))
+                    <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>
+                    @endif
+                    @if(session('nom'))
+                    <span class="badge rounded-pill bg-label-info me-3">Nom de l'individu: {{session('nom')}}</span>
+                    @endif
+                    @if(session('prenom'))
+                    <span class="badge rounded-pill bg-label-info me-3">Prénom de l'individu: {{session('prenom')}}</span>
+                    @endif
+                </div>
                 <!-- Account -->
                 <div class="card-body pt-2">
-                        @csrf
-                        @if(session('refEnr'))
-                        <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>
-                        @endif
-                        @if(session('nom'))
-                        <span class="badge rounded-pill bg-label-info me-3">{{session('nom')}}</span>
-                        @endif
-                        @if(session('prenom'))
-                        <span class="badge rounded-pill bg-label-info me-3">{{session('prenom')}}</span>
-                        @endif
+                    @csrf
 
-                        <div class="container">
-                            <div class="column" style="margin: auto;">
-                                <!-- Contenu de la deuxième colonne -->
-                                <span style="font-size: 17px;">Capture de photo</span><br>
-                                <div class="button-container" style="margin: auto;">
-                                    <video style="border: 2px solid transparent; border-radius: 19px;" id="video" width="640" height="480" autoplay></video>
-                                </div><br><br>
-                                <div class="button-container">
-                                    <button id="snap" class="btn icon-button"><i class="fa-solid fa-camera" style="color: #0f8000;"></i></button>
-                                    <canvas id="canvas" style="border: 2px solid transparent; border-radius: 19px; display:none;" width="240" height="180"></canvas>
-                                    <button id="save" class="btn icon-button"><i class="fas fa-save" style="color: #0f8000;"></i></button>
-                                </div>
+
+                    <div class="container">
+                        <div class="column" style="margin: auto;">
+                            <!-- Contenu de la deuxième colonne -->
+                            <span style="font-size: 17px;">Capture de photo</span><br>
+                            <div class="button-container" style="margin: auto;">
+                                <video style="border: 2px solid transparent; border-radius: 19px;" id="video" width="640" height="480" autoplay></video>
+                            </div><br><br>
+                            <div class="button-container">
+                                <button id="snap" class="btn icon-button"><i class="fa-solid fa-camera" style="color: #0f8000;"></i></button>
+                                <canvas id="canvas" style="border: 2px solid transparent; border-radius: 19px; display:none;" width="240" height="180"></canvas>
+                                <button id="save" class="btn icon-button" disabled><i class="fas fa-save" style="color: #0f8000;"></i></button>
                             </div>
+                        </div>
+                    </div>
+                    <!-- /Account -->
                 </div>
-                <!-- /Account -->
             </div>
         </div>
-    </div>
 
 
 
 
-    <script>
-        // Declare the variable in the global scope
+        <script>
+            // Declare the variable in the global scope
 
-        document.addEventListener('DOMContentLoaded', () => {
-            monitorNetworkStatus();
-        });
-
-
-
-        function monitorNetworkStatus() {
-            const updateOnlineStatus = () => {
-                const onlineMessage = document.getElementById('online-message');
-                const offlineMessage = document.getElementById('offline-message');
-
-                if (navigator.onLine) {
-                    onlineMessage.style.display = 'block';
-                    offlineMessage.style.display = 'none';
-                } else {
-                    onlineMessage.style.display = 'none';
-                    offlineMessage.style.display = 'block';
-                }
-            };
-
-            window.addEventListener('online', updateOnlineStatus);
-            window.addEventListener('offline', updateOnlineStatus);
-            updateOnlineStatus();
-        }
-
-        const video = document.getElementById('video');
-        const canvas = document.getElementById('canvas');
-        const context = canvas.getContext('2d');
-        const snapButton = document.getElementById('snap');
-        const saveButton = document.getElementById('save');
-
-        // Accéder à la webcam
-        navigator.mediaDevices.getUserMedia({
-                video: true
-            })
-            .then(function(stream) {
-                video.srcObject = stream;
-            })
-            .catch(function(error) {
-                console.log("Erreur lors de l'accès à la caméra: ", error);
+            document.addEventListener('DOMContentLoaded', () => {
+                monitorNetworkStatus();
             });
 
-        // Capture de la photo
-        snapButton.addEventListener('click', function() {
-            context.drawImage(video, 0, 0, 240, 180);
-            canvas.style.display = 'block'; // Afficher le canvas après la capture
-        });
 
-        // Enregistrer la photo
-        saveButton.addEventListener('click', function() {
-            canvas.toBlob(function(blob) {
-                let formData = new FormData();
-                formData.append('photo', blob, 'photo.png');
 
-                fetch("{{ route('photo.store') }}", {
-                        method: 'POST',
-                        body: formData,
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        }
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }, 'image/png');
-        });
-    </script>
-    <script src="{{ asset('js/empreinte.js') }}"></script>
-    <script src="{{ asset('js/socket.io.min.js') }}"></script>
-    <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/bootstrap.js?id=0a1f83aa0a6a7fd382c37453e3f11128"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/node-waves/node-waves.js?id=0ca80150f23789eaa9840778ce45fc5c"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
-    @notifyJs
-    @livewireScripts
+            function monitorNetworkStatus() {
+                const updateOnlineStatus = () => {
+                    const onlineMessage = document.getElementById('online-message');
+                    const offlineMessage = document.getElementById('offline-message');
+
+                    if (navigator.onLine) {
+                        onlineMessage.style.display = 'block';
+                        offlineMessage.style.display = 'none';
+                    } else {
+                        onlineMessage.style.display = 'none';
+                        offlineMessage.style.display = 'block';
+                    }
+                };
+
+                window.addEventListener('online', updateOnlineStatus);
+                window.addEventListener('offline', updateOnlineStatus);
+                updateOnlineStatus();
+            }
+
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const snapButton = document.getElementById('snap');
+            const saveButton = document.getElementById('save');
+
+            // Accéder à la webcam
+            navigator.mediaDevices.getUserMedia({
+                    video: true
+                })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                })
+                .catch(function(error) {
+                    console.log("Erreur lors de l'accès à la caméra: ", error);
+                });
+
+            // Capture de la photo
+            snapButton.addEventListener('click', function() {
+                context.drawImage(video, 0, 0, 240, 180);
+                saveButton.disabled = false;
+                canvas.style.display = 'block'; // Afficher le canvas après la capture
+            });
+
+            // Enregistrer la photo
+            saveButton.addEventListener('click', function() {
+                canvas.toBlob(function(blob) {
+                    let formData = new FormData();
+                    formData.append('photo', blob, 'photo.png');
+
+                    fetch("{{ route('photo.store') }}", {
+                            method: 'POST',
+                            body: formData,
+                            headers: {
+                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                            }
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error:', error);
+                        });
+                }, 'image/png');
+            });
+        </script>
+        <script src="{{ asset('js/empreinte.js') }}"></script>
+        <script src="{{ asset('js/socket.io.min.js') }}"></script>
+        <script src="{{ asset('js/loading.js') }}"></script>
+        <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/bootstrap.js?id=0a1f83aa0a6a7fd382c37453e3f11128"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/node-waves/node-waves.js?id=0ca80150f23789eaa9840778ce45fc5c"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
+        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
+        @notifyJs
+        @livewireScripts
 </body>
 
 </html>

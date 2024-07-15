@@ -289,11 +289,24 @@ class DonneesDemographiquesController extends Controller
                 );
     
                 DB::commit();
-                notify()->success('Individu enrégistré avec succès!', 'Succès');
+                notify()->success('Données démographiques enrégistrées avec succès!', 'Succès');
                 $request->session()->put('refEnr', $ref_Enr_short);
                 $request->session()->put('niu', $folderName);
                 $request->session()->put('nom', $data['nom']);
+                $request->session()->put('mail', $data['mail']);
+                $request->session()->put('nomJeuneFille', $data['nomJeuneFille']);
+                $request->session()->put('statutMatrimonial', $data['statutMatrimonial']);
+                $request->session()->put('nomPrenomsConjoint', $data['nomPrenomsConjoint']);
                 $request->session()->put('prenom', $data['prenom']);
+                $request->session()->put('sexe', $data['sexe']);
+                $request->session()->put('dateNaissance', $data['dateNaissance']);
+                $request->session()->put('lieuNaissance', $data['lieuNaissance']);
+                $request->session()->put('numPersonnePrevenir1', $data['numPersonnePrevenir1']);
+                $request->session()->put('numPersonnePrevenir2', $data['numPersonnePrevenir2']);
+                $request->session()->put('profession', $data['profession']);
+                $request->session()->put('quartierResidence', $data['quartierResidence']);
+                $request->session()->put('paysVilleResidence', $data['paysVilleResidence']);
+
                 return redirect()->route('dbForm.create');
             } catch (\Exception $e) {
     

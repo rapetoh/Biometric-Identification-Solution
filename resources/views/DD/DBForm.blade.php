@@ -19,6 +19,9 @@
 </head>
 
 <body>
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
 
     @include('notify::components.notify')
 
@@ -133,14 +136,22 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">2</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
+                <div style="margin: auto;">
+                    @if(session('refEnr'))
+                    <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>
+                    @endif
+                    @if(session('nom'))
+                    <span class="badge rounded-pill bg-label-info me-3">Nom de l'individu: {{session('nom')}}</span>
+                    @endif
+                    @if(session('prenom'))
+                    <span class="badge rounded-pill bg-label-info me-3">Prénom de l'individu: {{session('prenom')}}</span>
+                    @endif
+                </div>
                 <!-- Account -->
                 <div class="card-body pt-2">
                     <form id="fingerprintForm" style="max-width: 80%;" class="p-4" method="POST" action="{{ route('dbForm.store', ['pouce' => 'pouce','index' => 'index', 'majeur' => 'majeur', 'annulaire' => 'annulaire', 'auriculaire' => 'auriculaire']) }}">
-                    @csrf
-                        @if(session('refEnr'))
-                        {{session('refEnr')}}
-                        @endif
+                        @csrf
 
                         <div class="container">
                             <div style="margin-right: 90px;" class="columns-1">
@@ -242,12 +253,12 @@
                     allVisible = false;
                     console.log(icon.id)
                     console.log(window.getComputedStyle(icon).display)
-                    console.log("allv: "+allVisible);
+                    console.log("allv: " + allVisible);
                 }
             });
 
             submitButton.disabled = !allVisible;
-            console.log("sb.d: "+submitButton.disabled)
+            console.log("sb.d: " + submitButton.disabled)
         }
 
 
@@ -340,6 +351,7 @@
         }
     </script>
     <script src="{{ asset('js/empreinte.js') }}"></script>
+    <script src="{{ asset('js/loading.js') }}"></script>
     <script src="{{ asset('js/socket.io.min.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
