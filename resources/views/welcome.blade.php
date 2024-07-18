@@ -184,6 +184,7 @@
             <br>
 
             <div class="card mb-4">
+            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
                 <div class="card-body">
                     <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
                         @csrf
@@ -205,7 +206,7 @@
             <a href="">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <i class="fa-solid fa-user" style="margin-right: 25px"></i>This is some text within a card body.
+                        <i class="fa-solid fa-fingerprint fa-lg" style="margin-right: 25px; color: green;"></i>Service d'identification
                     </div>
                 </div>
             </a>

@@ -66,6 +66,14 @@ class DonneesDemographiquesController extends Controller
             'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
             'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
             'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+            'cniFile' => 'file|mimes:pdf|max:2048',
+            'passportFile' => 'file|mimes:pdf|max:2048',
+            'birthCertFile' => 'file|mimes:pdf|max:2048',
+            'marriageCertFile' => 'file|mimes:pdf|max:2048',
+            'nationalityCertFile' => 'file|mimes:pdf|max:2048',
+            'divorceCertFile' => 'file|mimes:pdf|max:2048',
+            'deathCertFile' => 'file|mimes:pdf|max:2048',
+
         ]);
 
 
@@ -80,7 +88,6 @@ class DonneesDemographiquesController extends Controller
 
 
 
-        notify()->success('Validation terminée avec succès!', 'Succès');
         $pieces_justificatives = [];
 
 
@@ -287,8 +294,16 @@ class DonneesDemographiquesController extends Controller
                         'idDDemo' => $DD->idDDemo,
                     ]
                 );
+
+                if($data['statutMatrimonial']!='Célibataire' && (!$request->hasFile('marriageCertFile') && !$request->hasFile('divorceCertFile') && !$request->hasFile('deathCertFile'))){
+                    notify()->error('Les pièces justificatives fournies ne sont pas en accords avec le staut Matrimonial', 'Erreur');
+                    return redirect()->back()->withErrors('Un minimum de 2 pièces justificatives doivent être soumises !');
+                }else{
+                    DB::commit();
+                    
+                }
     
-                DB::commit();
+                
                 notify()->success('Données démographiques enrégistrées avec succès!', 'Succès');
                 $request->session()->put('refEnr', $ref_Enr_short);
                 $request->session()->put('niu', $folderName);
@@ -300,7 +315,7 @@ class DonneesDemographiquesController extends Controller
                 $request->session()->put('prenom', $data['prenom']);
                 $request->session()->put('sexe', $data['sexe']);
                 $request->session()->put('dateNaissance', $data['dateNaissance']);
-                $request->session()->put('lieuNaissance', $data['lieuNaissance']);
+                $request->session()->put('lieuNaissance', $data['paysVilleNaissance']);
                 $request->session()->put('numPersonnePrevenir1', $data['numPersonnePrevenir1']);
                 $request->session()->put('numPersonnePrevenir2', $data['numPersonnePrevenir2']);
                 $request->session()->put('profession', $data['profession']);

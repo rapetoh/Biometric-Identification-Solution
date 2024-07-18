@@ -9,6 +9,8 @@ class SessionEnrolement extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'idSE';
+
     protected $fillable = [
         'est_validee', 'ref_enrolement', 'NIU', 'idAgent', 'idDDemo', 'idDBio'
     ];

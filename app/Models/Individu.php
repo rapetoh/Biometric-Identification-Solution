@@ -9,6 +9,8 @@ class Individu extends Model
 {
     use HasFactory;
 
+    protected $primaryKey = 'NIU';
+
     protected $fillable = [
         'NIU','nom', 'prenom', 'telephone'
     ];

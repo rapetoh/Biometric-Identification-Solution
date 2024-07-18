@@ -80,7 +80,7 @@ class GoogleController extends Controller
             $client->setAccessToken(session('google_access_token'));
             $driveService = new Drive($client);
     
-            $folderPath = storage_path('app/pièces_justificatives');
+            $folderPath = storage_path('app/validated');
             $this->uploadDirectory($driveService, $folderPath, null);
     
             notify()->success('Synchronisation réussie !','Succès');

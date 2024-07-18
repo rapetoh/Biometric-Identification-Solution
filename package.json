@@ -12,6 +12,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "puppeteer": "^22.13.1",
         "socket.io-client": "^4.7.5"
     }
 }
