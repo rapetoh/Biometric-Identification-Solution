@@ -35,19 +35,19 @@
   
   hr {
     border: none;
-    border-top: 3px solid var(--highlight-color);
+    border-top: 3px solid green;
     margin: 5px 0;
   }
   
   header {
-    background-color: var(--header-bg-color);
+    background-color: #cdffd3;
     padding: 15px;
     text-align: center;
-    border-bottom: 5px solid var(--highlight-color);
+    border-bottom: 5px solid green;
   }
   
   footer {
-    background-color: var(--footer-bg-color);
+    background-color: #a3f6ff;
     padding: 10px;
     text-align: center;
     font-size: 8pt;
@@ -64,14 +64,14 @@
   }
   
   th {
-    background-color: var(--table-header-bg-color);
-    color: var(--highlight-color);
+    background-color: #cdffd3;
+    color: black;
     padding: 10px;
     text-align: left;
   }
   
-  td {
-    border: 1px solid var(--table-border-color);
+  td style = "font-size: 17px; margin-bottom: 10px;" {
+    border: 1px solid white;
     padding: 8px;
     text-align: left;
   }
@@ -80,7 +80,7 @@
     margin-top: 10px;
     padding: 10px;
     background-color: #FFFFFF;
-    border-left: 5px solid var(--highlight-color);
+    border-left: 5px solid green;
   }
   
   .notes b, aside b {
@@ -93,8 +93,8 @@
       <circle cx="50%" cy="50%" r="40%" stroke="black" stroke-width="3" fill="black" />
     </svg>
     <h1>ID Togo - Récapitulatif d'Enregistrement</h1>
-    <p>Nom Prénom : {{$nom}} {{$prenom}}</p>
-    <p>NIU : {{$NIU}}</p>
+    <p>Nom Prénom : {{$nom?$nom:'--N/A--'}} {{$prenom?$prenom:'--N/A--'}}</p>
+    <p>NIU : {{$NIU?$NIU:'--N/A--'}}</p>
   </header>
   
   <main>
@@ -108,61 +108,62 @@
       </thead>
       <tbody>
         <tr>
-          <td>Date de naissance</td>
-          <td>{{$DOB}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Date de naissance</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$DOB?$DOB:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Sexe</td>
-          <td>{{$sexe}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Sexe</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$sexe?$sexe:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Nom de jeune fille</td>
-          <td>{{$njf}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Nom de jeune fille</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$njf?$njf:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Groupe sanguin</td>
-          <td>{{$GS}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Groupe sanguin</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$GS?$GS:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Adresse de résidence</td>
-          <td>{{$adresse_residence}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Adresse de résidence</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$adresse_residence?$adresse_residence:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Email</td>
-          <td>{{$mail}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Email</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$mail?$mail:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Téléphone</td>
-          <td>{{$tel1}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Téléphone</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$tel1?$tel1:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Personne à prévenir 1</td>
-          <td>{{$PAP1}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Personne à prévenir 1</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$PAP1?$PAP1:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Personne à prévenir 2</td>
-          <td>{{$PAP2}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Personne à prévenir 2</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$PAP2?$PAP2:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Pièces Justificatives</td>
-          <td>{{$pj}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Pièces Justificatives</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$pj?$pj:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Statut Matrimonial</td>
-          <td>{{$statut_matrimonial}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Statut Matrimonial</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$statut_matrimonial?$statut_matrimonial:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Nom prenom Conjoint</td>
-          <td>{{$npconjoint}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Nom prenom Conjoint</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$npconjoint?$npconjoint:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <tr>
-          <td>Profession</td>
-          <td>{{$profession}}</td>
+          <td style = "font-size: 17px; margin-bottom: 10px;">Profession</td style = "font-size: 17px; margin-bottom: 10px;">
+          <td style = "font-size: 17px; margin-bottom: 10px;">{{$profession?$profession:'--N/A--'}}</td style = "font-size: 17px; margin-bottom: 10px;">
         </tr>
         <!-- Other rows omitted for brevity -->
       </tbody>
     </table>
-  
+    <h2>Informations Biométriques: Enrégistrées</h2>
+    <h2>Prise de vue: Effectuée</h2><br>
     <div class="notes">
       <b>Notes</b>
       <p>Ce document est généré automatiquement et n'a besoin d'aucune signature.</p>

@@ -183,12 +183,12 @@
             <br>
             <br>
 
-            <div class="card mb-4">
-            <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
+            <div class="card mb-4" style="background-color: {{ $dircount!=0 ? 'white' : '#E5E5E5' }};">
+            <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
                 <div class="card-body">
                     <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
                         @csrf
-                        <button type="submit">
+                        <button type="submit" {{$dircount==0 ? 'disabled':''}}>
                             <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; margin-left: -145px; color: green;"></i>Synchroniser les données
                         </button>
                     </form>
@@ -238,9 +238,9 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ route('dvForm.create') }}">
-                <div class="card mb-4">
-                    <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
+            <a href="{{$count!=0 ? route('dvForm.create') : '#'}}">
+                <div class="card mb-4" style="background-color: {{ $count!=0 ? 'white' : '#E5E5E5' }};">
+                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count!=0 ? 'bg-danger' : '' }} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
                     <div class="card-body">
                         <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
                     </div>

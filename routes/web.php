@@ -60,7 +60,10 @@ Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('a
 
 Route::resource('dvForm', DVcontroller::class)->middleware('auth');
 
+Route::get('modal-page/{id}', [DVcontroller::class, 'showModalPage'])->name('modal.page');
+
 Route::get('/pdf/{iddemo}', [DVcontroller::class, 'generateAndPrintPdf'])->middleware('auth')->name('pdf.generate');
+Route::get('/generatePDF', [DVcontroller::class, 'generatePDF'])->middleware('auth');
 
 Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('auth');
 

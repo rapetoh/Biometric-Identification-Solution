@@ -43,6 +43,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'val' => [
+            'driver' => 'local',
+            'root' => storage_path('app/validated'),
+            'url' => env('APP_URL') . '/validated',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -79,6 +86,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('pièces_justificatives') => storage_path('app/pièces_justificatives'),
+        public_path('validated') => storage_path('app/validated'),
     ],
 
 ];

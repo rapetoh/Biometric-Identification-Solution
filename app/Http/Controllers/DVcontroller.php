@@ -20,37 +20,49 @@ class DVcontroller extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
-    public function generateAndPrintPdf(Request $request)
+    public function showModalPage($id)
     {
+        $item = DonneesDemographiques::findOrFail($id);
+        
+        return view('DD.modal_content', compact('item'));
+    }
 
-        $id = $request->query('iddemo');
 
-        $DD = DonneesDemographiques::findOrFail($id);
+    public function generatePDF()
+    {
+        $pdf = PDF::loadView('DD.test'); // Assurez-vous que cette vue existe et est simple
+        return $pdf->stream('simple.pdf');
+    }
+
+    public function generateAndPrintPdf($id)
+    {
+        $DD = DonneesDemographiques::find($id);
 
         $data = [
             'nom' => $DD->nom,
             'prenom' => $DD->prenom,
-            // 'sexe' => $request->query('sexe', '--'),
-            // 'NIU' => $request->query('NIU', '--'),
-            // 'DOB' => $request->query('DOB', '--'),
-            // 'GS' => $request->query('GS', '--'),
-            // 'adresse_residence' => $request->query('adresse_residence', '--'),
-            // 'mail' => $request->query('mail', '--'),
-            // 'tel1' => $request->query('tel1', '--'),
-            // 'PAP1' => $request->query('PAP1', '--'),
-            // 'PAP2' => $request->query('PAP2', '--'),
-            // 'pj' => $request->query('pj', '--'),
-            // 'statut_matrimonial' => $request->query('statut_matrimonial', '--'),
-            // 'npconjoint' => $request->query('npconjoint', '--'),
-            // 'profession' => $request->query('profession', '--'),
-            // 'njf' => $request->query('njf', '--'),
+            'sexe' => $DD->sexe,
+            'NIU' => $DD->NIU,
+            'DOB' => $DD->DOB,
+            'GS' => $DD->groupe_sanguin,
+            'adresse_residence' => $DD->quartier_residence . ', ' . $DD->pays_ville_residence,
+            'mail' => $DD->mail,
+            'tel1' => $DD->tel1 . ' - ' . $DD->tel2,
+            'PAP1' => $DD->nom_personne_a_prevenir1 . ' - ' . $DD->numero_personne_a_prevenir1,
+            'PAP2' => $DD->nom_personne_a_prevenir2 . ' - ' . $DD->numero_personne_a_prevenir2,
+            'pj' => $DD->pieces_justificatives,
+            'statut_matrimonial' => $DD->statut_matrimonial,
+            'npconjoint' => $DD->nom_prenom_conjoint,
+            'profession' => $DD->profession,
+            'njf' => $DD->nom_de_jeune_fille,
         ];
 
         // Generate HTML from Blade view
         $pdf = Pdf::loadView('DD.pdf', $data);
 
-        return $pdf->stream('document.pdf');
+        return response($pdf->stream())
+            ->header('Content-Type', 'application/pdf')
+            ->header('Content-Disposition', 'inline; filename="document.pdf"');
     }
     public function index()
     {
@@ -130,7 +142,7 @@ class DVcontroller extends Controller
 
                 DB::commit();
                 notify()->success('1 dossier validé', 'succès');
-                return redirect()->back();
+                return redirect()->route('modal.page', ['id' => $iddemo]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 notify()->error('La validaiton du dossier a échoué. ' . $e->getMessage() . '.', 'Erreur');
@@ -240,7 +252,7 @@ class DVcontroller extends Controller
 
                 DB::commit();
                 notify()->success('1 dossier validé', 'succès');
-                return redirect()->back();
+                return redirect()->route('modal-page', ['id' => $iddemo]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 notify()->error('La validaiton du dossier a échoué. ' . $e->getMessage() . '.', 'Erreur');
