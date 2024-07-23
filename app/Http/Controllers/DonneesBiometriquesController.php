@@ -61,7 +61,7 @@ class DonneesBiometriquesController extends Controller
                 'empreinte_annulaire'=>$cheminAnnulaire,
                 'empreinte_auriculaire'=>$cheminAuriculaire,
             ]
-            );
+        );
             DB::commit();
             notify()->success('Empreintes enrégistrées avec succès. ', 'Succès');
             return redirect()->route('photo');

@@ -47,11 +47,11 @@
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-                <li class="nav-item lh-1 me-3">
+                <!-- <li class="nav-item lh-1 me-3">
                     <button style=" border-radius: 13px; padding: 7px;">
                         <i class="fa-solid fa-file-invoice fa-beat fa-lg" style="color: green;"></i>
                     </button>
-                </li>
+                </li> -->
 
                 <li class="nav-item lh-1 me-3 online-message" id="online-message">
                     <div style=" border-radius: 13px; padding: 7px;">
@@ -203,7 +203,7 @@
                 </div>
             </a>
 
-            <a href="">
+            <a href="{{route('id.create')}}">
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fa-solid fa-fingerprint fa-lg" style="margin-right: 25px; color: green;"></i>Service d'identification

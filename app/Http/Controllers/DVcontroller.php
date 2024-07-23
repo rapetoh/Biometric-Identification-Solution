@@ -12,6 +12,8 @@ use App\Models\SessionEnrolement;
 use Spatie\Browsershot\Browsershot;  // Pour utiliser Browsershot
 use Response;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Session;
+
 
 class DVcontroller extends Controller
 {
@@ -23,7 +25,9 @@ class DVcontroller extends Controller
     public function showModalPage($id)
     {
         $item = DonneesDemographiques::findOrFail($id);
-        
+
+        Session::put('niu', $item->NIU);
+
         return view('DD.modal_content', compact('item'));
     }
 
@@ -33,6 +37,28 @@ class DVcontroller extends Controller
         $pdf = PDF::loadView('DD.test'); // Assurez-vous que cette vue existe et est simple
         return $pdf->stream('simple.pdf');
     }
+
+
+    public function storeCarte(Request $request)
+    {
+
+        $folderName = session('niu');
+
+        $storagePath = 'validated/' . $folderName;
+        try {
+
+            if ($request->hasFile('image')) {
+
+                $path = $request->file('image')->storeAs($storagePath, $request->file('image')->getClientOriginalName(), 'local');
+                return response()->json(['message' => 'carte enregistrée avec succès', 'path' => $path]);
+            } else {
+                return response()->json(['message' => 'Carte non enregistrée']);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Carte non enregistrée' . $e]);
+        }
+    }
+
 
     public function generateAndPrintPdf($id)
     {

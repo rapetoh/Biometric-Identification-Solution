@@ -7,6 +7,7 @@ use App\Http\Controllers\CentreEnrolementController;
 use App\Http\Controllers\DonneesDemographiquesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\IdController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
@@ -62,6 +63,8 @@ Route::resource('dvForm', DVcontroller::class)->middleware('auth');
 
 Route::get('modal-page/{id}', [DVcontroller::class, 'showModalPage'])->name('modal.page');
 
+Route::post('carteStore', [DVcontroller::class, 'storeCarte'])->name('carte.store');
+
 Route::get('/pdf/{iddemo}', [DVcontroller::class, 'generateAndPrintPdf'])->middleware('auth')->name('pdf.generate');
 Route::get('/generatePDF', [DVcontroller::class, 'generatePDF'])->middleware('auth');
 
@@ -69,8 +72,11 @@ Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('aut
 
 Route::resource('ce', CentreEnrolementController::class)->middleware('auth');
 
+Route::resource('id', IdController::class)->middleware('auth');
+
 Route::get('photo', [PhotoController::class, 'createPhoto'])->name('photo');
 Route::post('photo', [PhotoController::class, 'storePhoto'])->name('photo.store');
+Route::post('identity', [IdController::class, 'idtreatment'])->name('id.find');
 
 // Route::get('/pieces_justificatives/{filename}', function ($filename) {
 //     // Vérifier si l'utilisateur est authentifié

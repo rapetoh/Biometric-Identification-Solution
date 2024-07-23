@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\DonneesBiometriques;
 use App\Models\Individu;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+
 
 class PhotoController extends Controller
 {
@@ -45,6 +47,24 @@ class PhotoController extends Controller
 
 
                 notify()->success('Enrôlement de l\'Individu terminée avec succès !', 'Succès');
+                Session::forget([
+                    'refEnr',
+                    'niu',
+                    'nom',
+                    'mail',
+                    'nomJeuneFille',
+                    'statutMatrimonial',
+                    'nomPrenomsConjoint',
+                    'prenom',
+                    'sexe',
+                    'dateNaissance',
+                    'lieuNaissance',
+                    'numPersonnePrevenir1',
+                    'numPersonnePrevenir2',
+                    'profession',
+                    'quartierResidence',
+                    'paysVilleResidence',
+                ]);
                 //redirect()->route('home');
                 return response()->json(['message' => 'Photo enregistrée avec succès', 'path' => $path,'redirect' => route('home')]);
             }

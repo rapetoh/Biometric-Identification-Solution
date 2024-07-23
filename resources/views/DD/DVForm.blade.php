@@ -332,46 +332,46 @@
                                 @else
                                 <h1>{{ Storage::disk('pj')->exists($cniPath) }}</h1>
                                 @endif
-
+                                <br><br>
                                 @if (Storage::disk('pj')->exists($passportPath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($passportPath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 
                                 @if (Storage::disk('pj')->exists($adnPath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($adnPath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 
                                 @if (Storage::disk('pj')->exists($marriagePath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($marriagePath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 
                                 @if (Storage::disk('pj')->exists($nationalityCertPath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($nationalityCertPath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 
                                 @if (Storage::disk('pj')->exists($divorceCertPath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($divorceCertPath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 
                                 @if (Storage::disk('pj')->exists($deathCertPath))
                                 <div class="pdf-container">
                                     <embed src="{{ Storage::disk('pj')->url($deathCertPath) }}" type="application/pdf">
-                                </div>
+                                </div><br><br>
                                 @else
                                 @endif
 

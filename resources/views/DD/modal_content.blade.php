@@ -158,9 +158,9 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/idtogo.png') }}" style="width: 100px"></h5>
                     <form style="margin-right: 40px;" action="{{ route('dvForm.create') }}">
-                        <button type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer capturer le nécessaire avant de continuer.');">
-                    <i class="fa-solid fa-circle-check fa-xl" style="color: green;"></i>
-                    </button>
+                        <button id="downloadedVerificator" type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer capturer le nécessaire avant de continuer.');">
+                            <i class="fa-solid fa-circle-check fa-xl" style="color: green;"></i>
+                        </button>
                     </form>
                 </div>
                 <div class="modal-body">
@@ -187,7 +187,7 @@
                                                 <img style="border-radius: 1000px; width: 30px" src="{{ asset('img/empreinte-digitale.png') }}" alt="Description de l'image">
                                                 @endif
                                             </circle>
-                                            <p style="">{{substr( $item->NIU ,0, 4).'  -  '}}{{substr( $item->NIU, 4 , 4).'  -  '}}{{substr( $item->NIU, 8, 4).'  -  '}}{{substr( $item->NIU, 8, 5)}}</p>
+                                            <p style="">{{substr( $item->NIU ,0, 4).'  -  '}}{{substr( $item->NIU, 4 , 4).'  -  '}}{{substr( $item->NIU, 8, 4).'  -  '}}{{substr( $item->NIU, 12, 5)}}</p>
 
                                         </div>
                                         <div style="display: inline-flex; justify-content: space-between; align-items: center;">
@@ -239,40 +239,70 @@
     </div>
 
     <script>
-        // Fonction pour capturer l'élément HTML et le convertir en image
+        
+        var formAvailability = document.getElementById('downloadedVerificator');
+        formAvailability.disabled = true;
+
+
         document.addEventListener('DOMContentLoaded', function() {
-    var captureButton = document.getElementById('captureButton');
-    captureButton.addEventListener('click', function() {
-        captureAndSaveCard();
-    });
-});
+            var captureButton = document.getElementById('captureButton');
+            captureButton.addEventListener('click', function() {
+                captureAndSaveCard();
+            });
+        });
 
-function captureAndSaveCard() {
-    // Capture de la face avant
-    html2canvas(document.querySelector("#idcard .front")).then(canvas => {
-        saveAsImage(canvas, 'idCard-front.png');
-    });
+        function captureAndSaveCard() {
+            // Capture de la face avant
+            html2canvas(document.querySelector("#idcard .front")).then(canvas => {
+                saveAsImage(canvas, 'idCard-front.png');
+                sendImageToServer(canvas, 'idCard-front.png'); // Envoyer au serveur
+            });
 
-    const backCard = document.querySelector("#idcard .back");
-    backCard.style.transform = 'rotateY(0deg)';
+            const backCard = document.querySelector("#idcard .back");
+            backCard.style.transform = 'rotateY(0deg)';
 
-    // Capture de la face arrière
-    html2canvas(document.querySelector("#idcard .back")).then(canvas => {
-        saveAsImage(canvas, 'idCard-back.png');
-    });
+            // Capture de la face arrière
+            html2canvas(document.querySelector("#idcard .back")).then(canvas => {
+                saveAsImage(canvas, 'idCard-back.png');
+                sendImageToServer(canvas, 'idCard-back.png'); // Envoyer au serveur
+            });
 
-    backCard.style.transform = 'rotateY(-180deg)';
-}
+            backCard.style.transform = 'rotateY(-180deg)';
+        }
 
-function saveAsImage(canvas, filename) {
-    var image = canvas.toDataURL("image/png");
-    var link = document.createElement('a');
-    link.download = filename;
-    link.href = image;
-    document.body.appendChild(link); // Ajouter le lien au corps du document pour Firefox
-    link.click(); // Déclenche le téléchargement
-    document.body.removeChild(link); // Supprimer le lien lorsque terminé
-}
+        function saveAsImage(canvas, filename) {
+            var image = canvas.toDataURL("image/png");
+            var link = document.createElement('a');
+            link.download = filename;
+            link.href = image;
+            document.body.appendChild(link); // Ajouter le lien au corps du document pour Firefox
+            link.click(); // Déclencher le téléchargement
+            document.body.removeChild(link); // Supprimer le lien une fois terminé
+        }
+
+        function sendImageToServer(canvas, filename) {
+            canvas.toBlob(function(blob) {
+                var formData = new FormData();
+                formData.append('image', blob, filename);
+
+                // Mettez ici l'URL de votre endpoint Laravel
+                fetch("{{route('carte.store')}}", {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        formAvailability.disabled = false;
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }, 'image/png');
+        }
 
 
         function closeModal() {
@@ -284,6 +314,7 @@ function saveAsImage(canvas, filename) {
             $('#myModal').modal('show');
         });
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

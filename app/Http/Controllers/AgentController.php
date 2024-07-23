@@ -6,7 +6,9 @@ use App\Models\Agent;
 use App\Models\CentreEnrolement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Ramsey\Uuid\Uuid;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LoginMail;
 
 class AgentController extends Controller
 {
@@ -59,13 +61,21 @@ class AgentController extends Controller
         $admin = $request->has('Admin');
 
         $CE = CentreEnrolement::where('nom', $centreEnrolement);
+
+        $mdp = Uuid::uuid4();
+        $mdp_int = hexdec(substr($mdp, 0, 16));
+        $mdpString = (string) $mdp_int;
+
+
+
         try {
+
             Agent::create(
                 [
                     'nom' => $request->nom,
                     'prenom' => $request->prenom,
                     'mail' => $request->mail,
-                    'mdp' => bcrypt($request->tel1),
+                    'mdp' => bcrypt($mdpString),
                     'telephone' => $request->tel1,
                     'idCentre' => $CE->first()->idCentre,
                     'idRegion' => auth()->user()->idRegion,
@@ -73,6 +83,8 @@ class AgentController extends Controller
                     'domicile' => $request->adresse,
                 ]
             );
+
+            Mail::to($request->mail)->send(new LoginMail($mdpString,$request->nom));
 
             notify()->success('Utilisateur enregistré avec succès! Il est formellement exigé à tout agent de changer son mot de passe dès sa première connexion', 'Succès');
 
