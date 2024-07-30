@@ -16,7 +16,7 @@
 </head>
 
 <body>
-<div id="loader">
+    <div id="loader">
         <div class="spinner"></div>
     </div>
     @include('notify::components.notify')
@@ -84,7 +84,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-menu-end mt-3 py-2">
                         <li>
-    
+
                             <a class="dropdown-item pb-2 mb-1" href="{{ route('agents.editPass') }}">
                                 <div class="d-flex align-items-center">
                                     <div class="flex-shrink-0 me-2 pe-1">
@@ -173,7 +173,15 @@
     <div class="agents-list">
         <div class="card">
             <h5 class="card-header">Liste des agents -- Région: {{ auth()->user()->region->nom }}</h5>
+
             <div class="table-responsive text-nowrap">
+                <div class="search-box">
+                    <form id="search-form" style="margin-left: 16px;" action="{{route('searchAgent')}}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
+                        <input value="{{ isset($search)? $search : '' }}" type="text" name="search" class="input-search" placeholder="Rechercher agent ...">
+                    </form>
+                </div>
                 <table class="table">
                     <thead>
                         <tr>

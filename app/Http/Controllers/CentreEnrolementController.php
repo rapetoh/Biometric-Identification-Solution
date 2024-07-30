@@ -19,6 +19,22 @@ class CentreEnrolementController extends Controller
         return view('CE.CEList', compact('ces'));
     }
 
+    public function searchCE(Request $request)
+    {
+
+        $search = $request->search;
+
+        $ces = CentreEnrolement::where(function ($query) use ($search) {
+                $query->where('idCentre', 'LIKE', '%' . $search . '%')
+                    ->orWhere('nom', 'LIKE', '%' . $search . '%')
+                    ->orWhere('adresse', 'LIKE', '%' . $search . '%');
+            })
+            ->where('idRegion', auth()->user()->idRegion)
+            ->get();
+
+        return view('CE.CEList', compact('ces','search'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -65,7 +81,6 @@ class CentreEnrolementController extends Controller
             notify()->error('La création du CE a échoué. ' . $e->getMessage() . '.', 'Erreur');
             return redirect()->back()->withErrors($e->getMessage());
         }
-         
     }
 
     /**

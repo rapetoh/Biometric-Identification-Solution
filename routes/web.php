@@ -13,6 +13,7 @@ use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
 use App\Http\Controllers\DonneesBiometriquesController;
 use App\Http\Controllers\DVcontroller;
+use App\Http\Controllers\Pre_Enrôlement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -52,6 +53,14 @@ Route::post('logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::resource('agents', AgentController::class)->middleware('auth');
 
+
+Route::resource('Pre_Enrôlement', Pre_Enrôlement::class);
+
+
+Route::get('Pre_Enrôlement', [Pre_Enrôlement::class,'create']);
+
+Route::post('searchAgent', [AgentController::class, 'searchAgent'])->middleware('auth')->name('searchAgent');
+
 Route::controller(AgentController::class)->group(function(){
     Route::put('upPW', 'updatePass')->name('agents.updatePass');
     Route::get('edPW', 'editPass')->name('agents.editPass');
@@ -66,11 +75,17 @@ Route::get('modal-page/{id}', [DVcontroller::class, 'showModalPage'])->name('mod
 Route::post('carteStore', [DVcontroller::class, 'storeCarte'])->name('carte.store');
 
 Route::get('/pdf/{iddemo}', [DVcontroller::class, 'generateAndPrintPdf'])->middleware('auth')->name('pdf.generate');
+
+//Route::get('/printPDF_Pre_enrolement/{id}', [Pre_Enrôlement::class, 'printPDF'])->middleware('auth')->name('printPDF_Pre_enrolement');
+
+Route::get('/receipt/{receipt_id}',  [Pre_Enrôlement::class, 'receipt'])->name('PreEnrReceipt');
+
 Route::get('/generatePDF', [DVcontroller::class, 'generatePDF'])->middleware('auth');
 
 Route::resource('dbForm', DonneesBiometriquesController::class)->middleware('auth');
 
 Route::resource('ce', CentreEnrolementController::class)->middleware('auth');
+Route::post('searchCE', [CentreEnrolementController::class, 'searchCE'])->middleware('auth')->name('searchCE');
 
 Route::resource('id', IdController::class)->middleware('auth');
 

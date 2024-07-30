@@ -287,13 +287,13 @@ class DonneesDemographiquesController extends Controller
                     ]
                 );
     
-                SessionPreEnrolement::create(
-                    [
-                        'NIU' => $NIU_int,
-                        'ref_enrolement' => $ref_Enr_short,
-                        'idDDemo' => $DD->idDDemo,
-                    ]
-                );
+                // SessionPreEnrolement::create(
+                //     [
+                //         'NIU' => $NIU_int,
+                //         'ref_enrolement' => $ref_Enr_short,
+                //         'idDDemo' => $DD->idDDemo,
+                //     ]
+                // );
 
                 if($data['statutMatrimonial']!='Célibataire' && (!$request->hasFile('marriageCertFile') && !$request->hasFile('divorceCertFile') && !$request->hasFile('deathCertFile'))){
                     notify()->error('Les pièces justificatives fournies ne sont pas en accords avec le staut Matrimonial', 'Erreur');

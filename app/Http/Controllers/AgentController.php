@@ -26,6 +26,26 @@ class AgentController extends Controller
         return response()->view('agentsViews.agentsListForAdminRegion', compact('agents', 'agentRegion'));
     }
 
+    public function searchAgent(Request $request){
+
+        $search = $request->search;
+
+        $agents = Agent::with('centreEnrolement')
+        ->where(function ($query) use ($search) {
+            $query->where('idAgent', 'LIKE', '%' . $search . '%')
+                  ->orWhere('nom', 'LIKE', '%' . $search . '%')
+                  ->orWhere('prenom','LIKE', '%' . $search . '%')
+                  ->orWhere('mail', 'LIKE', '%' . $search . '%');
+        })
+        ->where('idRegion', auth()->user()->idRegion)
+        ->get();
+    
+
+        $agentRegion = Agent::with('region')->where('idAgent', auth()->user()->idAgent)->get();
+
+        return response()->view('agentsViews.agentsListForAdminRegion', compact('agents', 'agentRegion', 'search'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

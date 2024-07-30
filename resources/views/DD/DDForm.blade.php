@@ -18,7 +18,7 @@
 
 <body>
 
-<div id="loader">
+    <div id="loader">
         <div class="spinner"></div>
     </div>
     @include('notify::components.notify')
@@ -163,7 +163,7 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Démographiques du citoyen  &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Démographiques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
                     <form id="formAccountSettings" enctype="multipart/form-data" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">
@@ -274,11 +274,11 @@
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <select class="form-control @error('statutMatrimonial') is-invalid @enderror" id="statutMatrimonial" name="statutMatrimonial">
-                                        <<option value="">Sélectionner le statut matrimonial</option>
-                                            <option value="Célibataire" {{ old('statutMatrimonial') == 'Célibataire' ? 'selected' : '' }}>Célibataire</option>
-                                            <option value="Marié(e)" {{ old('statutMatrimonial') == 'Marié(e)' ? 'selected' : '' }}>Marié(e)</option>
-                                            <option value="Divorcé(e)" {{ old('statutMatrimonial') == 'Divorcé(e)' ? 'selected' : '' }}>Divorcé(e)</option>
-                                            <option value="Veuf(ve)" {{ old('statutMatrimonial') == 'Veuf(ve)' ? 'selected' : '' }}>Veuf(ve)</option>
+                                        <option value="">Sélectionner le statut matrimonial</option>
+                                        <option value="Célibataire" {{ old('statutMatrimonial') == 'Célibataire' ? 'selected' : '' }}>Célibataire</option>
+                                        <option value="Marié(e)" {{ old('statutMatrimonial') == 'Marié(e)' ? 'selected' : '' }}>Marié(e)</option>
+                                        <option value="Divorcé(e)" {{ old('statutMatrimonial') == 'Divorcé(e)' ? 'selected' : '' }}>Divorcé(e)</option>
+                                        <option value="Veuf(ve)" {{ old('statutMatrimonial') == 'Veuf(ve)' ? 'selected' : '' }}>Veuf(ve)</option>
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="statutMatrimonial">Statut matrimonial *</label>
                                     @error('statutMatrimonial')
@@ -473,7 +473,7 @@
                                     <input class="form-check-input" type="checkbox" id="passportCheckbox" name="passportCheckbox" value="checked" {{ old('passportCheckbox') == 'checked' ? 'checked' : '' }}>
                                     <label style="margin-left: 20px;" class="form-check-label" for="passportCheckbox">Passeport</label>
                                 </div>
-                                <div class="form-floating form-floating-outline" id="passportUploadDiv" style ="{{ old('passportCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
+                                <div class="form-floating form-floating-outline" id="passportUploadDiv" style="{{ old('passportCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
                                     <input type="file" class="form-control" id="passportFile" name="passportFile">
                                     <label for="passportFile">Téléchargez votre passeport</label>
                                     @error('passportFile')
