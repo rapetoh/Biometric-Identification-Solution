@@ -10,7 +10,7 @@ class SessionPreEnrolement extends Model
     use HasFactory;
 
     protected $fillable = [
-        'nom_individu', 'prenom_individu', 'telephone_individu', 'mail_individu', 'ref_enrolement', 'NIU', 'idDDemo'
+        'nom_individu', 'prenom_individu', 'telephone_individu1', 'telephone_individu2', 'mail_individu', 'ref_enrolement', 'NIU', 'idDDemo'
     ];
 
     public function individu()

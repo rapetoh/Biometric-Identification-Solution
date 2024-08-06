@@ -19,7 +19,7 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::with('centreEnrolement')->where('idRegion', auth()->user()->idRegion)->get();
+        $agents = Agent::with('centreEnrolement')->where('idRegion', auth()->user()->idRegion)->where('exist',1)->get();
 
         $agentRegion = Agent::with('region')->where('idAgent', auth()->user()->idAgent)->get();
 
@@ -38,6 +38,7 @@ class AgentController extends Controller
                   ->orWhere('mail', 'LIKE', '%' . $search . '%');
         })
         ->where('idRegion', auth()->user()->idRegion)
+        ->where('exist',1)
         ->get();
     
 
@@ -253,7 +254,11 @@ class AgentController extends Controller
     {
         try {
             $agent = Agent::findOrFail($id);
-            $agent->delete();
+            $agent->update(
+                [
+                    'exist'=> 0
+                ]
+            );
             notify()->success('Agent supprimé avec succès!', 'Succès');
             return redirect()->route('agents.index')->with('success', 'Agent supprimé avec succès.');
         } catch (\Illuminate\Database\QueryException $e) {

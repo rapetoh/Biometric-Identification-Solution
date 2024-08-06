@@ -4,10 +4,12 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\CentreEnrolementController;
+use App\Http\Controllers\SessionPreEnrolementController;
 use App\Http\Controllers\DonneesDemographiquesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\IdController;
+use App\Http\Controllers\Statistiques;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
@@ -56,10 +58,16 @@ Route::resource('agents', AgentController::class)->middleware('auth');
 
 Route::resource('Pre_Enrôlement', Pre_Enrôlement::class);
 
+Route::resource('Session_Pre_Enrollement', SessionPreEnrolementController::class);
 
 Route::get('Pre_Enrôlement', [Pre_Enrôlement::class,'create']);
 
+Route::get('pj/{ref}', [Pre_Enrôlement::class, 'pj']);
+
 Route::post('searchAgent', [AgentController::class, 'searchAgent'])->middleware('auth')->name('searchAgent');
+
+
+Route::post('searchPEFolder', [SessionPreEnrolementController::class, 'searchPEFolder'])->middleware('auth')->name('searchPEFolder');
 
 Route::controller(AgentController::class)->group(function(){
     Route::put('upPW', 'updatePass')->name('agents.updatePass');
@@ -76,7 +84,7 @@ Route::post('carteStore', [DVcontroller::class, 'storeCarte'])->name('carte.stor
 
 Route::get('/pdf/{iddemo}', [DVcontroller::class, 'generateAndPrintPdf'])->middleware('auth')->name('pdf.generate');
 
-//Route::get('/printPDF_Pre_enrolement/{id}', [Pre_Enrôlement::class, 'printPDF'])->middleware('auth')->name('printPDF_Pre_enrolement');
+Route::get('/printPDF_Pre_enrolement/{id}', [Pre_Enrôlement::class, 'printPDF_Pre_enrolement'])->middleware('auth')->name('printPDF_Pre_enrolement');
 
 Route::get('/receipt/{receipt_id}',  [Pre_Enrôlement::class, 'receipt'])->name('PreEnrReceipt');
 
@@ -92,6 +100,8 @@ Route::resource('id', IdController::class)->middleware('auth');
 Route::get('photo', [PhotoController::class, 'createPhoto'])->name('photo');
 Route::post('photo', [PhotoController::class, 'storePhoto'])->name('photo.store');
 Route::post('identity', [IdController::class, 'idtreatment'])->name('id.find');
+
+Route::get('statistiques', [Statistiques::class, 'displayStat'])->middleware('auth')->name('displayStat');
 
 // Route::get('/pieces_justificatives/{filename}', function ($filename) {
 //     // Vérifier si l'utilisateur est authentifié

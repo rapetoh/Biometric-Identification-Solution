@@ -14,7 +14,7 @@ class CentreEnrolementController extends Controller
      */
     public function index()
     {
-        $ces = CentreEnrolement::where('idRegion', auth()->user()->idRegion)->get();
+        $ces = CentreEnrolement::where('idRegion', auth()->user()->idRegion)->where('exist',1)->get();
 
         return view('CE.CEList', compact('ces'));
     }
@@ -30,6 +30,7 @@ class CentreEnrolementController extends Controller
                     ->orWhere('adresse', 'LIKE', '%' . $search . '%');
             })
             ->where('idRegion', auth()->user()->idRegion)
+            ->where('exist',1)
             ->get();
 
         return view('CE.CEList', compact('ces','search'));
@@ -153,7 +154,11 @@ class CentreEnrolementController extends Controller
     {
         try {
             $CE = CentreEnrolement::findOrFail($id);
-            $CE->delete();
+            $CE->update(
+                [
+                    'exist'=> 0
+                ]
+            );
             notify()->success('CE supprimé avec succès!', 'Succès');
             return redirect()->route('ce.index')->with('success', 'Agent supprimé avec succès.');
         } catch (\Illuminate\Database\QueryException $e) {

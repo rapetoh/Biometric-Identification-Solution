@@ -91,10 +91,9 @@ main {
 }
 
 .forms-wrap {
-  overflow-y: scroll;
   position: absolute;
   height: 100%;
-  width: 75%;
+  width: 45%;
   top: 0;
   left: 0;
   display: grid;
@@ -260,8 +259,8 @@ main.sign-up-mode .carousel {
 .carousel {
   position: absolute;
   height: 100%;
-  width: 25%;
-  left: 75%;
+  width: 55%;
+  left: 45%;
   top: 0;
   background-color: #ffe0d2;
   border-radius: 2rem;

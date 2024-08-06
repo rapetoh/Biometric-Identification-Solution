@@ -180,7 +180,7 @@
                                     @enderror
                                 </div>
                             </div>
-
+                            
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('prenom') is-invalid @enderror" value="{{ old('prenom') }}" id="prenom" name="prenom" placeholder="Prénom" />

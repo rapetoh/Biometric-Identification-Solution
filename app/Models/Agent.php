@@ -33,6 +33,7 @@ class Agent extends Authenticatable
         'isAdmin',
         'idCentre',
         'idRegion',
+        'exist'
     ];
 
     /**

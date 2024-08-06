@@ -13,15 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('agents', function (Blueprint $table) {
-            $table->id('idAgent');
+        Schema::create('Identifications', function (Blueprint $table) {
+            $table->id('idIDENT');
             $table->string('nom');
             $table->string('prenom');
-            $table->string('mail', 30)->unique();
-            $table->string('mdp');
-            $table->string('telephone', 15)->unique();
+            $table->string('NIU', 30);
+            $table->string('sexe');
+            $table->string('telephone', 15);
             $table->string('domicile');
-            //$table->boolean('exist');
+            $table->string('lieu_identification');
             $table->timestamps();
         });
     }
@@ -33,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('agents');
+        Schema::dropIfExists('Identifications');
     }
 };

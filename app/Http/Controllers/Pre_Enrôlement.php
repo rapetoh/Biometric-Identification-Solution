@@ -12,6 +12,8 @@ use App\Models\Individu;
 use App\Models\SessionEnrolement;
 use App\Models\SessionPreEnrolement;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\PreEnrollMail;
 
 class Pre_Enrôlement extends Controller
 {
@@ -22,7 +24,7 @@ class Pre_Enrôlement extends Controller
      */
     public function index()
     {
-        //
+        return 'ee' ;
     }
 
     /**
@@ -37,19 +39,38 @@ class Pre_Enrôlement extends Controller
 
 
 
-    public function printPDF_Pre_enrolement($id)
-    {
+    // public function printPDF_Pre_enrolement($id)
+    // {
+    //     $idArray = [
+    //         'id' => $id,
+    //     ];
+    //     $pdf = Pdf::loadView('PreEnrReceipt', $idArray);
 
-        $pdf = Pdf::loadView('PreEnrReceipt', $id);
-
-        return $pdf->download('Référence d\'enrôlement.pdf');
-    }
+    //     return $pdf->download('Référence.pdf');
+    // }
 
     public function receipt($receipt_id)
     {
-        $receipt = $receipt_id;
-        return view('PreEnr', compact('receipt'));
+        $id = $receipt_id;
+        return view('PreEnrReceipt', compact('id'));
     }
+
+
+    private function isConnectedToInternet()
+    {
+        $host = 'www.google.com'; // ou tout autre serveur distant
+        $port = 80; // port HTTP
+
+        $fp = @fsockopen($host, $port, $errno, $errstr, 10);
+
+        if ($fp) {
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -96,89 +117,101 @@ class Pre_Enrôlement extends Controller
             'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
         ]);
 
-        
+
+
 
         try {
-            DB::beginTransaction();
-            
-            Individu::create(
-                [
-                    'NIU' => $NIU_int,
-                    'nom' => $data['nom'],
-                    'prenom' => $data['prenom'],
-                    'telephone' => $data['tel1'],
-                ]
-            );
 
-            DonneesDemographiques::create(
-                [
-                    'NIU' => $NIU_int,
-                    'sexe' => $data['sexe'] == 'Masculin' ? 'M' :  'F',
-                    'nom' => $data['nom'],
-                    'prenom' => $data['prenom'],
-                    'tel1' => $data['tel1'],
-                    'tel2' => $data['tel2'],
-                    'mail' => $data['mail'],
-                    'numero_personne_a_prevenir1' => $data['numPersonnePrevenir1'],
-                    'numero_personne_a_prevenir2' => $data['numPersonnePrevenir2'],
-                    'nom_personne_a_prevenir1' => $data['nomPersonnePrevenir1'],
-                    'nom_personne_a_prevenir2' => $data['nomPersonnePrevenir2'],
-                    'DOB' => $data['dateNaissance'],
-                    'nom_prenom_conjoint' => $data['nomPrenomsConjoint'],
-                    'pays_ville_naissance' => $data['paysVilleNaissance'],
-                    'pays_ville_residence' => $data['paysVilleResidence'],
-                    'quartier_residence' => $data['quartierResidence'],
-                    'statut_matrimonial' => $data['statutMatrimonial'],
-                    'profession' => $data['profession'],
-                    'secteur_emploi' => $data['secteurEmploi'] === 'Autre' ? $data['autreSecteur'] : $data['secteurEmploi'],
-                    //'autre_secteur' => $data['autreSecteur'],
-                    'groupe_sanguin' => $data['groupeSanguin'],
-                    'pieces_justificatives' => 'Aucune',
-                    'ref_enrolement' => $ref_Enr_short,
-                    'idAgent' => 0,
-                    'nom_de_jeune_fille' => $data['nomJeuneFille'],
-                ]
-            );
+            $connected = $this->isConnectedToInternet();
 
-            DonneesBiometriques::create(
-                [
-                    'NIU' => $NIU_int,
-                    'ref_enrolement' => $ref_Enr_short,
-                    'idAgent' => 0,
-                ]
-            );
+            if ($connected) {
+                if ($request->has('mail')) {
+                    Mail::to($data['mail'])->send(new PreEnrollMail($ref_Enr_short));
+                }
 
-            $DB = DonneesBiometriques::where('ref_enrolement', $ref_Enr_short)->first();
+                DB::beginTransaction();
+                Individu::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'nom' => $data['nom'],
+                        'prenom' => $data['prenom'],
+                        'telephone' => $data['tel1'],
+                    ]
+                );
 
-            $DD = DonneesDemographiques::where('ref_enrolement', $ref_Enr_short)->first();
+                DonneesDemographiques::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'sexe' => $data['sexe'] == 'Masculin' ? 'M' :  'F',
+                        'nom' => $data['nom'],
+                        'prenom' => $data['prenom'],
+                        'tel1' => $data['tel1'],
+                        'tel2' => $data['tel2'],
+                        'mail' => $data['mail'],
+                        'numero_personne_a_prevenir1' => $data['numPersonnePrevenir1'],
+                        'numero_personne_a_prevenir2' => $data['numPersonnePrevenir2'],
+                        'nom_personne_a_prevenir1' => $data['nomPersonnePrevenir1'],
+                        'nom_personne_a_prevenir2' => $data['nomPersonnePrevenir2'],
+                        'DOB' => $data['dateNaissance'],
+                        'nom_prenom_conjoint' => $data['nomPrenomsConjoint'],
+                        'pays_ville_naissance' => $data['paysVilleNaissance'],
+                        'pays_ville_residence' => $data['paysVilleResidence'],
+                        'quartier_residence' => $data['quartierResidence'],
+                        'statut_matrimonial' => $data['statutMatrimonial'],
+                        'profession' => $data['profession'],
+                        'secteur_emploi' => $data['secteurEmploi'] === 'Autre' ? $data['autreSecteur'] : $data['secteurEmploi'],
+                        //'autre_secteur' => $data['autreSecteur'],
+                        'groupe_sanguin' => $data['groupeSanguin'],
+                        'pieces_justificatives' => 'Aucune',
+                        'ref_enrolement' => $ref_Enr_short,
+                        'idAgent' => 0,
+                        'nom_de_jeune_fille' => $data['nomJeuneFille'],
+                    ]
+                );
 
-            Log::info('DD: ' . $DD->idDDemo);
-            Log::info('DB: ' . $DB->idDBio);
+                DonneesBiometriques::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'ref_enrolement' => $ref_Enr_short,
+                        'idAgent' => 0,
+                    ]
+                );
 
-            SessionEnrolement::create(
-                [
-                    'NIU' => $NIU_int,
-                    'ref_enrolement' => $ref_Enr_short,
-                    'est_validee' => 0,
-                    'idAgent' => 0,
-                    'idDDemo' => $DD->idDDemo,
-                    'idDBio' => $DB->idDBio,
-                ]
-            );
+                $DB = DonneesBiometriques::where('ref_enrolement', $ref_Enr_short)->first();
 
-            SessionPreEnrolement::create(
-                [
-                    'nom_individu' => $data['nom'],
-                    'prenom_individu' => $data['prenom'],
-                    'mail_individu' => $data['mail'],
-                    'telephone_individu' => $data['tel1'] . ' - ' . $data['tel2'],
-                    'NIU' => $NIU_int,
-                    'ref_enrolement' => $ref_Enr_short,
-                    'idDDemo' => $DD->idDDemo,
-                ]
-            );
-            $this->printPDF_Pre_enrolement($ref_Enr_short);
-            DB::commit();
+                $DD = DonneesDemographiques::where('ref_enrolement', $ref_Enr_short)->first();
+
+                Log::info('DD: ' . $DD->idDDemo);
+                Log::info('DB: ' . $DB->idDBio);
+
+                SessionEnrolement::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'ref_enrolement' => $ref_Enr_short,
+                        'est_validee' => 0,
+                        'idAgent' => 0,
+                        'idDDemo' => $DD->idDDemo,
+                        'idDBio' => $DB->idDBio,
+                    ]
+                );
+
+                SessionPreEnrolement::create(
+                    [
+                        'nom_individu' => $data['nom'],
+                        'prenom_individu' => $data['prenom'],
+                        'mail_individu' => $data['mail'],
+                        'telephone_individu1' => $data['tel1'],
+                        'telephone_individu2' =>  $data['tel2'],
+                        'NIU' => $NIU_int,
+                        'ref_enrolement' => $ref_Enr_short,
+                        'idDDemo' => $DD->idDDemo,
+                    ]
+                );
+
+                DB::commit();
+            } else {
+                throw new \Exception('Pas de connexion internet !');
+            }
             notify()->success('Données démographiques enrégistrées avec succès!', 'Succès');
             return redirect()->route('PreEnrReceipt', ['receipt_id' => $ref_Enr_short]);
         } catch (\Exception $e) {

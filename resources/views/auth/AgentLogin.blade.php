@@ -59,10 +59,6 @@
 
                 <button style="background-color: green;" type="submit" value="Sign In" class="sign-btn">Se connecter</button>
 
-                <p class="text">
-                  Forgotten your password or you login datails?
-                  <a href="#">Get help</a> signing in
-                </p>
               </div>
             </form>
 

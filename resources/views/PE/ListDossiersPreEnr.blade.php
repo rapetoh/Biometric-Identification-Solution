@@ -16,7 +16,6 @@
 </head>
 
 <body>
-
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -42,16 +41,10 @@
                         <h4 style="color: green; font-weight: bold;">Togo</h4>
                     </div>
                 </a>
-
             </div>
             <!-- /Search -->
             <ul class="navbar-nav flex-row align-items-center ms-auto">
 
-                <!-- <li class="nav-item lh-1 me-3">
-                    <button style=" border-radius: 13px; padding: 7px;">
-                        <i class="fa-solid fa-file-invoice fa-beat fa-lg" style="color: green;"></i>
-                    </button>
-                </li> -->
 
                 <li class="nav-item lh-1 me-3 online-message" id="online-message">
                     <div style=" border-radius: 13px; padding: 7px;">
@@ -59,7 +52,6 @@
                     </div>
 
                 </li>
-                &nbsp;&nbsp;
 
                 <li class="nav-item lh-1 me-3 offline-message" id="offline-message">
                     <div style="border-radius: 13px; padding: 7px;">
@@ -73,12 +65,14 @@
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">ID: {{ auth()->user()->idAgent }}</p>
                     </div>
+
                 </li>
 
                 <li class="nav-item lh-1 me-3">
                     <div style=" background-color: rgb(198, 198, 198); border-radius: 13px; padding: 7px;">
                         <p style="font-weight: bold; ">Mail: {{ auth()->user()->mail }}</p>
                     </div>
+
                 </li>
 
                 <!-- User -->
@@ -176,109 +170,85 @@
 
     </nav>
 
-    <div class="container">
-        <div class="column">
-            <!-- Contenu de la première colonne -->
-            Tâches opérationnelles
-            <br>
-            <br>
+    <div class="agents-list">
+        <div class="card">
+            <h5 class="card-header" style="font-weight: bold;">Dossiers d'enrôlement</h5>
 
-            <div class="card mb-4" style="background-color: {{ $dircount!=0 ? 'white' : '#E5E5E5' }};">
-            <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
-                <div class="card-body">
-                    <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
+            <div class="table-responsive text-nowrap">
+                <div class="search-box">
+                    <form id="search-form" style="margin-left: 16px;" action="{{route('searchPEFolder')}}" method="POST">
                         @csrf
-                        <button type="submit" {{$dircount==0 ? 'disabled':''}}>
-                            <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; margin-left: -145px; color: green;"></i>Synchroniser les données
-                        </button>
+                        <button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
+                        <input value="{{ isset($search)? $search : '' }}" type="text" name="search" class="input-search" placeholder="Rechercher référence ...">
                     </form>
                 </div>
-            </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Référence d'enrôlement</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Sexe</th>
+                            <th>Date de naissance</th>
+                            <th>Mail</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-border-bottom-0">
+                        @foreach ($dossiers as $dossier)
+                        <a href="{{url('pj/'.$dossier->ref_enrolement)}}">
+                            <tr>
+                                <td style="color: green; font-weight: 600;">
+                                    {{ $dossier->ref_enrolement }}
+                                </td>
+                                <td>
+                                    <span class="fw-medium">{{ $dossier->donneesDemographiques->nom ? $dossier->donneesDemographiques->nom : 'Non spécifiée' }}</span>
+                                </td>
+                                <td>
+                                    {{ $dossier->donneesDemographiques->prenom ? $dossier->donneesDemographiques->prenom : 'Non spécifiée' }}
+                                </td>
+                                <td>
+                                    {{ $dossier->donneesDemographiques->tel1 ? $dossier->donneesDemographiques->sexe : 'Non spécifiée' }}
+                                </td>
+                                <td>
+                                {{ $dossier->donneesDemographiques->tel1 ? $dossier->donneesDemographiques->DOB : 'Non spécifiée' }}
+                                </td>
+                                <td>
+                                <span class="badge rounded-pill bg-label-danger me-1">{{ $dossier->donneesDemographiques->mail ? $dossier->donneesDemographiques->mail : 'Non spécifiée' }}</span>
+                                </td>
+                                <!-- <td>
+                                    @if($dossier->isAdmin == 1)
+                                    <span class="badge rounded-pill bg-label-info me-1">Admin</span>
+                                    @else
+                                    <span class="badge rounded-pill bg-label-danger me-1">Non Admin</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    {{ $dossier->centreEnrolement ? $dossier->centreEnrolement->nom : 'Non spécifiée' }}
+                                </td> -->
+                                <td>
+                                    <div class="dropdown">
+                                        <button type="button" class="btn m-auto dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                                        <div class="dropdown-menu">
+                                            <a href=""> <i style="color: green;" class="fa-solid fa-pencil ms-4 me-2"></i>Modifier</a>
+                                            <form action="" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet agent ?');"><i style="color: red;" class="fa-solid fa-trash me-2"></i> Suppprimer</a></button>
+                                            </form>
 
-            <a href="{{$count_dossier_pre_enr!=0 ? route('Session_Pre_Enrollement.index') : '#'}}">
-                <div class="card mb-4" style="background-color: {{ $count_dossier_pre_enr!=0 ? 'white' : '#E5E5E5' }};">
-                <span class="flex-shrink-0 badge badge-center rounded-pill {{$count_dossier_pre_enr!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count_dossier_pre_enr}}</span>
-                    <div class="card-body">
-                        <i class="fa-solid fa-folder-closed" style="margin-right: 25px; color: green;"></i>Dossiers de pré-enrôlement
-                    </div>
-                </div>
-            </a>
 
-            <a href="{{route('id.create')}}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-fingerprint fa-lg" style="margin-right: 25px; color: green;"></i>Service d'identification
-                    </div>
-                </div>
-            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </a>
+                        @endforeach
 
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                    <i class="fa-solid fa-face-smile fa-lg" style="margin-right: 25px; color: green;"></i>Reconnaissance faciale
-                    </div>
-                </div>
-            </a>
 
-        </div>
-        <div class="column">
-            <!-- Contenu de la deuxième colonne -->
-            Tâches d'inscription
-            <br>
-            <br>
-            <a href="{{ route('ddForm.create') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-address-card" style="margin-right: 25px; color: green;"></i>Nouvelle inscription
-                    </div>
-                </div>
-            </a>
-            <a href="{{ route('photo') }}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
-                    </div>
-                </div>
-            </a>
-            <a href="">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-person-circle-question" style="margin-right: 25px; color: green;"></i>Dédoublonage
-                    </div>
-                </div>
-            </a>
-            <a href="{{$count!=0 ? route('dvForm.create') : '#'}}">
-                <div class="card mb-4" style="background-color: {{ $count!=0 ? 'white' : '#E5E5E5' }};">
-                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count!=0 ? 'bg-danger' : '' }} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
-                    <div class="card-body">
-                        <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
-                    </div>
 
-                </div>
-            </a>
-            <a href="{{route('displayStat')}}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Statistiques
-                    </div>
-                </div>
-            </a>
-        </div>
-        <div class="column">
-            <hr style="margin: 20px;">
-            Informations
-            <!-- <br>
-            <br> -->
-            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">CE: {{auth()->user()->centreEnrolement->nom}}</span>
-            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">Commune: {{auth()->user()->centreEnrolement->commune}}</span>
-            <hr style="margin: 20px;">Contacts Administrateurs - Région: <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">{{ auth()->user()->region->nom }}</span> <br>
-            <br>
-            <div class="row">
-                @foreach ($adminAgents as $adminAgent)
-                <H5 style="font-size: 10px;">{{ $loop->index+1 }} -- Nom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->nom}} </span> Prénom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->prenom}} </span>Contact: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->telephone}}</span></H5>
-                <H5 style="font-size: 10px;"></H5>
-                <H5 style="font-size: 10px;"></H5><br><br>
-                @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
