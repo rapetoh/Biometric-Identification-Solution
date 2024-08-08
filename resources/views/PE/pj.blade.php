@@ -135,10 +135,10 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-camera fa-lg  "></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">Completer le dossier de pré-enrôlement -- Pièces Justificatives &nbsp;<i style="color: green;" class="fa-solid fa-file-invoice fa-lg  "></i></h4>
                 <div style="margin: auto;">
                     @if(session('refEnr'))
-                    <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>
+                    <span class="badge rounded-pill bg-label-danger me-3">{{session('refEnr')}}</span>
                     @endif
                     @if(session('nom'))
                     <span class="badge rounded-pill bg-label-info me-3">Nom de l'individu: {{session('nom')}}</span>
@@ -150,7 +150,7 @@
                     <span class="badge rounded-pill bg-label-info me-3">Sexe: {{session('prenom')}}</span>
                     @endif
                     @if(session('statutMatrimonial'))
-                    <span class="badge rounded-pill bg-label-info me-3">Statut matrimonial: {{session('prenom')}}</span>
+                    <span class="badge rounded-pill bg-label-info me-3">Statut matrimonial: {{session('statutMatrimonial')}}</span>
                     @endif
                 </div>
                 <!-- Account -->
@@ -160,107 +160,111 @@
 
                     <div class="container">
                         <div class="column" style="margin: auto;">
-                            <form method="POST" action="">
+                            <form method="POST" action="{{route('Session_Pre_Enrollement.store')}}">
                                 @csrf
-                                <div class="col-md-4">
-                                    <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives *</h6><br>
+                                <div class="row">
+                                    <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives *</h6><br><br><br>
                                     <!-- CNI -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="cniCheckbox" name="cniCheckbox" value="checked" {{ old('cniCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="cniCheckbox">CNI</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="cniUploadDiv" style="{{ old('cniCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="cniFile" name="cniFile">
-                                        <label for="cniFile">Téléchargez votre CNI</label>
-                                        @error('cniFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                    <div class="row">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="cniCheckbox" name="cniCheckbox" value="checked">
+                                            <label style="margin-left: 20px;" class="form-check-label" for="cniCheckbox">CNI</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="cniUploadDiv">
+                                            <input type="file" class="form-control @error('cniFile') is-invalid @enderror"  id="cniFile" name="cniFile">
+                                            <label for="cniFile">Téléchargez votre CNI</label>
+                                            @error('cniFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                    <!-- Passeport -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="passportCheckbox" name="passportCheckbox" value="checked" {{ old('passportCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="passportCheckbox">Passeport</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="passportUploadDiv" style="{{ old('passportCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="passportFile" name="passportFile">
-                                        <label for="passportFile">Téléchargez votre passeport</label>
-                                        @error('passportFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                        <!-- Passeport -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="passportCheckbox" name="passportCheckbox" value="checked">
+                                            <label style="margin-left: 20px;" class="form-check-label" for="passportCheckbox">Passeport</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="passportUploadDiv">
+                                            <input type="file" class="form-control @error('passportFile') is-invalid @enderror" id="passportFile" name="passportFile">
+                                            <label for="passportFile">Téléchargez votre passeport</label>
+                                            @error('passportFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                    <!-- Acte de Naissance -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="birthCertCheckbox" name="birthCertCheckbox" value="checked" {{ old('birthCertCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="birthCertCheckbox">Acte de naissance</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="birthCertUploadDiv" style="{{ old('birthCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="birthCertFile" name="birthCertFile">
-                                        <label for="birthCertFile">Téléchargez votre acte de naissance</label>
-                                        @error('birthCertFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                        <!-- Acte de Naissance -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="birthCertCheckbox" name="birthCertCheckbox" value="checked">
+                                            <label style="margin-left: 20px;" class="form-check-label" for="birthCertCheckbox">Acte de naissance</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="birthCertUploadDiv">
+                                            <input type="file" class="form-control @error('birthCertFile') is-invalid @enderror" id="birthCertFile" name="birthCertFile">
+                                            <label for="birthCertFile">Téléchargez votre acte de naissance</label>
+                                            @error('birthCertFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                    <!-- Certificat de Mariage -->
-                                    @if(session('statutMatrimonial')=='Marié(e)')
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="marriageCertCheckbox" name="marriageCertCheckbox" value="checked" {{ old('marriageCertCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="marriageCertCheckbox">Certificat de mariage</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="marriageCertUploadDiv" style="{{ old('marriageCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="marriageCertFile" name="marriageCertFile">
-                                        <label for="marriageCertFile">Téléchargez votre certificat de mariage</label>
-                                        @error('marriageCertFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    @endif
+                                        <!-- Certificat de Mariage -->
+                                        @if(session('statutMatrimonial')=='Marié(e)')
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="marriageCertCheckbox" name="marriageCertCheckbox" value="checked">
+                                            <label style="margin-left: 20px;" class="form-check-label" for="marriageCertCheckbox">Certificat de mariage</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="marriageCertUploadDiv">
+                                            <input type="file" class="form-control @error('marriageCertFile') is-invalid @enderror" id="marriageCertFile" name="marriageCertFile">
+                                            <label for="marriageCertFile">Téléchargez votre certificat de mariage</label>
+                                            @error('marriageCertFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        @endif
 
-                                    <!-- Certificat de Nationalité -->
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="nationalityCertCheckbox" name="nationalityCertCheckbox" value="checked" {{ old('nationalityCertCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="nationalityCertCheckbox">Certificat de nationalité</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="nationalityCertUploadDiv" style="{{ old('nationalityCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="nationalityCertFile" name="nationalityCertFile">
-                                        <label for="nationalityCertFile">Téléchargez votre certificat de nationalité</label>
-                                        @error('nationalityCertFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                                        <!-- Certificat de Nationalité -->
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="nationalityCertCheckbox" name="nationalityCertCheckbox" value="checked" >
+                                            <label style="margin-left: 20px;" class="form-check-label" for="nationalityCertCheckbox">Certificat de nationalité</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="nationalityCertUploadDiv">
+                                            <input type="file" class="form-control @error('nationalityCertFile') is-invalid @enderror" id="nationalityCertFile" name="nationalityCertFile">
+                                            <label for="nationalityCertFile">Téléchargez votre certificat de nationalité</label>
+                                            @error('nationalityCertFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
 
-                                    <!-- Certificat de Divorce -->
-                                    @if(session('statutMatrimonial')=='Divorcé(e)')
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="divorceCertCheckbox" name="divorceCertCheckbox" value="checked" {{ old('divorceCertCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="divorceCertCheckbox">Certificat de divorce</label>
-                                    </div>
-                                    <div class="form-floating form-floating-outline" id="divorceCertUploadDiv" style="{{ old('divorceCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="divorceCertFile" name="divorceCertFile">
-                                        <label for="divorceCertFile">Téléchargez votre certificat de divorce</label>
-                                        @error('divorceCertFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    @endif
+                                        <!-- Certificat de Divorce -->
+                                        @if(session('statutMatrimonial')=='Divorcé(e)')
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="divorceCertCheckbox" name="divorceCertCheckbox" value="checked">
+                                            <label style="margin-left: 20px;" class="form-check-label" for="divorceCertCheckbox">Certificat de divorce</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="divorceCertUploadDiv">
+                                            <input type="file" class="form-control @error('divorceCertFile') is-invalid @enderror" id="divorceCertFile" name="divorceCertFile">
+                                            <label for="divorceCertFile">Téléchargez votre certificat de divorce</label>
+                                            @error('divorceCertFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        @endif
 
-                                    <!-- Certificat de Décès du Conjoint -->
-                                    @if(session('statutMatrimonial')=='Veuf(ve)')
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="deathCertCheckbox" name="deathCertCheckbox" value="checked" {{ old('deathCertCheckbox') == 'checked' ? 'checked' : '' }}>
-                                        <label style="margin-left: 20px;" class="form-check-label" for="deathCertCheckbox">Certificat de décès du conjoint</label>
+                                        <!-- Certificat de Décès du Conjoint -->
+                                        @if(session('statutMatrimonial')=='Veuf(ve)')
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="deathCertCheckbox" name="deathCertCheckbox" value="checked" >
+                                            <label style="margin-left: 20px;" class="form-check-label" for="deathCertCheckbox">Certificat de décès du conjoint</label>
+                                        </div>
+                                        <div class="form-floating form-floating-outline" id="deathCertUploadDiv" >
+                                            <input type="file" class="form-control @error('deathCertFile') is-invalid @enderror" id="deathCertFile" name="deathCertFile">
+                                            <label for="deathCertFile">Téléchargez le certificat de décès du conjoint</label>
+                                            @error('deathCertFile')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        @endif
                                     </div>
-                                    <div class="form-floating form-floating-outline" id="deathCertUploadDiv" style="{{ old('deathCertCheckbox') == 'checked' ? 'display: block;' : 'display: none;' }}">
-                                        <input type="file" class="form-control" id="deathCertFile" name="deathCertFile">
-                                        <label for="deathCertFile">Téléchargez le certificat de décès du conjoint</label>
-                                        @error('deathCertFile')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    @endif
                                 </div>
+                                <br><br>
+                                <button type="submit" style="background-color: green;" class="btn btn-primary me-2">VALIDER</button>
                             </form>
                         </div>
                     </div>
@@ -300,22 +304,38 @@
                 updateOnlineStatus();
             }
             document.addEventListener('DOMContentLoaded', function() {
-                function toggleUploadDiv(checkboxId, divId) {
-                    const checkbox = document.getElementById(checkboxId);
-                    const div = document.getElementById(divId);
-                    checkbox.addEventListener('change', function() {
-                        div.style.display = this.checked ? 'block' : 'none';
-                    });
-                }
+    function toggleUploadDiv(checkboxId, divId) {
+        const checkbox = document.getElementById(checkboxId);
+        const div = document.getElementById(divId);
 
-                toggleUploadDiv('cniCheckbox', 'cniUploadDiv');
-                toggleUploadDiv('passportCheckbox', 'passportUploadDiv');
-                toggleUploadDiv('birthCertCheckbox', 'birthCertUploadDiv');
-                toggleUploadDiv('marriageCertCheckbox', 'marriageCertUploadDiv');
-                toggleUploadDiv('nationalityCertCheckbox', 'nationalityCertUploadDiv');
-                toggleUploadDiv('divorceCertCheckbox', 'divorceCertUploadDiv');
-                toggleUploadDiv('deathCertCheckbox', 'deathCertUploadDiv');
-            });
+        // Vérifiez que les éléments existent
+        if (!checkbox || !div) {
+            console.error(`Éléments introuvables pour les IDs : ${checkboxId}, ${divId}`);
+            return;
+        }
+
+        console.log(`Initial state for ${checkboxId}: ${checkbox.checked}`);
+
+        // Gestion de l'événement de changement
+        checkbox.addEventListener('change', function() {
+            div.style.display = this.checked ? 'block' : 'none';
+            console.log(`Changed state for ${checkboxId}: ${this.checked}`);
+        });
+
+        // Réglage initial de l'état d'affichage sur le chargement de la page
+        div.style.display = checkbox.checked ? 'block' : 'none';
+    }
+
+    // Appel de la fonction pour chaque case à cocher et div associée
+    toggleUploadDiv('cniCheckbox', 'cniUploadDiv');
+    toggleUploadDiv('passportCheckbox', 'passportUploadDiv');
+    toggleUploadDiv('birthCertCheckbox', 'birthCertUploadDiv');
+    toggleUploadDiv('marriageCertCheckbox', 'marriageCertUploadDiv');
+    toggleUploadDiv('nationalityCertCheckbox', 'nationalityCertUploadDiv');
+    toggleUploadDiv('divorceCertCheckbox', 'divorceCertUploadDiv');
+    toggleUploadDiv('deathCertCheckbox', 'deathCertUploadDiv');
+});
+
         </script>
         <script src="{{ asset('js/empreinte.js') }}"></script>
         <script src="{{ asset('js/socket.io.min.js') }}"></script>

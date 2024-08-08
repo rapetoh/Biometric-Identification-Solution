@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
+    <link rel="stylesheet" href="{{ asset('css/aos.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/solid.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/empreinte.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/fontawesome.css') }}" />
@@ -380,38 +381,52 @@
 
     <div class="main-cards" style="width: 94%;" style="color: white">
 
+
+
         <div class="thegroup">
+
+<!-- <ul>
+    @foreach($regions as $region)
+        <li>
+            {{ $region }} :
+            <ul>
+                <li>Adultes : {{ $adultesPerRegion[$region] }}</li>
+                <li>Mineurs : {{ $mineursPerRegion[$region] }}</li>
+            </ul>
+        </li>
+    @endforeach
+</ul> -->
             <div class="subgroup" style="margin-bottom:18px;">
-                <div class="card degrade" style=" margin-right:18px; height:100px; background-color: green ;border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="100" style=" margin-right:18px; height:100px; background-color: green ;border-radius: 15px; color: white">
                     <div class="card-inner">
                         <h6 style="color: white; font-size: 11.5px; ">Total Enrôlements </h6>
                         <span class=""></span>
                     </div>
-                    <h1 style="font-size: 40px; font-weight: 500;">249 <i class="fa-solid fa-id-card fa-sm" style="color: #ffffff;"></i></h1>
+                    <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_enr?$nbre_enr:'Error'}} <i class="fa-solid fa-id-card fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" style=" margin-right:18px; height:100px; background-color: red ; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="200" style=" margin-right:18px; height:100px; background-color: red ; border-radius: 15px; color: white">
                     <div class="card-inner">
                         <h3 style="color: white; font-size: 11.5px;">Total Agents</h3>
                         <span class=""></span>
                     </div>
-                    <h1 style="font-size: 40px; font-weight: 500;">178 <i class="fa-solid fa-users fa-sm" style="color: #ffffff;"></i></h1>
+                    <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_agts?$nbre_agts:'Error'}} <i class="fa-solid fa-users fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" style=" margin-right:18px; height:100px; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="300" style=" margin-right:18px; height:100px; border-radius: 15px; color: white">
                     <div class="card-inner">
                         <h3 style="color: white; font-size: 11.5px;">Total CE</h3>
                         <span class=""></span>
                     </div>
-                    <h1 style="font-size: 40px; font-weight: 500;">24 <i class="fa-solid fa-building fa-sm" style="color: #ffffff;"></i></h1>
+                    <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_CE?$nbre_CE:'Error'}} <i class="fa-solid fa-building fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" style=" height:100px; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="400" style=" height:100px; border-radius: 15px; color: white">
                     <div class="card-inner">
                         <h3 style="color: white; font-size: 11.5px;">Total dossiers de Pré-enrôlement</h3>
                         <span class=""></span>
                     </div>
-                    <h1 style="font-size: 40px; font-weight: 500;">17 <i class="fa-regular fa-folder-open fa-sm" style="color: #ffffff;"></i></h1>
+                    <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_SPE?$nbre_SPE:'Error'}} <i class="fa-regular fa-folder-open fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
             </div>
@@ -429,20 +444,26 @@
         </div>
 
     </div>
-
+<div style="margin:auto; display:flex; flex-direction:column; justify-content: center;">
+    <hr style="width: 80%; margin: auto;">
+    <p style="text-align:center; margin-top: 10px; margin-bottom: 10px; color: green">Statut Matrimonial - Sexe - Secteur d'activité</p>
+    <hr style="width: 80%; margin: auto;">
+    </div>
     <div class="charts" style="max-width: 94%" style="color: green;">
+    
+    
 
-        <div class="charts-card" style=" background-color:#F9F9F9; border-radius: 15px;">
+        <div class="charts-card" style=" background-color:#F9F9F9; border-radius: 15px;" data-aos="fade-up">
             <h2 class="chart-title">Répartition en fonction du Statut Matrimonial</h2>
             <div id="bar-chart"></div>
         </div>
 
-        <div class="charts-card" style="border-radius: 15px;">
+        <div class="charts-card" style="border-radius: 15px;" data-aos="fade-up" data-aos-delay="100">
             <h2 class="chart-title">Répartition en fonction du sexe</h2>
             <div id="pie-chart"></div>
         </div>
 
-        <div class="charts-card" style="border-radius: 15px;">
+        <div class="charts-card" style="border-radius: 15px;" data-aos="fade-up" data-aos-delay="200">
             <h2 class="chart-title">Répartition par Secteur d'activité</h2>
             <div id="progress-bar"></div>
         </div>
@@ -451,7 +472,7 @@
 
 
 
-        <div class="charts-card" style="border-radius: 15px;">
+        <div class="charts-card" style="border-radius: 15px;" data-aos="fade-up" data-aos-delay="300">
             <h2 class="chart-title">Répartition par Groupe Sanguin</h2><br>
             <div id="doughnut-chart"></div>
         </div>
@@ -461,7 +482,7 @@
         <!-- Custom JS -->
         <script>
             // SIDEBAR TOGGLE
-
+            
             let sidebarOpen = false;
             const sidebar = document.getElementById('sidebar');
 
@@ -484,8 +505,8 @@
             // BAR CHART
             const barChartOptions = {
                 series: [{
-                    data: [1000000, 2000000, 1000000, 7000000],
-                    name: 'Products',
+                    data: ["{{isset($st_matri['Célibataire'])?$st_matri['Célibataire']:0}}"+'%', "{{isset($st_matri['Marié(e)'])?$st_matri['Marié(e)']:0}}"+'%', "{{isset($st_matri['Veuf(ve)'])?$st_matri['Veuf(ve)']:0}}"+'%', "{{isset($st_matri['Divorcé(e)'])?$st_matri['Divorcé(e)']:0}}"+'%'],
+                    name: 'Pourcentage',
                 }, ],
                 chart: {
                     type: 'bar',
@@ -563,7 +584,7 @@
                 },
                 yaxis: {
                     title: {
-                        text: 'Nombre',
+                        text: 'Pourcentage',
                         style: {
                             color: 'green',
                         },
@@ -594,11 +615,37 @@
             const areaChartOptions = {
                 series: [{
                         name: 'Enrôlements',
-                        data: [200, 250, 300, 350, 300, 250, 300, 200], // Exemple de données mensuelles pour les enrôlements
+                        data: [
+    "{{isset($sessionsParMois[1])?$sessionsParMois[1]['nombre']:0}}",
+    "{{isset($sessionsParMois[2])?$sessionsParMois[2]['nombre']:0}}",
+    "{{isset($sessionsParMois[3])?$sessionsParMois[3]['nombre']:0}}",
+    "{{isset($sessionsParMois[4])?$sessionsParMois[4]['nombre']:0}}",
+    "{{isset($sessionsParMois[5])?$sessionsParMois[5]['nombre']:0}}",
+    "{{isset($sessionsParMois[6])?$sessionsParMois[6]['nombre']:0}}",
+    "{{isset($sessionsParMois[7])?$sessionsParMois[7]['nombre']:0}}",
+    "{{isset($sessionsParMois[8])?$sessionsParMois[8]['nombre']:0}}",
+    "{{isset($sessionsParMois[9])?$sessionsParMois[9]['nombre']:0}}",
+    "{{isset($sessionsParMois[10])?$sessionsParMois[10]['nombre']:0}}",
+    "{{isset($sessionsParMois[11])?$sessionsParMois[11]['nombre']:0}}",
+    "{{isset($sessionsParMois[12])?$sessionsParMois[12]['nombre']:0}}"
+]
                     },
                     {
                         name: 'Pré-enrôlements',
-                        data: [150, 180, 220, 270, 260, 240, 230, 200], // Exemple de données mensuelles pour les pré-enrôlements
+                        data: [
+                            "{{isset($sessionsParMois[1])?$sessionsParMois[1]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[2])?$sessionsPreEnrParMois[2]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[3])?$sessionsPreEnrParMois[3]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[4])?$sessionsPreEnrParMois[4]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[5])?$sessionsPreEnrParMois[5]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[6])?$sessionsPreEnrParMois[6]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[7])?$sessionsPreEnrParMois[7]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[8])?$sessionsPreEnrParMois[8]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[9])?$sessionsPreEnrParMois[9]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[10])?$sessionsPreEnrParMois[10]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[11])?$sessionsPreEnrParMois[11]['nombre']:0}}",
+    "{{isset($sessionsPreEnrParMois[12])?$sessionsPreEnrParMois[12]['nombre']:0}}"
+                        ], // Exemple de données mensuelles pour les pré-enrôlements
                     },
                 ],
                 chart: {
@@ -622,7 +669,7 @@
                     },
                 },
                 colors: ['#FF0000', '#00FF00'], // Couleurs bleu pour les enrôlements, jaune pour les pré-enrôlements
-                labels: ['Jan', 'Fev', 'Mar', 'Avr', 'Mai', 'Juin', 'Jul', 'Août'], // Labels des mois
+                labels: ['Janv', 'Fev', 'Mars', 'Avr', 'Mai', 'Juin', 'Jllt', 'Août','Sept','Oct','Nov', 'Dec'],
                 dataLabels: {
                     enabled: false,
                 },
@@ -713,7 +760,7 @@
 
             const progressBarOptions = {
                 series: [{
-                    data: [60, 30, 40, 70, 28] // Exemple de pourcentage de participation par secteur
+                    data: ["{{isset($PSA['Primaire'])?$PSA['Primaire']:0}}", "{{isset($PSA['Secondaire'])?$PSA['Secondaire']:0}}", "{{isset($PSA['Tertiaire'])?$PSA['Tertiaire']:0}}", "{{isset($PSA['Quaternaire'])?$$PSA['Quaternaire']:0}}", "{{ array_sum(array_diff_key($PSA, array_flip(['Primaire', 'Secondaire', 'Tertiaire', 'Quaternaire']))) }}"] // Exemple de pourcentage de participation par secteur
                 }],
                 chart: {
                     type: 'bar',
@@ -757,7 +804,7 @@
 
 
             const pieChartOptions = {
-                series: [60, 40], // Remplacer par les valeurs réelles du nombre d'hommes et de femmes
+                series: [parseInt("{{$pHommes}}") , parseInt("{{$pFemmes}}")], // Remplacer par les valeurs réelles du nombre d'hommes et de femmes
                 chart: {
                     toolbar: {
                         show: true,
@@ -781,7 +828,7 @@
                 dataLabels: {
                     enabled: true,
                     formatter: function(val, opts) {
-                        return opts.w.globals.labels[opts.seriesIndex] + ': ' + val + '%';
+                        return opts.w.globals.labels[opts.seriesIndex] + ': ' + Math.round(val) + '%';
                     }
                 },
                 legend: {
@@ -794,11 +841,12 @@
             pieChart.render();
 
 
+            console.log()
 
             // Data for the chart
-            const regions = ['MARITIME', 'KARA', 'CENTRALE', 'PLATEAUX', 'SAVANES'];
-            const adultsEnrolled = [200, 150, 180, 130, 160]; // Remplacer par les vraies données
-            const minorsEnrolled = [120, 100, 140, 90, 110]; // Remplacer par les vraies données
+            const regions = ['Maritime','Plateaux', 'Centrale','Kara','Savanes'];
+            const adultsEnrolled = ["{{isset($adultesPerRegion['Maritime'])?$adultesPerRegion['Maritime']:0}}","{{isset($adultesPerRegion['Plateaux'])?$adultesPerRegion['Plateaux']:0}}","{{isset($adultesPerRegion['Centrale'])?$adultesPerRegion['Centrale']:0}}","{{isset($adultesPerRegion['Kara'])?$adultesPerRegion['Kara']:0}}","{{isset($adultesPerRegion['Savanes'])?$adultesPerRegion['Savanes']:0}}"]; // Remplacer par les vraies données
+            const minorsEnrolled = ["{{isset($mineursPerRegion['Maritime'])?$mineursPerRegion['Maritime']:0}}","{{isset($adultesPerRegion['Plateaux'])?$adultesPerRegion['Plateaux']:0}}","{{isset($adultesPerRegion['Centrale'])?$adultesPerRegion['Centrale']:0}}","{{isset($adultesPerRegion['Kara'])?$adultesPerRegion['Kara']:0}}","{{isset($adultesPerRegion['Savanes'])?$adultesPerRegion['Savanes']:0}}"]; // Remplacer par les vraies données
 
             // Combined Radar Chart for Adults and Minors Enrolled
             const enrollmentRadarOptions = {
@@ -863,7 +911,7 @@
 
 
             const doughnutChartOptions = {
-                series: [15, 15, 5, 5, 20, 20, 10, 10], // Exemple de données pour chaque groupe sanguin
+                series: [parseInt("{{isset($pourcentagesGroupesSanguins['A+'])?$pourcentagesGroupesSanguins['A+']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['A-'])?$pourcentagesGroupesSanguins['A-']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['B+'])?$pourcentagesGroupesSanguins['B+']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['B-'])?$pourcentagesGroupesSanguins['B-']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['AB+'])?$pourcentagesGroupesSanguins['AB+']:0}}"),parseInt("{{isset($pourcentagesGroupesSanguins['AB-'])?$pourcentagesGroupesSanguins['AB-']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['O+'])?$pourcentagesGroupesSanguins['O+']:0}}"), parseInt("{{isset($pourcentagesGroupesSanguins['O-'])?$pourcentagesGroupesSanguins['O-']:0}}")], // Exemple de données pour chaque groupe sanguin
                 chart: {
                     toolbar: {
                         show: true,
@@ -949,6 +997,7 @@
         <script src="{{ asset('js/empreinte.js') }}"></script>
         <script src="{{ asset('js/socket.io.min.js') }}"></script>
         <script src="{{ asset('js/loading.js') }}"></script>
+        <script src="{{ asset('js/aos.js') }}"></script>
         <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
         <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
         <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
@@ -958,6 +1007,9 @@
         <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
         @notifyJs
         @livewireScripts
+        <script>
+  AOS.init();
+</script>
 </body>
 
 </html>

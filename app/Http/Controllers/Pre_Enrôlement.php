@@ -14,6 +14,8 @@ use App\Models\SessionPreEnrolement;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\PreEnrollMail;
+use App\Rules\CustomRule;
+
 
 class Pre_Enrôlement extends Controller
 {
@@ -79,6 +81,11 @@ class Pre_Enrôlement extends Controller
      */
     public function store(Request $request)
     {
+
+        $client = new \GuzzleHttp\Client([
+            'verify' => storage_path('app/cacert.pem')  // Chemin vers le fichier cacert.pem
+        ]);
+
         $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -90,7 +97,7 @@ class Pre_Enrôlement extends Controller
             'quartierResidence' => 'required|string|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
             'nomPrenomsConjoint' => 'nullable|string|max:255',
-            'tel1' => 'nullable|string|min:8|max:15|unique:donnees_demographiques,tel1|unique:individus,telephone',
+            'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:donnees_demographiques,tel1', new CustomRule($client)],
             'tel2' => 'nullable|string|min:8|max:15',
             'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail',
             'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',

@@ -15,6 +15,16 @@ class DonneesDemographiques extends Model
         'nom', 'nom_de_jeune_fille', 'prenom', 'sexe', 'statut_matrimonial', 'nom_prenom_conjoint', 'DOB', 'pays_ville_naissance', 'pays_ville_residence', 'quartier_residence', 'profession', 'secteur_emploi', 'mail', 'tel1', 'tel2', 'groupe_sanguin', 'pieces_justificatives', 'nom_personne_a_prevenir1', 'nom_personne_a_prevenir2', 'numero_personne_a_prevenir1', 'numero_personne_a_prevenir2', 'ref_enrolement', 'idAgent', 'NIU'
     ];
 
+    protected $appends = ['age'];
+
+    public function getAgeAttribute()
+    {
+        $dob = $this->DOB;
+        $today = date('Y-m-d');
+        $age = date_diff(date_create($dob), date_create($today));
+        return $age->y;
+    }
+
     public function individu()
     {
         return $this->belongsTo(Individu::class, 'ref_enrolement', 'ref_enrolement');

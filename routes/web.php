@@ -16,6 +16,7 @@ use App\Models\DonneesDemographiques;
 use App\Http\Controllers\DonneesBiometriquesController;
 use App\Http\Controllers\DVcontroller;
 use App\Http\Controllers\Pre_Enrôlement;
+use App\Models\SessionPreEnrolement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
@@ -58,11 +59,11 @@ Route::resource('agents', AgentController::class)->middleware('auth');
 
 Route::resource('Pre_Enrôlement', Pre_Enrôlement::class);
 
-Route::resource('Session_Pre_Enrollement', SessionPreEnrolementController::class);
+Route::resource('Session_Pre_Enrollement', SessionPreEnrolementController::class)->middleware('auth');
 
 Route::get('Pre_Enrôlement', [Pre_Enrôlement::class,'create']);
 
-Route::get('pj/{ref}', [Pre_Enrôlement::class, 'pj']);
+Route::get('pj/{ref}', [SessionPreEnrolementController::class,'pj']);
 
 Route::post('searchAgent', [AgentController::class, 'searchAgent'])->middleware('auth')->name('searchAgent');
 

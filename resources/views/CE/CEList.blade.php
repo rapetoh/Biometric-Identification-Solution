@@ -181,7 +181,7 @@
                         <input value="{{ isset($search) ? $search : '' }}" type="text" name="search" class="input-search" placeholder="Rechercher agent ...">
                     </form>
                 </div>
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Nom du centre</th>

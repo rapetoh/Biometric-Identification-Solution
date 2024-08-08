@@ -10,6 +10,8 @@ use App\Models\SessionPreEnrolement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
+use App\Rules\CustomRule;
+use Illuminate\Support\Facades\Validator;
 
 
 use Ramsey\Uuid\Uuid;
@@ -44,6 +46,10 @@ class DonneesDemographiquesController extends Controller
      */
     public function store(Request $request)
     {
+        $client = new \GuzzleHttp\Client([
+            'verify' => storage_path('app/cacert.pem')  // Chemin vers le fichier cacert.pem
+        ]);
+
         $request->validate([
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
@@ -55,8 +61,8 @@ class DonneesDemographiquesController extends Controller
             'quartierResidence' => 'required|string|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
             'nomPrenomsConjoint' => 'nullable|string|max:255',
-            'tel1' => 'nullable|string|min:8|max:15,unique:donnees_demographiques,tel1',
-            'tel2' => 'nullable|string|min:8|max:15',
+            'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:donnees_demographiques,tel1', new CustomRule($client)],
+            'tel2' => ['nullable','string','min:8','max:15',new CustomRule($client)],
             'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail',
             'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
             'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
@@ -76,7 +82,7 @@ class DonneesDemographiquesController extends Controller
 
         ]);
 
-
+       
         $cniCheckbox = $request->has('cniCheckbox');
         $passportCheckbox = $request->has('passportCheckbox');
         $birthCertCheckbox = $request->has('birthCertCheckbox');
@@ -218,7 +224,7 @@ class DonneesDemographiquesController extends Controller
         }
         
         
-        if (count($pieces_justificatives)>=2){
+        if (count($pieces_justificatives)>=1){
             try {
 
 
@@ -333,7 +339,7 @@ class DonneesDemographiquesController extends Controller
             }
         }
         else{
-            notify()->error('Un minimum de 2 pièces justificatives doivent être soumises !', 'Erreur');
+            notify()->error('Un minimum de 1 pièce justificative doit être soumis !', 'Erreur');
             return redirect()->back()->withErrors('Un minimum de 2 pièces justificatives doivent être soumises !');
         }
 

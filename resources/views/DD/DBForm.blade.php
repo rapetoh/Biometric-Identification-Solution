@@ -136,7 +136,7 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Biométriques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">2</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Biométriques de l'individu &nbsp;<i style="color: green;" class="fa-solid fa-fingerprint fa-lg  "></i></h4>
                 <div style="margin: auto;">
                     @if(session('refEnr'))
                     <span class="badge rounded-pill bg-label-info me-3">{{session('refEnr')}}</span>

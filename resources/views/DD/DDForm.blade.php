@@ -163,7 +163,7 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Démographiques du citoyen &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;"><span style="color: green; font-weight: 600; font-size: 15px; margin-left: 39px;">STEP</span> <span class="flex-shrink-0 badge badge-center rounded-pill bg-success w-px-20 h-px-20">1</span> sur <span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">3</span> - Données Démographiques de l'individu &nbsp;<i style="color: green;" class="fa-solid fa-address-card"></i></h4>
                 <!-- Account -->
                 <div class="card-body pt-2">
                     <form id="formAccountSettings" enctype="multipart/form-data" style="max-width: 80%;" class="p-4" method="POST" action="{{route('ddForm.store')}}">

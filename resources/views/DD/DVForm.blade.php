@@ -754,7 +754,7 @@
         // Réattacher les événements à chaque changement de slide
         const carousel = document.getElementById('myCarousel');
         carousel.addEventListener('slid.bs.carousel', function() {
-            attachToggleEvent();
+            //attachToggleEvent();*********************************************************************************************************************************************************************************************************************************************************
         });
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.form-check-input').forEach(function(checkbox) {
