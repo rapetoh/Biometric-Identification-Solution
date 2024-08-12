@@ -45,11 +45,13 @@ class DVcontroller extends Controller
         $folderName = session('niu');
 
         $storagePath = 'validated/' . $folderName;
+        $storagePath2 = 'toUpload/' . $folderName;
         try {
 
             if ($request->hasFile('image')) {
 
                 $path = $request->file('image')->storeAs($storagePath, $request->file('image')->getClientOriginalName(), 'local');
+                $path = $request->file('image')->storeAs($storagePath2, $request->file('image')->getClientOriginalName(), 'local');
                 return response()->json(['message' => 'carte enregistrée avec succès', 'path' => $path]);
             } else {
                 return response()->json(['message' => 'Carte non enregistrée']);
@@ -123,6 +125,7 @@ class DVcontroller extends Controller
         $iddemo = $request->input('iddemo');
         $source = 'pièces_justificatives/' . $niu;  // Chemin relatif à storage/app
         $destination = 'validated/' . $niu;  // Chemin relatif à storage/app
+        $destination2 = 'toUpload/' . $niu;  // Chemin relatif à storage/app
 
         DB::beginTransaction();
 
@@ -138,6 +141,7 @@ class DVcontroller extends Controller
                 );
 
                 Storage::makeDirectory($destination, 0777, true, true);
+                Storage::makeDirectory($destination2, 0777, true, true);
 
                 // Crée le répertoire de destination avec la structure complète
                 $files = Storage::allFiles($source);
@@ -145,8 +149,11 @@ class DVcontroller extends Controller
 
                 // Déplace chaque fichier
                 foreach ($files as $file) {
+                    $newPath2 = str_replace($source, $destination2, $file);
+                    Storage::copy($file, $newPath2);
                     $newPath = str_replace($source, $destination, $file);
                     Storage::move($file, $newPath);
+                    
                 }
 
                 // Déplace chaque dossier et recrée leur structure dans le nouveau chemin
@@ -155,6 +162,18 @@ class DVcontroller extends Controller
                     // Assure que le nouveau dossier existe avant de déplacer
                     if (!Storage::exists($newDirPath)) {
                         Storage::makeDirectory($newDirPath);
+                    }
+
+                    $newDirPath2 = str_replace($source, $destination2, $dir);
+                    // Assure que le nouveau dossier existe avant de déplacer
+                    if (!Storage::exists($newDirPath2)) {
+                        Storage::makeDirectory($newDirPath2);
+                    }
+                    //copier vers le dossier upload to
+                    $subFiles2 = Storage::allFiles($dir);
+                    foreach ($subFiles2 as $subFile) {
+                        $newSubFilePath = str_replace($source, $destination2, $subFile);
+                        Storage::copy($subFile, $newSubFilePath);
                     }
                     // Déplacer les fichiers dans le nouveau sous-dossier
                     $subFiles = Storage::allFiles($dir);
@@ -247,7 +266,16 @@ class DVcontroller extends Controller
                     ]
                 );
 
+                $SE = SessionEnrolement::findOrFail($id);
 
+                $SE->update(
+                    [
+                        'est_validee' => 1,
+                    ]
+                );
+
+
+                Storage::makeDirectory($destination2, 0777, true, true);
                 Storage::makeDirectory($destination, 0777, true, true);
 
                 // Crée le répertoire de destination avec la structure complète
@@ -256,6 +284,8 @@ class DVcontroller extends Controller
 
                 // Déplace chaque fichier
                 foreach ($files as $file) {
+                    $newPath2 = str_replace($source, $destination2, $file);
+                    Storage::copy($file, $newPath2);
                     $newPath = str_replace($source, $destination, $file);
                     Storage::move($file, $newPath);
                 }
@@ -266,6 +296,17 @@ class DVcontroller extends Controller
                     // Assure que le nouveau dossier existe avant de déplacer
                     if (!Storage::exists($newDirPath)) {
                         Storage::makeDirectory($newDirPath);
+                    }
+                    $newDirPath2 = str_replace($source, $destination2, $dir);
+                    // Assure que le nouveau dossier existe avant de déplacer
+                    if (!Storage::exists($newDirPath2)) {
+                        Storage::makeDirectory($newDirPath2);
+                    }
+                    //copier vers le dossier upload to
+                    $subFiles2 = Storage::allFiles($dir);
+                    foreach ($subFiles2 as $subFile) {
+                        $newSubFilePath = str_replace($source, $destination2, $subFile);
+                        Storage::copy($subFile, $newSubFilePath);
                     }
                     // Déplacer les fichiers dans le nouveau sous-dossier
                     $subFiles = Storage::allFiles($dir);
@@ -278,7 +319,7 @@ class DVcontroller extends Controller
 
                 DB::commit();
                 notify()->success('1 dossier validé', 'succès');
-                return redirect()->route('modal-page', ['id' => $iddemo]);
+                return redirect()->route('modal.page', ['id' => $iddemo]);
             } catch (\Exception $e) {
                 DB::rollBack();
                 notify()->error('La validaiton du dossier a échoué. ' . $e->getMessage() . '.', 'Erreur');

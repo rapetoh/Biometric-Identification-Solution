@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\SessionEnrolement;
+
 
 class IndividuController extends Controller
 {
@@ -13,9 +15,30 @@ class IndividuController extends Controller
      */
     public function index()
     {
-        //
+        $dossiers = SessionEnrolement::with(['individu', 'agent', 'donneesDemographiques', 'donneesBiometriques'])->where('est_validee', 1)->get();
+
+        return response()->view('IndividusEnrolés', compact('dossiers'));
     }
 
+    public function searchIndividuFolder(Request $request)
+    {
+
+        $search = $request->search;
+
+        if ($search == '') {
+            return redirect()->route('individu.index');
+        }
+
+
+
+        $dossiers = SessionEnrolement::with(['individu', 'agent', 'donneesDemographiques', 'donneesBiometriques'])
+            ->where(function ($query) use ($search) {
+                $query->where('NIU', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
+
+        return response()->view('IndividusEnrolés', compact('dossiers', 'search'));
+    }
     /**
      * Show the form for creating a new resource.
      *

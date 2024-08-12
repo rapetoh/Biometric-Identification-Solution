@@ -162,6 +162,7 @@
                                     <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
                                             <img id="pouce" src="{{ asset('img/pouce.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <p style="text-align: center; font-size:12px">Pouce</p>
                                             <i class="fa-solid fa-circle-check validate-icon" id="pouceIcone" style="display:none;"></i>
                                         </div>
                                     </div>
@@ -169,6 +170,7 @@
                                     <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
                                             <img id="index" src="{{ asset('img/index.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <p style="text-align: center;  font-size:12px">Index</p>
                                             <i class="fa-solid fa-circle-check validate-icon" id="indexIcone" style="display:none;"></i>
                                         </div>
                                     </div>
@@ -176,6 +178,7 @@
                                     <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
                                             <img id="majeur" src="{{ asset('img/majeur.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <p style="text-align: center;  font-size:12px">Majeur</p>
                                             <i class="fa-solid fa-circle-check validate-icon" id="majeurIcone" style="display:none;"></i>
                                         </div>
                                     </div>
@@ -185,6 +188,7 @@
                                     <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
                                             <img id="annulaire" src="{{ asset('img/annulaire.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <or style="text-align: center; font-size:12px">Annulaire</p>
                                             <i class="fa-solid fa-circle-check validate-icon" id="annulaireIcone" style="display:none;"></i>
                                         </div>
                                     </div>
@@ -192,6 +196,7 @@
                                     <div style="max-width: 130px;" class="card m-4 carte">
                                         <div class="card-body">
                                             <img id="auriculaire" src="{{ asset('img/auriculaire.png') }}" style="max-width: 60px;" class="h-auto rounded-circle">
+                                            <p style="text-align: center; font-size:11px">Auriculaire</p>
                                             <i class="fa-solid fa-circle-check validate-icon" id="auriculaireIcone" style="display:none;"></i>
                                         </div>
                                     </div>

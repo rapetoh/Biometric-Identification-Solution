@@ -55,6 +55,8 @@ class GoogleController extends Controller
 
             // Vous pouvez maintenant sauvegarder ce token dans une base de données ou une session pour des utilisations ultérieures
             session(['google_access_token' => $token]);
+            
+            
             notify()->success('Succès de l\'authentification au serveur distant', 'Succès');
             return redirect('/')->with('success', 'Authentifié avec Google Drive');
         }
@@ -80,9 +82,9 @@ class GoogleController extends Controller
             $client->setAccessToken(session('google_access_token'));
             $driveService = new Drive($client);
     
-            $folderPath = storage_path('app/validated');
+            $folderPath = storage_path('app/toUpload');
             $this->uploadDirectory($driveService, $folderPath, null);
-    
+
             notify()->success('Synchronisation réussie !','Succès');
             return back()->with('success', 'Files uploaded successfully to Google Drive.');
         } catch (\Exception $e) {

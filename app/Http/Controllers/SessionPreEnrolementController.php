@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SessionEnrolement;
+use App\Models\DonneesDemographiques;
+use App\Models\DonneesBiometriques;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -75,6 +77,7 @@ class SessionPreEnrolementController extends Controller
      */
     public function store(Request $request)
     {
+        //Log::info('Fichier téléchargé : ' . $request->file('cniFile')->getPathname());
         $request->validate([
             'cniFile' => 'file|mimes:pdf|max:2048',
             'passportFile' => 'file|mimes:pdf|max:2048',
@@ -113,6 +116,10 @@ class SessionPreEnrolementController extends Controller
             }
         }
         Log::info('Pièces justificatives: ' . json_encode($pieces_justificatives));
+
+        $imploded_pieces = implode(', ', $pieces_justificatives);
+        Log::info('Imploded Pieces: ' . $imploded_pieces);
+
 
         try {
 
@@ -187,9 +194,21 @@ class SessionPreEnrolementController extends Controller
 
 
                 $SE = SessionEnrolement::where('ref_enrolement', session('refEnr'))->first();
-
-                $SE::update(
+                $DD = DonneesDemographiques::where('ref_enrolement', session('refEnr'))->first();
+                $DB = DonneesBiometriques::where('ref_enrolement', session('refEnr'))->first();
+                $SE->update(
                     [
+                        'idAgent' => auth()->user()->idAgent,
+                    ]
+                );
+                $DB->update(
+                    [
+                        'idAgent' => auth()->user()->idAgent,
+                    ]
+                );
+                $DD->update(
+                    [
+                        'pieces_justificatives' => $imploded_pieces,
                         'idAgent' => auth()->user()->idAgent,
                     ]
                 );

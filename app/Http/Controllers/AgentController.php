@@ -114,7 +114,7 @@ class AgentController extends Controller
             // Log the error or handle it as per your needs
             report($e);
 
-            notify()->error('L\'enregistrement de l\'utilisateur a échoué. ' + $e->getMessage() + '.', 'Erreur');
+            notify()->error('L\'enregistrement de l\'utilisateur a échoué. ' . $e->getMessage() + '.', 'Erreur');
             return redirect()->back()->withErrors($e->getMessage());
         }
     }

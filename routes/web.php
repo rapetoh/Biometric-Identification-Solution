@@ -15,7 +15,9 @@ use App\Http\Livewire\MultiStepForm;
 use App\Models\DonneesDemographiques;
 use App\Http\Controllers\DonneesBiometriquesController;
 use App\Http\Controllers\DVcontroller;
+use App\Http\Controllers\IndividuController;
 use App\Http\Controllers\Pre_Enrôlement;
+use App\Http\Controllers\FaceId;
 use App\Models\SessionPreEnrolement;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -69,6 +71,12 @@ Route::post('searchAgent', [AgentController::class, 'searchAgent'])->middleware(
 
 
 Route::post('searchPEFolder', [SessionPreEnrolementController::class, 'searchPEFolder'])->middleware('auth')->name('searchPEFolder');
+Route::post('searchIndividuFolder', [IndividuController::class, 'searchIndividuFolder'])->middleware('auth')->name('searchIndividuFolder');
+
+Route::get('detect', [FaceId::class, 'runCommands'])->middleware('auth')->name('detect');
+Route::get('faceID', [FaceId::class, 'create'])->middleware('auth')->name('faceID');
+Route::post('faceIDfileDetect', [FaceId::class, 'runCommands_with_file'])->middleware('auth')->name('faceIDfileDetect');
+
 
 Route::controller(AgentController::class)->group(function(){
     Route::put('upPW', 'updatePass')->name('agents.updatePass');
@@ -76,8 +84,14 @@ Route::controller(AgentController::class)->group(function(){
 });
 
 Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('auth');
+Route::get('ddIdentifyBeforeModify', [DonneesDemographiquesController::class, 'IdentifyForModification'])->middleware('auth')->name('IdentifyForModification');
+Route::post('ddModifyForm', [DonneesDemographiquesController::class, 'ModifyForm'])->middleware('auth')->name('dd.modifyForm');
+Route::get('ddModify', [DonneesDemographiquesController::class, 'Modify'])->middleware('auth')->name('dd.modify');
 
 Route::resource('dvForm', DVcontroller::class)->middleware('auth');
+
+Route::resource('individu', IndividuController::class)->middleware('auth');
+
 
 Route::get('modal-page/{id}', [DVcontroller::class, 'showModalPage'])->name('modal.page');
 
@@ -100,7 +114,12 @@ Route::resource('id', IdController::class)->middleware('auth');
 
 Route::get('photo', [PhotoController::class, 'createPhoto'])->name('photo');
 Route::post('photo', [PhotoController::class, 'storePhoto'])->name('photo.store');
+
+
+
 Route::post('identity', [IdController::class, 'idtreatment'])->name('id.find');
+Route::post('logID', [IdController::class, 'logID'])->middleware('auth')->name('logID');
+
 
 Route::get('statistiques', [Statistiques::class, 'displayStat'])->middleware('auth')->name('displayStat');
 

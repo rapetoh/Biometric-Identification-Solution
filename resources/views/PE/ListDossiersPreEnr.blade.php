@@ -198,7 +198,7 @@
                         @foreach ($dossiers as $dossier)
                             <tr>
                                 <td style="color: green; font-weight: 600;">
-                                    {{ $dossier->ref_enrolement }}
+                                <i class="fa-solid fa-folder-open" style="color:green"></i>   {{ $dossier->ref_enrolement }}
                                 </td>
                                 <td>
                                     <span class="fw-medium">{{ $dossier->donneesDemographiques->nom ? $dossier->donneesDemographiques->nom : 'Non spécifiée' }}</span>

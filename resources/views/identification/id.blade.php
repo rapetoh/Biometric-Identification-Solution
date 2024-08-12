@@ -22,6 +22,7 @@
 <body>
 
 
+
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -239,7 +240,7 @@
                         <div id="messages" style="border: 1px solid green; text-align:center; border-radius: 10px; padding: 15px; margin:auto; max-width: 400px;">
                             <p id="mess"></p>
                             <p style="color: red; font-weight: bold;" id="niu"></p><br>
-                            <img style="border-radius: 1000px; width: 120px; margin: auto;" id="identifiedPhoto" src=""><br>
+                            <img style="border-radius: 1000px; width: 150px; margin: auto;" id="identifiedPhoto" src=""><br>
                             <p style="color: darkblue; font-weight: bold;" id="nom"></p>
                             <p style="color: darkblue; font-weight: bold;" id="prenom"></p>
                             <p style="color: darkblue; font-weight: bold;" id="sexe"></p>
@@ -263,6 +264,36 @@
 
 
         <script>
+            let longitude;
+            let latitude;
+
+            window.onload = function() {
+                navigator.geolocation.getCurrentPosition(success, error,{ enableHighAccuracy: true });
+            };
+
+            function success(position) {
+                // L'utilisateur a accordé la permission, continuez avec votre logique
+                console.log("Latitude:", position.coords.latitude, "Longitude:", position.coords.longitude);
+                longitude = position.coords.longitude.toString(); // Conversion correcte en chaîne
+                latitude = position.coords.latitude.toString(); // Conversion correcte en chaîne
+
+                // Maintenant, les valeurs sont prêtes, on peut les afficher
+                console.log('eee' + longitude);
+                console.log('iiii' + latitude);
+            }
+
+            function error(err) {
+                console.warn(`ERREUR (${err.code}): ${err.message}`);
+                // Gérer l'erreur, par exemple en affichant un message d'erreur à l'utilisateur
+            }
+
+
+            function error(err) {
+                // L'utilisateur a refusé la permission ou une erreur s'est produite
+                console.warn(`ERREUR (${err.code}): ${err.message}`);
+                // Rediriger vers la page précédente
+                window.history.back();
+            }
             // Declare the variable in the global scope
             let selectedFinger = null;
 
@@ -270,44 +301,28 @@
                 configureSocketConnection();
             });
 
-            // function checkAllIconsVisible() {
-            //     const icons = document.querySelectorAll('.validate-icon');
-            //     const submitButton = document.getElementById('submitButton');
-            //     let allVisible = true;
+            function typeWriter(elementId, text, speed) {
+                let i = 0;
+                const elem = document.getElementById(elementId);
 
-            //     icons.forEach(icon => {
-            //         if (window.getComputedStyle(icon).display != 'block') {
-            //             allVisible = false;
-            //             console.log(icon.id)
-            //             console.log(window.getComputedStyle(icon).display)
-            //             console.log("allv: " + allVisible);
-            //         }
-            //     });
-
-            //     submitButton.disabled = !allVisible;
-            //     console.log("sb.d: " + submitButton.disabled)
-            // }
+                function typing() {
+                    if (i < text.length) {
+                        elem.textContent += text.charAt(i);
+                        i++;
+                        setTimeout(typing, speed);
+                    }
+                }
+                typing();
+            }
 
 
-
-            // function setupFingerSelection() {
-            //     const cards = document.querySelectorAll('.carte');
-
-            //     cards.forEach(card => {
-            //         card.addEventListener('click', () => {
-            //             cards.forEach(c => c.classList.remove('selected'));
-            //             card.classList.add('selected');
-            //             selectedFinger = card.querySelector('img').id;
-            //             console.log('Doigt sélectionné:', selectedFinger);
-            //         });
-            //     });
-
-            //     const postButton = document.getElementById('submitButton');
-
-            //     checkAllIconsVisible();
-
-
-            // }
+            const elem = document.getElementById('mess');
+            const niuelm = document.getElementById('niu');
+            const nom = document.getElementById('nom');
+            const prenom = document.getElementById('prenom');
+            const sexe = document.getElementById('sexe');
+            const DOB = document.getElementById('DOB');
+            const pht = document.getElementById('identifiedPhoto');
 
             function monitorNetworkStatus() {
                 const updateOnlineStatus = () => {
@@ -337,6 +352,12 @@
                 trigerButton.addEventListener('click', (event) => {
                     console.log('Formulaire d\'identification soumis, envoi du message au serveur Python');
                     socket.emit('identifyFingerprint');
+                    pht.src = "";
+                    niuelm.textContent = "";
+                    nom.textContent = "";
+                    prenom.textContent = "";
+                    sexe.textContent = "";
+                    DOB.textContent = "";
                     scanningElement.classList.toggle('animate');
                 });
 
@@ -350,13 +371,7 @@
                 });
 
                 socket.on('server_message', (msg) => {
-                    const elem = document.getElementById('mess');
-                    const niuelm = document.getElementById('niu');
-                    const nom = document.getElementById('nom');
-                    const prenom = document.getElementById('prenom');
-                    const sexe = document.getElementById('sexe');
-                    const DOB = document.getElementById('DOB');
-                    const pht = document.getElementById('identifiedPhoto');
+
 
                     pht.src = "";
                     niuelm.textContent = "";
@@ -380,7 +395,6 @@
                         var niu = last21Chars.slice(0, 17);
                         console.log('Le niu :', niu);
 
-                        // JavaScript code
                         fetch("{{ route('id.find') }}", {
                                 method: 'POST',
                                 headers: {
@@ -394,20 +408,82 @@
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data.message);
+                                console.log(data.realNIU);
                                 console.log(data.identity);
                                 //location.reload();
                                 //$('#myModal').modal('show');
-                                const n = data.identity.NIU.toString();
-                                niuelm.textContent = "NIU: " + n.substring(0, 4) + " - " + n.substring(4, 8) + " - " + n.substring(8, 12) + " - " + n.substring(12, 17);
-                                nom.textContent = "NOM:  " + data.identity.nom;
-                                prenom.textContent = "PRENOM: " + data.identity.prenom;
-                                sexe.textContent = "SEXE: " + data.identity.sexe;
-                                DOB.textContent = "Date de naissance: " + data.identity.DOB;
-                                const url = "{{ Storage::disk('val')->url('/') }}";
-                                const newUrl = url + data.identity.NIU.toString() + '/photo' + data.identity.NIU.toString() + '.png';
-                                pht.src = newUrl;
+                                if (data.message === "L'individu identifié doit d'abord être validé pour pouvoir apparaitre ici") {
+                                    elem.textContent = data.message;
+                                } else {
+                                    const n = data.realNIU.toString();
+                                    var ni = "NIU: " + n.substring(0, 4) + " - " + n.substring(4, 8) + " - " + n.substring(8, 12) + " - " + n.substring(12, 18);
+                                    // nom.textContent = "NOM:  " + data.identity.nom;
+                                    // prenom.textContent = "PRENOM: " + data.identity.prenom;
+                                    // sexe.textContent = "SEXE: " + data.identity.sexe;
+                                    DOB.textContent = "Date de naissance: " + data.identity.DOB;
+
+
+                                    typeWriter('niu', ni, 75);
+                                    typeWriter('nom', "NOM: " + data.identity.nom, 75);
+                                    typeWriter('prenom', "PRENOM: " + data.identity.prenom, 75);
+                                    typeWriter('sexe', "SEXE: " + data.identity.sexe, 75);
+                                    //typeWriter('Date de naissance', "DOB: " + data.identity.DOB, 75);
+
+                                    const url = "{{ Storage::disk('val')->url('/') }}";
+                                    const newUrl = url + data.realNIU + '/photo' + data.realNIU + '.png';
+                                    pht.src = newUrl;
+
+                                    console.log(longitude);
+                                    console.log(latitude);
+                                    console.log(data.identity.nom);
+                                    console.log(data.identity.prenom);
+                                    console.log(n);
+                                    console.log(data.identity.sexe);
+                                    console.log(data.identity.tel1);
+                                    console.log((data.identity.pays_ville_residence + ' , ' + data.identity.quartier_residence));
+
+                                    const postData = {
+                                        method: 'POST',
+                                        headers: {
+                                            'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            nom: data.identity.nom,
+                                            prenom: data.identity.prenom,
+                                            NIU: n,
+                                            sexe: data.identity.sexe,
+                                            telephone: data.identity.tel1,
+                                            domicile: (data.identity.pays_ville_residence + ' , ' + data.identity.quartier_residence),
+                                            longitude: longitude,
+                                            latitude: latitude,
+                                        }) // Remplacez par les données nécessaires
+                                    };
+                                    fetch("{{route('logID')}}", postData)
+                                        .then(secondresponse => {
+                                            if (!secondresponse.ok) {
+                                                throw new Error(`HTTP error, status = ${secondresponse.status}`);
+                                            }
+                                            console.log(secondresponse); // Vérifiez l'objet Response complet
+                                            return secondresponse.text();
+                                        })
+
+                                        .then(secondresponseData => {
+                                            console.log('Success:', secondresponseData);
+                                            // Gérer la réponse ici
+                                        })
+                                        .catch((error) => {
+                                            console.error('Error:', error);
+                                        });
+
+                                }
                             })
+
                             .catch((error) => {
+                                // if (msg == 'Erreur dans la restitution des info identifiées') {
+                                //     msg = 'L\individu identifié doit d\'abord être validé pour pouvoir apparaitre ici';
+                                //     elem.textContent = msg;
+                                // }
                                 console.error('Error:', error);
                             });
 
@@ -415,8 +491,12 @@
                         elem.textContent = msg;
 
                     } else {
+                        if (msg == 'Individu NON identifié !') {
+                            scanningElement.classList.toggle('animate');
+                        }
                         elem.textContent = msg;
                     }
+
 
 
                     // if (msg == "Identification") {

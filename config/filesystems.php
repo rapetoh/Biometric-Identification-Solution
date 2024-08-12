@@ -50,6 +50,13 @@ return [
             'visibility' => 'public',
         ],
 
+        'toUpload' => [
+            'driver' => 'local',
+            'root' => storage_path('app/toUpload'),
+            'url' => env('APP_URL') . '/toUpload',
+            'visibility' => 'public',
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
@@ -87,6 +94,7 @@ return [
         public_path('storage') => storage_path('app/public'),
         public_path('pièces_justificatives') => storage_path('app/pièces_justificatives'),
         public_path('validated') => storage_path('app/validated'),
+        public_path('toUpload') => storage_path('app/toUpload'),
     ],
 
 ];

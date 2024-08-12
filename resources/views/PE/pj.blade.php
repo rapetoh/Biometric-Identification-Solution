@@ -160,10 +160,11 @@
 
                     <div class="container">
                         <div class="column" style="margin: auto;">
-                            <form method="POST" action="{{route('Session_Pre_Enrollement.store')}}">
+                            <form method="POST" action="{{route('Session_Pre_Enrollement.store')}}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row">
                                     <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives *</h6><br><br><br>
+                                    
                                     <!-- CNI -->
                                     <div class="row">
                                         <div class="form-check">

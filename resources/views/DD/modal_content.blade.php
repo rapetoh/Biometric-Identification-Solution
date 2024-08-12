@@ -158,7 +158,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/idtogo.png') }}" style="width: 100px"></h5>
                     <form style="margin-right: 40px;" action="{{ route('dvForm.create') }}">
-                        <button id="downloadedVerificator" type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer capturer le nécessaire avant de continuer.');">
+                        <button id="downloadedVerificator" type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer et capturer le nécessaire avant de continuer.');">
                             <i class="fa-solid fa-circle-check fa-xl" style="color: green;"></i>
                         </button>
                     </form>
@@ -180,24 +180,28 @@
                                             <img src="{{ asset('img/idtogo.png') }}" style="width: 100px">
                                         </div>
                                         <div class="row card-no">
-                                            <circle style="margin-top: -40px;" cx="50%" cy="50%" r="40%" stroke="black" stroke-width="3" fill="black">
+                                            <circle style="margin-top: -60px;" cx="50%" cy="50%" r="40%" stroke="black" stroke-width="3" fill="black">
                                                 @if (Storage::disk('val')->exists($photoPath))
                                                 <img style="border-radius: 1000px; width: 90px;" src="{{ Storage::disk('val')->url($photoPath) }}" alt="Description de l'image">
                                                 @else
                                                 <img style="border-radius: 1000px; width: 30px" src="{{ asset('img/empreinte-digitale.png') }}" alt="Description de l'image">
                                                 @endif
                                             </circle>
-                                            <p style="">{{substr( $item->NIU ,0, 4).'  -  '}}{{substr( $item->NIU, 4 , 4).'  -  '}}{{substr( $item->NIU, 8, 4).'  -  '}}{{substr( $item->NIU, 12, 5)}}</p>
+                                            <div>
+                                                <h6 style="font-size: 12px; margin-top: 5px">TITULAIRE : <span style="font-size: 12px; font-weight: bold;">{{ $item->nom }} {{ $item->prenom }}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Né le : <span style="font-size: 12px; font-weight: bold;">{{ $item->DOB }}</span></h6>
+                                                
+                                            </div>
+                                            <p style="font-weight:500; font-size: 32px">{{substr( $item->NIU ,0, 4).'  -  '}}{{substr( $item->NIU, 4 , 4).'  -  '}}{{substr( $item->NIU, 8, 4).'  -  '}}{{substr( $item->NIU, 12, 5)}}</p>
 
                                         </div>
                                         <div style="display: inline-flex; justify-content: space-between; align-items: center;">
                                             <div style="margin-right: 0px;">
-                                                <h6 style="font-size: 12px;">TITULAIRE</h>
-                                                    <p style="font-size: 12px; width: 200px; font-weight: bold;">{{ $item->nom }} {{ $item->prenom }}</p>
+                                                <h6 style="font-size: 12px;">TELEPHONE</h>
+                                                    <p style="font-size: 12px; width: 200px; font-weight: bold;">{{ $item->tel1 }}</p>
                                             </div>
                                             <div>
-                                                <h6 style="font-size: 12px;">REF_ENR</h6>
-                                                <p style="font-size: 12px; font-weight: bold;">{{ $item->ref_enrolement }}</p>
+                                                <h6 style="font-size: 12px;">PROFESSION</h6>
+                                                <p style="font-size: 12px; font-weight: bold;">{{ $item->profession }}</p>
                                             </div>
 
                                         </div>
@@ -222,7 +226,7 @@
                             <canvas id="canvas"></canvas>
                         </div>
                         <div class="column">
-                            Recicipe
+                            Récépissé
                             <br><br>
                             <div class="pdf-container">
                                 <embed width="100%" height="85%" src="{{ url('/pdf/' . $item->idDDemo) }}" type="application/pdf">
@@ -239,7 +243,6 @@
     </div>
 
     <script>
-        
         var formAvailability = document.getElementById('downloadedVerificator');
         formAvailability.disabled = true;
 

@@ -184,7 +184,7 @@
             <br>
 
             <div class="card mb-4" style="background-color: {{ $dircount!=0 ? 'white' : '#E5E5E5' }};">
-            <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
+                <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
                 <div class="card-body">
                     <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
                         @csrf
@@ -197,7 +197,7 @@
 
             <a href="{{$count_dossier_pre_enr!=0 ? route('Session_Pre_Enrollement.index') : '#'}}">
                 <div class="card mb-4" style="background-color: {{ $count_dossier_pre_enr!=0 ? 'white' : '#E5E5E5' }};">
-                <span class="flex-shrink-0 badge badge-center rounded-pill {{$count_dossier_pre_enr!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count_dossier_pre_enr}}</span>
+                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count_dossier_pre_enr!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count_dossier_pre_enr}}</span>
                     <div class="card-body">
                         <i class="fa-solid fa-folder-closed" style="margin-right: 25px; color: green;"></i>Dossiers de pré-enrôlement
                     </div>
@@ -207,18 +207,48 @@
             <a href="{{route('id.create')}}">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <i class="fa-solid fa-fingerprint fa-lg" style="margin-right: 25px; color: green;"></i>Service d'identification
+                        <i class="fa-solid fa-fingerprint fa-lg" style="margin-right: 25px; color: green;"></i>Reconnaissance d'empreintes
                     </div>
                 </div>
             </a>
 
-            <a href="">
+            <a href="{{route('faceID')}}">
                 <div class="card mb-4">
                     <div class="card-body">
-                    <i class="fa-solid fa-face-smile fa-lg" style="margin-right: 25px; color: green;"></i>Reconnaissance faciale
+                        <i class="fa-solid fa-face-smile fa-lg" style="margin-right: 25px; color: green;"></i>Reconnaissance faciale
                     </div>
                 </div>
             </a>
+
+            @if (auth()->user()->isAdmin == true)
+            <a href="{{route('individu.index')}}">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <i class="fa-solid fa-person fa-lg" style="margin-right: 25px; color: green;"></i>Individus enrôlés
+                    </div>
+                </div>
+            </a>
+            @endif
+
+            @if (auth()->user()->isAdmin == true)
+            <a href="{{route('id.index')}}">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <i class="fa-solid fa-newspaper fa-lg" style="margin-right: 25px; color: green;"></i>Journal des identifications
+                    </div>
+                </div>
+            </a>
+            @endif
+
+            @if (auth()->user()->isAdmin == true)
+            <a href="{{route('displayStat')}}">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Statistiques
+                    </div>
+                </div>
+            </a>
+            @endif
 
         </div>
         <div class="column">
@@ -233,7 +263,7 @@
                     </div>
                 </div>
             </a>
-            <a href="{{ route('photo') }}">
+            <a href="{{ route('IdentifyForModification') }}">
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
@@ -243,7 +273,7 @@
             <a href="">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <i class="fa-solid fa-person-circle-question" style="margin-right: 25px; color: green;"></i>Dédoublonage
+                        <i class="fa-solid fa-people-arrows fa-lg" style="margin-right: 25px; color: green;"></i>Dédoublonage
                     </div>
                 </div>
             </a>
@@ -256,13 +286,7 @@
 
                 </div>
             </a>
-            <a href="{{route('displayStat')}}">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <i class="fa-solid fa-chart-simple" style="margin-right: 25px; color: green;"></i>Statistiques
-                    </div>
-                </div>
-            </a>
+            
         </div>
         <div class="column">
             <hr style="margin: 20px;">
@@ -275,7 +299,7 @@
             <br>
             <div class="row">
                 @foreach ($adminAgents as $adminAgent)
-                <H5 style="font-size: 10px;">{{ $loop->index+1 }} -- Nom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->nom}} </span> Prénom: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->prenom}} </span>Contact: <span style="font-size: 11px;" class="badge rounded-pill bg-label-info me-1">{{$adminAgent->telephone}}</span></H5>
+                <H5 style="font-size: 10px;">{{ $loop->index+1 }} -- Nom: <span style="font-size: 12.5px;" class="badge rounded-pill bg-label-danger me-1">{{$adminAgent->nom}} </span> Prénom: <span style="font-size: 12.5px;" class="badge rounded-pill bg-label-danger me-1">{{$adminAgent->prenom}} </span>Contact: <span style="font-size: 12.5px;" class="badge rounded-pill bg-label-danger me-1">{{$adminAgent->telephone}}</span></H5>
                 <H5 style="font-size: 10px;"></H5>
                 <H5 style="font-size: 10px;"></H5><br><br>
                 @endforeach
@@ -301,6 +325,9 @@
             // Initial check
             updateOnlineStatus();
         });
+
+
+
     </script>
     <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>

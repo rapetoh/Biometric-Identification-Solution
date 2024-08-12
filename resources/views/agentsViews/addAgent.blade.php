@@ -266,7 +266,7 @@
                             <div class="col-md-6">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" id="Admin" name="Admin" value="1">
-                                    <label style="margin-left: 30px;" class="form-check-label" for="deathCertCheckbox">Admin</label>
+                                    <label style="margin-left: 30px;" class="form-check-label" for="deathCertCheckbox">Administrateur</label>
                                     @error('Admin')
                                     <span>{{ $message }}</span>
                                     @enderror

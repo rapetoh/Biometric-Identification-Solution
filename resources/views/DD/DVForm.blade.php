@@ -306,7 +306,7 @@
                                 @php
                                 $photoPath = $item->individu->NIU . '/photo' . $item->individu->NIU . '.png';
                                 $cniPath = $item->individu->NIU . '/cni.pdf';
-                                $passportPath = $item->individu->NIU . '/passeport.pdf';
+                                $passportPath = $item->individu->NIU . '/passport.pdf';
                                 $adnPath = $item->individu->NIU . '/birthCert.pdf';
                                 $marriagePath = $item->individu->NIU . '/marriageCert.pdf';
                                 $nationalityCertPath = $item->individu->NIU . '/nationalityCert.pdf';
@@ -493,7 +493,7 @@
                                         <div class="col-md-12">
                                             <div class="form-floating form-floating-outline">
                                                 <select disabled class="toggleable form-control @error('statutMatrimonial') is-invalid @enderror" id="statutMatrimonial" name="statutMatrimonial">
-                                                    <<option value="" disabled {{is_null($item->donneesDemographiques->statut_matrimonial)? 'selected':''}}>Sélectionner le statut matrimonial</option>
+                                            <option value="" disabled {{is_null($item->donneesDemographiques->statut_matrimonial)? 'selected':''}}>Sélectionner le statut matrimonial</option>
                                                         <option value="Célibataire" {{ $item->donneesDemographiques->statut_matrimonial == 'Célibataire' ? 'selected' : '' }}>Célibataire</option>
                                                         <option value="Marié(e)" {{ $item->donneesDemographiques->statut_matrimonial == 'Marié(e)' ? 'selected' : '' }}>Marié(e)</option>
                                                         <option value="Divorcé(e)" {{ $item->donneesDemographiques->statut_matrimonial == 'Divorcé(e)' ? 'selected' : '' }}>Divorcé(e)</option>
