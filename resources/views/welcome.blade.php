@@ -266,7 +266,7 @@
             <a href="{{ route('IdentifyForModification') }}">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Mettre à jour NIU
+                        <i class="fa-solid fa-pen" style="margin-right: 25px; color: green;"></i>Modifier Identité
                     </div>
                 </div>
             </a>

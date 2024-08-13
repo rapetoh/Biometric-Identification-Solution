@@ -158,8 +158,9 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"><img src="{{ asset('img/idtogo.png') }}" style="width: 100px"></h5>
                     <form style="margin-right: 40px;" action="{{ route('dvForm.create') }}">
-                        <button id="downloadedVerificator" type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer et capturer le nécessaire avant de continuer.');">
-                            <i class="fa-solid fa-circle-check fa-xl" style="color: green;"></i>
+                    <span style="font-size:11px; text-align: center;">Télécharger la Carte générée et le Récépissé avant de pouvoir continuer</span>    
+                    <button id="downloadedVerificator" type="submit" class="close" aria-label="Close" onclick="return confirm('Assurez vous d\'avoir imprimer et capturer le nécessaire avant de continuer.');">
+                        <i class="fa-solid fa-circle-check fa-xl" style="color: green;"></i>
                         </button>
                     </form>
                 </div>

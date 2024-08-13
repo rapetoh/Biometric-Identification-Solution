@@ -226,7 +226,7 @@
 
                     <div class="column">
                         <!-- Contenu de la deuxième colonne -->
-                        <span style="font-size: 17px;">Identifier l'individu avant de procéder à la modification des informations</span>
+                        <span style="font-size: 17px;">Identifier l'individu avant de procéder à la modification de ses informations</span>
                         <br>
                         <br>
 
@@ -403,9 +403,9 @@
                                     const newUrl = url + data.realNIU + '/photo' + data.realNIU + '.png';
                                     pht.src = newUrl;
 
-
-                                    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  :" + data.identity.NIU);
-
+                                   
+                                    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  :"+data.identity.NIU);
+    
                                     const postData = {
                                         method: 'POST',
                                         headers: {
@@ -417,13 +417,19 @@
                                         }) // Remplacez par les données nécessaires
                                     };
                                     fetch("{{route('dd.modifyForm')}}", postData)
+                                        .then(secondresponse => {
+                                            if (!secondresponse.ok) {
+                                                throw new Error(`HTTP error, status = ${secondresponse.status}`);
+                                            }
+                                            console.log(secondresponse); // Vérifiez l'objet Response complet
+                                            return secondresponse.json();
+                                        })
+
                                         .then(secondresponseData => {
                                             console.log('Success:', secondresponseData);
-
                                             if (secondresponseData.redirect) {
                                                 window.location.href = secondresponseData.redirect;
                                             }
-                                            
                                         })
                                         .catch((error) => {
                                             console.error('Error:', error);

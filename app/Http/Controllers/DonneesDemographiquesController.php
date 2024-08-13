@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\DB;
 use App\Rules\CustomRule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
+
 
 
 
@@ -38,6 +40,126 @@ class DonneesDemographiquesController extends Controller
 
     public function Modify(Request $request)
     {
+
+        $id = $request->input('id');
+        $niu = $request->input('niu');
+        $iddemo = $request->input('iddemo');
+
+        $client = new \GuzzleHttp\Client([
+            'verify' => storage_path('app/cacert.pem')  // Chemin vers le fichier cacert.pem
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+
+            $request->validate([
+                'nom' => 'required|string|max:255',
+                'prenom' => 'required|string|max:255',
+                'sexe' => 'required|in:Masculin,Féminin',
+                'nomJeuneFille' => 'nullable|string|max:255',
+                'dateNaissance' => 'required|date|before:1 years ago',
+                'paysVilleNaissance' => 'required|string|max:255',
+                'paysVilleResidence' => 'required|string|max:255',
+                'quartierResidence' => 'required|string|max:255',
+                'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
+                'nomPrenomsConjoint' => 'nullable|string|max:255',
+                'tel1' => [
+                    'nullable', 
+                    'string', 
+                    'min:8', 
+                    'max:15', 
+                    'unique:donnees_demographiques,tel1,' . $iddemo . ',idDDemo', 
+                    new CustomRule($client)
+                ],
+                'tel2' => [
+                    'nullable', 
+                    'string', 
+                    'min:8', 
+                    'max:15', 
+                    new CustomRule($client)
+                ],
+                'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail,' . $iddemo . ',idDDemo',
+                'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
+                'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
+                'numPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
+                'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
+                'profession' => 'required|string|max:255',
+                'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
+                'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
+                'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
+            ]);
+
+            $data = $request->only([
+                'nom', 'prenom', 'nomJeuneFille', 'sexe', 'dateNaissance', 'paysVilleNaissance',
+                'paysVilleResidence', 'quartierResidence', 'statutMatrimonial', 'nomPrenomsConjoint',
+                'tel1', 'tel2', 'mail', 'numPersonnePrevenir1', 'nomPersonnePrevenir1', 'numPersonnePrevenir2', 'nomPersonnePrevenir2',
+                'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
+            ]);
+
+            $individu = Individu::findOrFail($niu);
+            $DD = DonneesDemographiques::findOrFail($iddemo);
+
+
+            $individu->update(
+                [
+                    'nom' => $data['nom'],
+                    'prenom' => $data['prenom'],
+                    'telephone' => $data['tel1'],
+                ]
+            );
+
+            $DD->update(
+                [
+                    'sexe' => $data['sexe'] == 'Masculin' ? 'M' :  'F',
+                    'nom' => $data['nom'],
+                    'prenom' => $data['prenom'],
+                    'tel1' => $data['tel1'],
+                    'tel2' => $data['tel2'],
+                    'mail' => $data['mail'],
+                    'numero_personne_a_prevenir1' => $data['numPersonnePrevenir1'],
+                    'numero_personne_a_prevenir2' => $data['numPersonnePrevenir2'],
+                    'nom_personne_a_prevenir1' => $data['nomPersonnePrevenir1'],
+                    'nom_personne_a_prevenir2' => $data['nomPersonnePrevenir2'],
+                    'DOB' => $data['dateNaissance'],
+                    'nom_prenom_conjoint' => $data['nomPrenomsConjoint'],
+                    'pays_ville_naissance' => $data['paysVilleNaissance'],
+                    'pays_ville_residence' => $data['paysVilleResidence'],
+                    'quartier_residence' => $data['quartierResidence'],
+                    'statut_matrimonial' => $data['statutMatrimonial'],
+                    'profession' => $data['profession'],
+                    'secteur_emploi' => $data['secteurEmploi'] === 'Autre' ? $data['autreSecteur'] : $data['secteurEmploi'],
+                    //'autre_secteur' => $data['autreSecteur'],
+                    'groupe_sanguin' => $data['groupeSanguin'],
+                    'nom_de_jeune_fille' => $data['nomJeuneFille'],
+                ]
+            );
+
+            $SE = SessionEnrolement::findOrFail($id);
+
+            $SE->update(
+                [
+                    'est_validee' => 1,
+                ]
+            );
+
+
+            DB::commit();
+            notify()->success('1 dossier modifié', 'succès');
+            return redirect()->route('modal.page', ['id' => $iddemo]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            notify()->error('La modification du dossier a échoué. ' . $e->getMessage() . '.', 'Erreur');
+            return redirect()->back()->withErrors($e->getMessage());
+        }
+    }
+
+    public function ModifyFormView()
+    {
+
+        $niu = session('itemNIU');
+        $item = SessionEnrolement::with(['individu', 'agent', 'donneesDemographiques', 'donneesBiometriques'])->where('NIU', $niu)->first();
+        return view('DD.DDModifyForm', compact('item'));
     }
 
     public function ModifyForm(Request $request)
@@ -51,9 +173,11 @@ class DonneesDemographiquesController extends Controller
 
             Log::info("Captured data: ", [$item]);
 
-            Session::put('item', $item);
             
-            return response()->json(['message' => 'Individu identifié avec succès','redirect' => route('dd.modifyForm')]);
+            Session::put('itemNIU', $item->individu->NIU);
+
+
+            return response()->json(['message' => 'Individu identifié avec succès', 'redirect' => route('dd.modifyForm')]);
         } catch (\Exception $e) {
             Log::error("Error processing the request: " . $e->getMessage());
             return response()->json(['message' => 'Erreur dans la journalisation de l\'identification'], 400);

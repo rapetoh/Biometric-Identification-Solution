@@ -86,7 +86,8 @@ Route::controller(AgentController::class)->group(function(){
 Route::resource('ddForm', DonneesDemographiquesController::class)->middleware('auth');
 Route::get('ddIdentifyBeforeModify', [DonneesDemographiquesController::class, 'IdentifyForModification'])->middleware('auth')->name('IdentifyForModification');
 Route::post('ddModifyForm', [DonneesDemographiquesController::class, 'ModifyForm'])->middleware('auth')->name('dd.modifyForm');
-Route::get('ddModify', [DonneesDemographiquesController::class, 'Modify'])->middleware('auth')->name('dd.modify');
+Route::get('ddModifyForm', [DonneesDemographiquesController::class, 'ModifyFormView'])->middleware('auth')->name('dd.ModifyFormView');
+Route::post('ddModify', [DonneesDemographiquesController::class, 'Modify'])->middleware('auth')->name('dd.modify');
 
 Route::resource('dvForm', DVcontroller::class)->middleware('auth');
 
@@ -113,7 +114,9 @@ Route::post('searchCE', [CentreEnrolementController::class, 'searchCE'])->middle
 Route::resource('id', IdController::class)->middleware('auth');
 
 Route::get('photo', [PhotoController::class, 'createPhoto'])->name('photo');
+Route::get('photoForModification', [PhotoController::class, 'createPhotoToModify'])->name('photoToModify');
 Route::post('photo', [PhotoController::class, 'storePhoto'])->name('photo.store');
+Route::post('photoForModification', [PhotoController::class, 'storePhotoModified'])->name('photo.storePhotoModified');
 
 
 

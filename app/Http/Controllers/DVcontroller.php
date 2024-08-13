@@ -13,6 +13,8 @@ use Spatie\Browsershot\Browsershot;  // Pour utiliser Browsershot
 use Response;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Session;
+use App\Rules\CustomRule;
+
 
 
 class DVcontroller extends Controller
@@ -127,6 +129,11 @@ class DVcontroller extends Controller
         $destination = 'validated/' . $niu;  // Chemin relatif à storage/app
         $destination2 = 'toUpload/' . $niu;  // Chemin relatif à storage/app
 
+        $client = new \GuzzleHttp\Client([
+            'verify' => storage_path('app/cacert.pem')  // Chemin vers le fichier cacert.pem
+        ]);
+
+        
         DB::beginTransaction();
 
         if ($request->input('input_disabled') === 'disabled') {
@@ -196,7 +203,6 @@ class DVcontroller extends Controller
         } else if ($request->input('input_disabled') === 'enabled') {
             try {
 
-
                 $request->validate([
                     'nom' => 'required|string|max:255',
                     'prenom' => 'required|string|max:255',
@@ -208,8 +214,21 @@ class DVcontroller extends Controller
                     'quartierResidence' => 'required|string|max:255',
                     'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
                     'nomPrenomsConjoint' => 'nullable|string|max:255',
-                    'tel1' => 'nullable|string|min:8|max:15,unique:donnees_demographiques,tel1,' . $iddemo . ',idDDemo',
-                    'tel2' => 'nullable|string|min:8|max:15',
+                    'tel1' => [
+                        'nullable', 
+                        'string', 
+                        'min:8', 
+                        'max:15', 
+                        'unique:donnees_demographiques,tel1,' . $iddemo . ',idDDemo', 
+                        new CustomRule($client)
+                    ],
+                    'tel2' => [
+                        'nullable', 
+                        'string', 
+                        'min:8', 
+                        'max:15', 
+                        new CustomRule($client)
+                    ],
                     'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail,' . $iddemo . ',idDDemo',
                     'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
                     'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
