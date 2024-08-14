@@ -230,10 +230,10 @@
                                         <button type="button" class="btn m-auto dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="fa-solid fa-ellipsis-vertical"></i></button>
                                         <div class="dropdown-menu">
                                             <a class="d-flex items-start" href="{{url('pj/'.$dossier->ref_enrolement)}}"> <i style="color: green;" class="fa-solid fa-pencil ms-4 me-2"></i>Continuer l'enrôlement&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-                                            <form action="" method="POST" class="d-flex items-start">
+                                            <form action="{{ route('Session_Pre_Enrollement.destroy', $dossier->idSE) }}" method="POST" class="d-flex items-start">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet agent ?');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: red;" class="fa-solid fa-trash me-2"></i> Suppprimer</a></button>
+                                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce dossier ?');">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: red;" class="fa-solid fa-trash me-2"></i> Suppprimer</a></button>
                                             </form>
 
 

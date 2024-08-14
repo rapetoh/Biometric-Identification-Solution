@@ -270,7 +270,7 @@
                     </div>
                 </div>
             </a>
-            <a href="">
+            <a href="{{route('DedoublonageView')}}">
                 <div class="card mb-4">
                     <div class="card-body">
                         <i class="fa-solid fa-people-arrows fa-lg" style="margin-right: 25px; color: green;"></i>Dédoublonage

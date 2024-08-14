@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\SessionEnrolement;
+use App\Models\SessionPreEnrolement;
 use App\Models\DonneesDemographiques;
 use App\Models\DonneesBiometriques;
+use App\Models\Individu;
 use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
@@ -269,6 +271,24 @@ class SessionPreEnrolementController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+
+            $SE = SessionEnrolement::findOrFail($id);
+            $ref_enr = $SE->getAttribute('ref_enrolement');
+            $niu = $SE->getAttribute('NIU');
+            Individu::where('NIU', $niu)->delete();
+            SessionPreEnrolement::where('ref_enrolement', $ref_enr)->delete();
+            DonneesDemographiques::where('ref_enrolement', $ref_enr)->delete();
+            DonneesBiometriques::where('ref_enrolement', $ref_enr)->delete();
+            $SE->delete();
+
+            notify()->success('Dossier supprimé avec succès!', 'Succès');
+            return redirect()->route('Session_Pre_Enrollement.index')->with('success', 'Dossier de pré-enrolement supprimé avec succès.');
+
+        } catch (\Exception $e) {
+
+            notify()->error($e->getMessage(), 'Erreur');
+            return redirect()->back()->with('error', 'Erreur lors de la suppression du dossier.');
+        }
     }
 }

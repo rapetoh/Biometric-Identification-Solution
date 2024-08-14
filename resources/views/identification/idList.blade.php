@@ -180,7 +180,7 @@
 
     <div class="agents-list">
         <div class="card">
-            <h5 class="card-header" style="font-weight: bold;">Individus enrôlés</h5>
+            <h5 class="card-header" style="font-weight: bold;">Régistre des identifications</h5>
 
             <div class="table-responsive text-nowrap">
                 <div class="search-box">

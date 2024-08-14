@@ -226,7 +226,7 @@
 
                     <div class="column">
                         <!-- Contenu de la deuxième colonne -->
-                        <span style="font-size: 17px;">Biométrie</span>
+                        <span style="font-size: 17px;">Biométrie des empreintes digitales</span>
                         <br>
                         <br>
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgentController;
+use App\Http\Controllers\DedoublonageController;
 use App\Http\Controllers\GoogleController;
 use App\Http\Controllers\AccueilController;
 use App\Http\Controllers\CentreEnrolementController;
@@ -45,6 +46,7 @@ Route::get('/error', function () {
     return view('errors.database', compact('error'));
 })->name('errorPage');
 
+Route::get('dedoublonage', [DedoublonageController::class, 'DedoublonageView'])->middleware('auth')->name('DedoublonageView');
 
 Route::post('/google/auth', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);

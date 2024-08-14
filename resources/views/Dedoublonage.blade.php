@@ -19,6 +19,67 @@
 </head>
 
 <body>
+    <style>
+        .card-custom {
+            min-width: 300px;
+            /* Largeur minimale pour chaque carte */
+            min-height: 200px;
+            margin: 20px;
+            /* Hauteur minimale pour chaque carte */
+        }
+
+        .container {
+            width: 100%;
+            /* or a specific width as needed */
+            overflow-x: auto;
+            /* Enables horizontal scrolling */
+            box-sizing: border-box;
+            /* Includes padding and border in the element's total width */
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                overflow-x: scroll;
+                /* Ensures scrollability on smaller devices */
+            }
+
+            .container .column {
+                flex: 1 0 50%;
+                /* Adjusts the basis to allow two items per row on smaller screens */
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            /* Largeur de la barre de défilement */
+            height: 10px;
+            /* Hauteur de la barre de défilement pour les scrollbars horizontaux */
+        }
+
+        ::-webkit-scrollbar-track {
+            background: whitesmoke;
+            /* Couleur de fond du chemin */
+            border-radius: 10px;
+            /* Arrondissement des angles */
+        }
+
+        /* Style du bouton de défilement (thumb) */
+        ::-webkit-scrollbar-thumb {
+            background-color: green;
+            /* Couleur de fond du bouton de défilement */
+            border-radius: 10px;
+            /* Arrondissement des angles */
+            border: 2px solid gray;
+            /* Bordure autour du bouton, optionnel */
+        }
+
+        /* Style du bouton de défilement au survol */
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: # darker green;
+            /* Couleur au survol */
+        }
+    </style>
     <div id="loader">
         <div class="spinner"></div>
     </div>
@@ -135,27 +196,64 @@
     <div class="row m-5">
         <div class="col-md-12">
             <div class="card mb-4">
-                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">Photo &nbsp;<i style="color: green;" class="fa-solid fa-images fa-lg  "></i></h4>
+                <h4 class="card-header" style="color: red; font-weight: 600; font-size: 15px; margin-left: 39px;">Dédoublonage &nbsp;<i style="color: green;" class="fa-solid fa-people-arrows fa-lg  "></i></h4>
 
                 <!-- Account -->
                 <div class="card-body pt-2">
-                    @csrf
+                    <div class="container-fluid mt-5">
+                        @foreach ($clusters as $index => $cluster)
+                        @if (count($cluster) >= 2) <!-- Affiche seulement les clusters avec au moins deux personnes -->
+                        <div class="container mb-4">
+                            <div class="card card-custom mx-2" style="border: green solid 1px;">
+                                <div class="card-header">
+                                    Doublons
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-0 flex-nowrap" style="overflow-x: auto;">
+                                        @foreach ($cluster as $person)
+                                        <div class="col-md-6">
+                                            <!-- Ajout de classes pour les marges -->
+                                            <div class="card text-center mb-3 card-custom mx-2">
+                                                <div class="card-body">
+                                                    @php
+                                                    $photoPath = $person->NIU . '/photo' . $person->NIU . '.png';
 
-
-                    <div class="container">
-                        <div class="column" style="margin: auto;">
-                            <!-- Contenu de la deuxième colonne -->
-                            <span style="font-size: 17px;">Capture de photo pour modification de l'identité</span><br>
-                            <div class="button-container" style="margin: auto;">
-                                <video style="border: 2px solid transparent; border-radius: 19px;" id="video" width="640" height="480" autoplay></video>
-                            </div><br><br>
-                            <div class="button-container">
-                                <button id="snap" class="btn icon-button"><i class="fa-solid fa-camera" style="color: #0f8000;"></i></button>
-                                <canvas id="canvas" style="border: 2px solid transparent; border-radius: 19px; display:none;" width="240" height="180"></canvas>
-                                <button id="save" class="btn icon-button" disabled><i class="fas fa-save" style="color: #0f8000;"></i></button>
+                                                    @endphp
+                                                    <circle style="" cx="50%" cy="50%" r="40%" stroke="black" stroke-width="3" fill="black">
+                                                        @if (Storage::disk('val')->exists($photoPath))
+                                                        <img style=" margin: auto ;border-radius: 1000px; width: 140px; height:100px;" src="{{ Storage::disk('val')->url($photoPath) }}" alt="Description de l'image">
+                                                        @else
+                                                        <i class="fa-solid fa-user fa-2xl" style="color:green; width: 140px;"></i><br>
+                                                        @endif
+                                                    </circle>
+                                                    <br>
+                                                    <h5 class="card-title" style="font-weight: 700;">{{ $person->nom }} {{ $person->prenom }}</h5>
+                                                    <p class="card-text"><span style="font-weight: 500; color: green;">Profession: </span> {{ $person->profession }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Secteur d'emploi: </span>{{ $person->secteur_emploi }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Mail: </span>{{ $person->mail }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Sexe: </span>{{ $person->sexe }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Date de naissance: </span>{{ $person->DOB }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Pays-Ville de naissance: </span>{{ $person->pays_ville_naissance }}</p>
+                                                    <br>
+                                                    <p class="card-text"> <span style="font-weight: 500; color: green;">Quartier de residence: </span>{{ $person->quartier_residence }}</p>
+                                                    <br><a href="javascript:void(0);" style="background-color: red;" class="btn btn-primary">Supprimer le doublon</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        @endif
+                        @endforeach
                     </div>
+
                     <!-- /Account -->
                 </div>
             </div>
@@ -191,57 +289,12 @@
                 window.addEventListener('offline', updateOnlineStatus);
                 updateOnlineStatus();
             }
-
-            const video = document.getElementById('video');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            const snapButton = document.getElementById('snap');
-            const saveButton = document.getElementById('save');
-
-            // Accéder à la webcam
-            navigator.mediaDevices.getUserMedia({
-                    video: true
-                })
-                .then(function(stream) {
-                    video.srcObject = stream;
-                })
-                .catch(function(error) {
-                    console.log("Erreur lors de l'accès à la caméra: ", error);
-                });
-
-            // Capture de la photo
-            snapButton.addEventListener('click', function() {
-                context.drawImage(video, 0, 0, 240, 180);
-                saveButton.disabled = false;
-                canvas.style.display = 'block'; // Afficher le canvas après la capture
-            });
-
-            // Enregistrer la photo
-            saveButton.addEventListener('click', function() {
-                canvas.toBlob(function(blob) {
-                    let formData = new FormData();
-                    formData.append('photo', blob, 'photo.png');
-
-                    fetch("{{ route('photo.storePhotoModified') }}", {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                            }
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            window.location.href = "{{ route('dd.ModifyFormView') }}";
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                }, 'image/png');
-            });
         </script>
         <script src="{{ asset('js/empreinte.js') }}"></script>
         <script src="{{ asset('js/socket.io.min.js') }}"></script>
         <script src="{{ asset('js/loading.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
         <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
         <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
