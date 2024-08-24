@@ -26,7 +26,7 @@ class Pre_Enrôlement extends Controller
      */
     public function index()
     {
-        return 'ee' ;
+        return 'ee';
     }
 
     /**
@@ -87,44 +87,73 @@ class Pre_Enrôlement extends Controller
         ]);
 
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|min:2|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'prenom' => 'required|string|min:2|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'sexe' => 'required|in:Masculin,Féminin',
-            'nomJeuneFille' => 'nullable|string|max:255',
+            'nomJeuneFille' => 'nullable|string|min:2|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'dateNaissance' => 'required|date|before:1 years ago',
-            'paysVilleNaissance' => 'required|string|max:255',
-            'paysVilleResidence' => 'required|string|max:255',
-            'quartierResidence' => 'required|string|max:255',
+            'paysVilleNaissance' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'paysVilleResidence' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'quartierResidence' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
-            'nomPrenomsConjoint' => 'nullable|string|max:255',
+            'nomPrenomsConjoint' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:donnees_demographiques,tel1', new CustomRule($client)],
-            'tel2' => 'nullable|string|min:8|max:15',
+            'tel2' => ['nullable', 'string', 'min:8', 'max:15', new CustomRule($client)],
             'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail',
-            'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-            'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-            'numPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-            'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-            'profession' => 'required|string|max:255',
+            'numPersonnePrevenir1' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+            'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'numPersonnePrevenir2' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+            'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'profession' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
-            'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
+            'autreSecteur' => 'nullable|string|max:255|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|required_if:secteurEmploi,Autre',
             'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
         ]);
 
-        $NIU = Uuid::uuid4();
-        $NIU_int = hexdec(substr($NIU, 0, 16));
-
-
+        function generateLargeRandomNumber($length = 17) {
+            if ($length < 1) {
+                return '0'; // Juste pour éviter les erreurs de longueur non valide
+            }
+        
+            // Génère le premier chiffre entre 1 et 9 pour éviter les zéros initiaux
+            $result = (string) mt_rand(1, 9);
+        
+            // Génère le reste des chiffres
+            for ($i = 1; $i < $length; $i++) {
+                $result .= mt_rand(0, 9);
+            }
+        
+            return $result;
+        }
+        $NIU_int = generateLargeRandomNumber();
         $ref_Enr = Uuid::uuid4()->toString();
         $ref_Enr_short = substr($ref_Enr, 0, 25);
 
         $data = $request->only([
-            'nom', 'prenom', 'nomJeuneFille', 'sexe', 'dateNaissance', 'paysVilleNaissance',
-            'paysVilleResidence', 'quartierResidence', 'statutMatrimonial', 'nomPrenomsConjoint',
-            'tel1', 'tel2', 'mail', 'numPersonnePrevenir1', 'nomPersonnePrevenir1', 'numPersonnePrevenir2', 'nomPersonnePrevenir2',
-            'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
+            'nom',
+            'prenom',
+            'nomJeuneFille',
+            'sexe',
+            'dateNaissance',
+            'paysVilleNaissance',
+            'paysVilleResidence',
+            'quartierResidence',
+            'statutMatrimonial',
+            'nomPrenomsConjoint',
+            'tel1',
+            'tel2',
+            'mail',
+            'numPersonnePrevenir1',
+            'nomPersonnePrevenir1',
+            'numPersonnePrevenir2',
+            'nomPersonnePrevenir2',
+            'profession',
+            'secteurEmploi',
+            'autreSecteur',
+            'groupeSanguin'
         ]);
 
-
+        DB::beginTransaction();
 
 
         try {
@@ -132,19 +161,9 @@ class Pre_Enrôlement extends Controller
             $connected = $this->isConnectedToInternet();
 
             if ($connected) {
-                if ($request->has('mail')) {
+                if ($request->filled('mail')) {
                     Mail::to($data['mail'])->send(new PreEnrollMail($ref_Enr_short));
                 }
-
-                DB::beginTransaction();
-                Individu::create(
-                    [
-                        'NIU' => $NIU_int,
-                        'nom' => $data['nom'],
-                        'prenom' => $data['prenom'],
-                        'telephone' => $data['tel1'],
-                    ]
-                );
 
                 DonneesDemographiques::create(
                     [
@@ -173,6 +192,15 @@ class Pre_Enrôlement extends Controller
                         'ref_enrolement' => $ref_Enr_short,
                         'idAgent' => 0,
                         'nom_de_jeune_fille' => $data['nomJeuneFille'],
+                    ]
+                );
+
+                Individu::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'nom' => $data['nom'],
+                        'prenom' => $data['prenom'],
+                        'telephone' => $data['tel1'],
                     ]
                 );
 

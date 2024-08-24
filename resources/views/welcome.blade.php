@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/core.css?id=fdb5cd3f802d37d094730acf8fdcb33a" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/theme-default.css?id=da9b9645b9e4f480d38ea81168db36b7" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/css/demo.css?id=0f3ae65b84f44dbd4971231c5d97ac3b" />
+    <link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><!-- Core CSS -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" />
+<!-- Vendor Styles -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" />
+<!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
@@ -183,10 +185,11 @@
             <br>
             <br>
 
+
             <div class="card mb-4" style="background-color: {{ $dircount!=0 ? 'white' : '#E5E5E5' }};">
-                <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
+                <span class="flex-shrink-0 badge badge-center rounded-pill {{$dircount!=0 ? 'bg-danger' : ''}} w-px-25 h-px-25" style="position: absolute; top: 5px; right: 5px;">{{$dircount}}</span>
                 <div class="card-body">
-                    <form id="uploadForm" action="@if(session('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
+                    <form id="uploadForm" action="@if(cache('google_access_token')) {{ route('upload.drive') }} @else {{ url('/google/auth') }} @endif" method="POST">
                         @csrf
                         <button type="submit" {{$dircount==0 ? 'disabled':''}}>
                             <i class="fa-solid fa-arrows-rotate" style="margin-right: 25px; margin-left: -145px; color: green;"></i>Synchroniser les données
@@ -197,7 +200,7 @@
 
             <a href="{{$count_dossier_pre_enr!=0 ? route('Session_Pre_Enrollement.index') : '#'}}">
                 <div class="card mb-4" style="background-color: {{ $count_dossier_pre_enr!=0 ? 'white' : '#E5E5E5' }};">
-                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count_dossier_pre_enr!=0 ? 'bg-danger' : ''}} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count_dossier_pre_enr}}</span>
+                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count_dossier_pre_enr!=0 ? 'bg-danger' : ''}} w-px-25 h-px-25" style="position: absolute; top: 5px; right: 5px;">{{$count_dossier_pre_enr}}</span>
                     <div class="card-body">
                         <i class="fa-solid fa-folder-closed" style="margin-right: 25px; color: green;"></i>Dossiers de pré-enrôlement
                     </div>
@@ -270,16 +273,20 @@
                     </div>
                 </div>
             </a>
+
+            @if (auth()->user()->isAdmin == true)
             <a href="{{route('DedoublonageView')}}">
                 <div class="card mb-4">
                     <div class="card-body">
-                        <i class="fa-solid fa-people-arrows fa-lg" style="margin-right: 25px; color: green;"></i>Dédoublonage
+                        <i class="fa-solid fa-people-arrows fa-lg" style="margin-right: 25px; color: green;"></i>Dédoublonnage
                     </div>
                 </div>
             </a>
+            @endif
+
             <a href="{{$count!=0 ? route('dvForm.create') : '#'}}">
                 <div class="card mb-4" style="background-color: {{ $count!=0 ? 'white' : '#E5E5E5' }};">
-                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count!=0 ? 'bg-danger' : '' }} w-px-20 h-px-20" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
+                    <span class="flex-shrink-0 badge badge-center rounded-pill {{$count!=0 ? 'bg-danger' : '' }} w-px-25 h-px-25" style="position: absolute; top: 5px; right: 5px;">{{$count}}</span>
                     <div class="card-body">
                         <i class="fa-solid fa-hourglass-start" style="margin-right: 25px; color: green;"></i>Dossiers en attente de validation
                     </div>
@@ -293,8 +300,8 @@
             Informations
             <!-- <br>
             <br> -->
-            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">CE: {{auth()->user()->centreEnrolement->nom}}</span>
-            <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">Commune: {{auth()->user()->centreEnrolement->commune}}</span>
+            <span style="font-size: 12px;" class="badge rounded-pill bg-label-danger me-1">CE: {{auth()->user()->centreEnrolement->nom}}</span>
+            <span style="font-size: 12px;" class="badge rounded-pill bg-label-danger me-1">Commune: {{auth()->user()->centreEnrolement->commune}}</span>
             <hr style="margin: 20px;">Contacts Administrateurs - Région: <span style="font-size: 13px;" class="badge rounded-pill bg-label-danger me-1">{{ auth()->user()->region->nom }}</span> <br>
             <br>
             <div class="row">
@@ -331,13 +338,22 @@
     </script>
     <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/bootstrap.js?id=0a1f83aa0a6a7fd382c37453e3f11128"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/node-waves/node-waves.js?id=0ca80150f23789eaa9840778ce45fc5c"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
-    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
-    @notifyJs
+    
+  <!-- Include Scripts -->
+  <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
+  <!-- BEGIN: Vendor JS-->
+
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CbdDuLi-.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CED9k22g.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/_commonjsHelpers-BosuxZz1.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-Czc5UB_B.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popper-DNZnuk_L.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/node-waves-XDuO7R8f.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/perfect-scrollbar-CLUWhEAQ.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/hammer-36U3igM9.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/typeahead-BKwBoP4T.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/menu-CY9lYqyY.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CbdDuLi-.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popper-DNZnuk_L.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/node-waves-XDuO7R8f.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/perfect-scrollbar-CLUWhEAQ.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/hammer-36U3igM9.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/typeahead-BKwBoP4T.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/menu-CY9lYqyY.js"></script>
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/moment-C2dq_Ep4.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/_commonjsHelpers-BosuxZz1.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/_commonjs-dynamic-modules-TDtrdbi3.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/datatables-bootstrap5-DVZaE8TT.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CED9k22g.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-Czc5UB_B.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/select2-Cg3gXliv.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popular-BiiL9sLA.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap5-COKFI6zn.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/index-CrI7K4FP.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/auto-focus-DSygTglc.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/cleave-C6wy96Im.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/cleave-phone-DRZWSJE_.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/sweetalert2-DnyLP1RS.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/moment-C2dq_Ep4.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/datatables-bootstrap5-DVZaE8TT.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/select2-Cg3gXliv.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popular-BiiL9sLA.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap5-COKFI6zn.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/auto-focus-DSygTglc.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/cleave-C6wy96Im.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/cleave-phone-DRZWSJE_.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/sweetalert2-DnyLP1RS.js"></script><!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/main-DRGn0ueN.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/main-DRGn0ueN.js"></script>
+<!-- END: Theme JS-->
+<!-- Pricing Modal JS-->
+<!-- END: Pricing Modal JS-->
+<!-- BEGIN: Page JS-->
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/laravel-user-management-CgiBSgLM.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/laravel-user-management-CgiBSgLM.js"></script><!-- END: Page JS-->
+<script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script>    
+@notifyJs
 </body>
 
 </html>

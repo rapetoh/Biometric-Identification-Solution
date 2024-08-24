@@ -4,9 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/core.css?id=fdb5cd3f802d37d094730acf8fdcb33a" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/theme-default.css?id=da9b9645b9e4f480d38ea81168db36b7" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/css/demo.css?id=0f3ae65b84f44dbd4971231c5d97ac3b" />
+    <link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><!-- Core CSS -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" />
+<!-- Vendor Styles -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" />
+<!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
@@ -266,9 +268,9 @@
             background: linear-gradient(45deg, #008000, #FF0000);
         }
     </style>
-    <div id="loader">
+    <!-- <div id="loader">
         <div class="spinner"></div>
-    </div>
+    </div> -->
     @include('notify::components.notify')
 
     <nav class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme" id="layout-navbar">
@@ -397,33 +399,33 @@
     @endforeach
 </ul> -->
             <div class="subgroup" style="margin-bottom:18px;">
-                <div class="card degrade" data-aos="fade-up" data-aos-delay="100" style=" margin-right:18px; height:100px; background-color: green ;border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="100" style=" margin-right:18px; height:120px; background-color: green ;border-radius: 15px; color: white">
                     <div class="card-inner">
-                        <h6 style="color: white; font-size: 11.5px; ">Total Enrôlements </h6>
+                        <h6 style="color: white; font-size: 11.5px; ">Enrôlements validés</h6>
                         <span class=""></span>
                     </div>
                     <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_enr?$nbre_enr:'Error'}} <i class="fa-solid fa-id-card fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" data-aos="fade-up" data-aos-delay="200" style=" margin-right:18px; height:100px; background-color: red ; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="200" style=" margin-right:18px; height:120px; background-color: red ; border-radius: 15px; color: white">
                     <div class="card-inner">
-                        <h3 style="color: white; font-size: 11.5px;">Total Agents</h3>
+                        <h6 style="color: white; font-size: 11.5px;">Total Agents</h6>
                         <span class=""></span>
                     </div>
                     <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_agts?$nbre_agts:'Error'}} <i class="fa-solid fa-users fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" data-aos="fade-up" data-aos-delay="300" style=" margin-right:18px; height:100px; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="300" style=" margin-right:18px; height:120px; border-radius: 15px; color: white">
                     <div class="card-inner">
-                        <h3 style="color: white; font-size: 11.5px;">Total CE</h3>
+                        <h6 style="color: white; font-size: 11.5px;">Total CE</h6>
                         <span class=""></span>
                     </div>
                     <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_CE?$nbre_CE:'Error'}} <i class="fa-solid fa-building fa-sm" style="color: #ffffff;"></i></h1>
                 </div>
 
-                <div class="card degrade" data-aos="fade-up" data-aos-delay="400" style=" height:100px; border-radius: 15px; color: white">
+                <div class="card degrade" data-aos="fade-up" data-aos-delay="400" style=" height:120px; border-radius: 15px; color: white">
                     <div class="card-inner">
-                        <h3 style="color: white; font-size: 11.5px;">Total dossiers de Pré-enrôlement</h3>
+                        <h6 style="color: white; font-size: 11.5px;">Total dossiers de Pré-enrôlement</h6>
                         <span class=""></span>
                     </div>
                     <h1 style="font-size: 40px; font-weight: 500;">{{$nbre_SPE?$nbre_SPE:'Error'}} <i class="fa-regular fa-folder-open fa-sm" style="color: #ffffff;"></i></h1>
@@ -760,7 +762,7 @@
 
             const progressBarOptions = {
                 series: [{
-                    data: ["{{isset($PSA['Primaire'])?$PSA['Primaire']:0}}", "{{isset($PSA['Secondaire'])?$PSA['Secondaire']:0}}", "{{isset($PSA['Tertiaire'])?$PSA['Tertiaire']:0}}", "{{isset($PSA['Quaternaire'])?$$PSA['Quaternaire']:0}}", "{{ array_sum(array_diff_key($PSA, array_flip(['Primaire', 'Secondaire', 'Tertiaire', 'Quaternaire']))) }}"] // Exemple de pourcentage de participation par secteur
+                    data: ["{{isset($PSA['Primaire'])?$PSA['Primaire']:0}}", "{{isset($PSA['Secondaire'])?$PSA['Secondaire']:0}}", "{{isset($PSA['Tertiaire'])?$PSA['Tertiaire']:0}}", "{{isset($PSA['Quaternaire'])?$PSA['Quaternaire']:0}}", "{{ array_sum(array_diff_key($PSA, array_flip(['Primaire', 'Secondaire', 'Tertiaire', 'Quaternaire']))) }}"] // Exemple de pourcentage de participation par secteur
                 }],
                 chart: {
                     type: 'bar',
@@ -953,7 +955,7 @@
             const doughnutChart = new ApexCharts(document.querySelector("#doughnut-chart"), doughnutChartOptions);
             doughnutChart.render();
 
-
+    
 
             const candlestickChartOptions = {
                 series: [{
@@ -999,17 +1001,26 @@
         <script src="{{ asset('js/loading.js') }}"></script>
         <script src="{{ asset('js/aos.js') }}"></script>
         <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/bootstrap.js?id=0a1f83aa0a6a7fd382c37453e3f11128"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/node-waves/node-waves.js?id=0ca80150f23789eaa9840778ce45fc5c"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js?id=f4192eb35ed7bdba94dcb820a77d9e47"></script>
-        <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/menu.js?id=201bb3c555bc0ff219dec4dfd098c916"></script>
+          <!-- Include Scripts -->
+  <!-- $isFront is used to append the front layout scripts only on the front layout otherwise the variable will be blank -->
+  <!-- BEGIN: Vendor JS-->
+
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CbdDuLi-.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CED9k22g.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/_commonjsHelpers-BosuxZz1.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-Czc5UB_B.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popper-DNZnuk_L.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/node-waves-XDuO7R8f.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/perfect-scrollbar-CLUWhEAQ.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/hammer-36U3igM9.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/typeahead-BKwBoP4T.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/menu-CY9lYqyY.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/jquery-CbdDuLi-.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/popper-DNZnuk_L.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/node-waves-XDuO7R8f.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/perfect-scrollbar-CLUWhEAQ.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/hammer-36U3igM9.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/typeahead-BKwBoP4T.js"></script><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/menu-CY9lYqyY.js"></script>
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/apexcharts-ZYWXGMLC.js" /><link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/_commonjsHelpers-BosuxZz1.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/apexcharts-ZYWXGMLC.js"></script><!-- END: Page Vendor JS-->
+<!-- BEGIN: Theme JS-->
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/main-DRGn0ueN.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/main-DRGn0ueN.js"></script>
+<!-- END: Theme JS-->
+<!-- Pricing Modal JS-->
+<!-- END: Pricing Modal JS-->
+<!-- BEGIN: Page JS-->
+<link rel="modulepreload" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/dashboards-analytics-BHlcqxn4.js" /><script type="module" src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/dashboards-analytics-BHlcqxn4.js"></script><!-- END: Page JS-->
         @notifyJs
         @livewireScripts
         <script>
   AOS.init();
 </script>
+<script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script>    
+
 </body>
 
 </html>

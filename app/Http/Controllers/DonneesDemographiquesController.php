@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use App\Rules\CustomRule;
+use App\Rules\CustomRuleForMail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
@@ -28,9 +29,7 @@ class DonneesDemographiquesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-    }
+    public function index() {}
 
 
     public function IdentifyForModification()
@@ -54,47 +53,64 @@ class DonneesDemographiquesController extends Controller
         try {
 
             $request->validate([
-                'nom' => 'required|string|max:255',
-                'prenom' => 'required|string|max:255',
+                'nom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                'prenom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                 'sexe' => 'required|in:Masculin,Féminin',
-                'nomJeuneFille' => 'nullable|string|max:255',
+                'nomJeuneFille' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                 'dateNaissance' => 'required|date|before:1 years ago',
-                'paysVilleNaissance' => 'required|string|max:255',
-                'paysVilleResidence' => 'required|string|max:255',
-                'quartierResidence' => 'required|string|max:255',
+                'paysVilleNaissance' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                'paysVilleResidence' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                'quartierResidence' => 'required|string|min:3|max:255',
                 'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
-                'nomPrenomsConjoint' => 'nullable|string|max:255',
+                'nomPrenomsConjoint' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                 'tel1' => [
-                    'nullable', 
-                    'string', 
-                    'min:8', 
-                    'max:15', 
-                    'unique:donnees_demographiques,tel1,' . $iddemo . ',idDDemo', 
+                    'nullable',
+                    'string',
+                    'min:8',
+                    'max:15',
+                    'unique:donnees_demographiques,tel1,' . $iddemo . ',idDDemo',
                     new CustomRule($client)
                 ],
                 'tel2' => [
-                    'nullable', 
-                    'string', 
-                    'min:8', 
-                    'max:15', 
+                    'nullable',
+                    'string',
+                    'min:8',
+                    'max:15',
                     new CustomRule($client)
                 ],
                 'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail,' . $iddemo . ',idDDemo',
-                'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-                'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-                'numPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-                'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-                'profession' => 'required|string|max:255',
+                'numPersonnePrevenir1' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+                'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                'numPersonnePrevenir2' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+                'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                'profession' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                 'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
-                'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
+                'autreSecteur' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255|required_if:secteurEmploi,Autre',
                 'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
             ]);
 
             $data = $request->only([
-                'nom', 'prenom', 'nomJeuneFille', 'sexe', 'dateNaissance', 'paysVilleNaissance',
-                'paysVilleResidence', 'quartierResidence', 'statutMatrimonial', 'nomPrenomsConjoint',
-                'tel1', 'tel2', 'mail', 'numPersonnePrevenir1', 'nomPersonnePrevenir1', 'numPersonnePrevenir2', 'nomPersonnePrevenir2',
-                'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
+                'nom',
+                'prenom',
+                'nomJeuneFille',
+                'sexe',
+                'dateNaissance',
+                'paysVilleNaissance',
+                'paysVilleResidence',
+                'quartierResidence',
+                'statutMatrimonial',
+                'nomPrenomsConjoint',
+                'tel1',
+                'tel2',
+                'mail',
+                'numPersonnePrevenir1',
+                'nomPersonnePrevenir1',
+                'numPersonnePrevenir2',
+                'nomPersonnePrevenir2',
+                'profession',
+                'secteurEmploi',
+                'autreSecteur',
+                'groupeSanguin'
             ]);
 
             $individu = Individu::findOrFail($niu);
@@ -173,7 +189,7 @@ class DonneesDemographiquesController extends Controller
 
             Log::info("Captured data: ", [$item]);
 
-            
+
             Session::put('itemNIU', $item->individu->NIU);
 
 
@@ -207,26 +223,26 @@ class DonneesDemographiquesController extends Controller
         ]);
 
         $request->validate([
-            'nom' => 'required|string|max:255',
-            'prenom' => 'required|string|max:255',
+            'nom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'prenom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'sexe' => 'required|in:Masculin,Féminin',
-            'nomJeuneFille' => 'nullable|string|max:255',
+            'nomJeuneFille' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'dateNaissance' => 'required|date|before:1 years ago',
-            'paysVilleNaissance' => 'required|string|max:255',
-            'paysVilleResidence' => 'required|string|max:255',
-            'quartierResidence' => 'required|string|max:255',
+            'paysVilleNaissance' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'paysVilleResidence' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'quartierResidence' => 'required|string|min:3|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
-            'nomPrenomsConjoint' => 'nullable|string|max:255',
+            'nomPrenomsConjoint' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:donnees_demographiques,tel1', new CustomRule($client)],
             'tel2' => ['nullable', 'string', 'min:8', 'max:15', new CustomRule($client)],
-            'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail',
-            'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-            'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-            'numPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-            'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-            'profession' => 'required|string|max:255',
+            'mail' => ['nullable', 'email', 'max:255', 'unique:donnees_demographiques,mail', new CustomRuleForMail($client)],
+            'numPersonnePrevenir1' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+            'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'numPersonnePrevenir2' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+            'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'profession' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
-            'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
+            'autreSecteur' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255|required_if:secteurEmploi,Autre',
             'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
             'cniFile' => 'file|mimes:pdf|max:2048',
             'passportFile' => 'file|mimes:pdf|max:2048',
@@ -288,8 +304,23 @@ class DonneesDemographiquesController extends Controller
         Log::info('Imploded Pieces: ' . $imploded_pieces);
 
 
-        $NIU = Uuid::uuid4();
-        $NIU_int = hexdec(substr($NIU, 0, 16));
+        function generateLargeRandomNumber($length = 17) {
+            if ($length < 1) {
+                return '0'; // Juste pour éviter les erreurs de longueur non valide
+            }
+        
+            // Génère le premier chiffre entre 1 et 9 pour éviter les zéros initiaux
+            $result = (string) mt_rand(1, 9);
+        
+            // Génère le reste des chiffres
+            for ($i = 1; $i < $length; $i++) {
+                $result .= mt_rand(0, 9);
+            }
+        
+            return $result;
+        }
+        $NIU_int = generateLargeRandomNumber();
+        //$unique_id = substr(uniqid(), 0, 17); 
 
 
         $ref_Enr = Uuid::uuid4()->toString();
@@ -298,10 +329,27 @@ class DonneesDemographiquesController extends Controller
 
         // Récupération des données du formulaire
         $data = $request->only([
-            'nom', 'prenom', 'nomJeuneFille', 'sexe', 'dateNaissance', 'paysVilleNaissance',
-            'paysVilleResidence', 'quartierResidence', 'statutMatrimonial', 'nomPrenomsConjoint',
-            'tel1', 'tel2', 'mail', 'numPersonnePrevenir1', 'nomPersonnePrevenir1', 'numPersonnePrevenir2', 'nomPersonnePrevenir2',
-            'profession', 'secteurEmploi', 'autreSecteur', 'groupeSanguin'
+            'nom',
+            'prenom',
+            'nomJeuneFille',
+            'sexe',
+            'dateNaissance',
+            'paysVilleNaissance',
+            'paysVilleResidence',
+            'quartierResidence',
+            'statutMatrimonial',
+            'nomPrenomsConjoint',
+            'tel1',
+            'tel2',
+            'mail',
+            'numPersonnePrevenir1',
+            'nomPersonnePrevenir1',
+            'numPersonnePrevenir2',
+            'nomPersonnePrevenir2',
+            'profession',
+            'secteurEmploi',
+            'autreSecteur',
+            'groupeSanguin'
         ]);
 
 
@@ -383,15 +431,6 @@ class DonneesDemographiquesController extends Controller
             try {
 
 
-                Individu::create(
-                    [
-                        'NIU' => $NIU_int,
-                        'nom' => $data['nom'],
-                        'prenom' => $data['prenom'],
-                        'telephone' => $data['tel1'],
-                    ]
-                );
-
                 DonneesDemographiques::create(
                     [
                         'NIU' => $NIU_int,
@@ -419,6 +458,15 @@ class DonneesDemographiquesController extends Controller
                         'ref_enrolement' => $ref_Enr_short,
                         'idAgent' => auth()->user()->idAgent,
                         'nom_de_jeune_fille' => $data['nomJeuneFille'],
+                    ]
+                );
+
+                Individu::create(
+                    [
+                        'NIU' => $NIU_int,
+                        'nom' => $data['nom'],
+                        'prenom' => $data['prenom'],
+                        'telephone' => $data['tel1'],
                     ]
                 );
 

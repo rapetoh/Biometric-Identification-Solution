@@ -8,6 +8,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Google\Client;
 use Google\Service\Drive;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
+
 
 
 set_time_limit(200); 
@@ -54,8 +57,11 @@ class GoogleController extends Controller
             $client->setAccessToken($token);
 
             // Vous pouvez maintenant sauvegarder ce token dans une base de données ou une session pour des utilisations ultérieures
-            session(['google_access_token' => $token]);
+            //session(['google_access_token' => $token]);
             
+            Cache::put('google_access_token', $token, now()->addHours(2000));
+            
+            Log::info('voilaaa le token:',[cache('google_access_token' )]);// Store for 24 hours
             
             notify()->success('Succès de l\'authentification au serveur distant', 'Succès');
             return redirect('/')->with('success', 'Authentifié avec Google Drive');
@@ -68,7 +74,10 @@ class GoogleController extends Controller
 
     public function uploadToDrive()
     {
-        if (!session()->has('google_access_token')) {
+        Log::info('voilaaa le token encore:',[cache('google_access_token' )]);// Store for 24 hours 
+
+
+        if (!Cache::has('google_access_token')) {
             return redirect('/google/auth');
         }
 
@@ -79,7 +88,7 @@ class GoogleController extends Controller
                 'timeout' => 200.0,  // Timeout prolongé pour les uploads
             ]);
             $client->setHttpClient($httpClient);
-            $client->setAccessToken(session('google_access_token'));
+            $client->setAccessToken(cache('google_access_token'));
             $driveService = new Drive($client);
     
             $folderPath = storage_path('app/toUpload');
@@ -119,6 +128,8 @@ class GoogleController extends Controller
                 // Recursively upload files in the folder
                 $this->uploadDirectory($driveService, $filePath, $createdFolder->id);
 
+                rmdir($filePath);
+
             } else {
 
                 $fileMetadata = new Drive\DriveFile([
@@ -132,6 +143,8 @@ class GoogleController extends Controller
                     'uploadType' => 'multipart',
                     'fields' => 'id'
                 ]);
+
+                unlink($filePath);
             }
         }
     }

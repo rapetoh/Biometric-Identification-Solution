@@ -4,10 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/core.css?id=fdb5cd3f802d37d094730acf8fdcb33a" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/theme-default.css?id=da9b9645b9e4f480d38ea81168db36b7" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/css/demo.css?id=0f3ae65b84f44dbd4971231c5d97ac3b" />
-    <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
+    <link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><!-- Core CSS -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" />
+<!-- Vendor Styles -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" />
+<!-- Page Styles -->    <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/bootstrap.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
@@ -378,7 +379,7 @@
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data.message);
-                                console.log(data.realNIU);
+                                console.log("realNIU: "+data.realNIU);
                                 console.log(data.identity);
                                 //location.reload();
                                 //$('#myModal').modal('show');
@@ -404,7 +405,7 @@
                                     pht.src = newUrl;
 
                                    
-                                    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  :"+data.identity.NIU);
+                                    console.log("rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr  :"+data.realNIU);
     
                                     const postData = {
                                         method: 'POST',
@@ -413,9 +414,10 @@
                                             'Content-Type': 'application/json'
                                         },
                                         body: JSON.stringify({
-                                            NIU: data.identity.NIU,
+                                            NIU: data.realNIU,
                                         }) // Remplacez par les données nécessaires
                                     };
+                                    
                                     fetch("{{route('dd.modifyForm')}}", postData)
                                         .then(secondresponse => {
                                             if (!secondresponse.ok) {

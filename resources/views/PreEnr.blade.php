@@ -4,9 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/core.css?id=fdb5cd3f802d37d094730acf8fdcb33a" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/theme-default.css?id=da9b9645b9e4f480d38ea81168db36b7" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/css/demo.css?id=0f3ae65b84f44dbd4971231c5d97ac3b" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&ampdisplay=swap" rel="stylesheet">
+
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><!-- Core CSS -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" />
+<!-- Vendor Styles -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" />
+<!-- Page Styles -->
     <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
@@ -98,7 +104,7 @@
                         @csrf
                         <div class="actual-form" style="max-width: auto">
                             <br><br>
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nom') is-invalid @enderror" id="nom" name="nom" placeholder="Nom" value="{{ old('nom') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom *</label>
@@ -110,7 +116,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('prenom') is-invalid @enderror" id="prenom" name="prenom" placeholder="Prénom" value="{{ old('prenom') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom *</label>
@@ -122,7 +128,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <select class="form-control @error('sexe') is-invalid @enderror" id="sexe" name="sexe">
                                         <option value="">Sélectionner le sexe</option>
@@ -139,7 +145,7 @@
                             </div>
 
                             <!-- Champ Nom de jeune fille, caché initialement -->
-                            <div class="input-wrap m-12" id="nomJeuneFilleDiv" style="display: none;">
+                            <div class="input-wrap m-8" id="nomJeuneFilleDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nomJeuneFille') is-invalid @enderror" id="nomJeuneFille" name="nomJeuneFille" placeholder="Nom de jeune fille" value="{{ old('nomJeuneFille') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomJeuneFille">Nom de jeune fille</label>
@@ -152,7 +158,7 @@
                             </div>
 
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="date" class="toggleable form-control @error('dateNaissance') is-invalid @enderror" id="dateNaissance" name="dateNaissance" value="{{ old('dateNaissance') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="dateNaissance">Date de naissance *</label>
@@ -164,7 +170,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('paysVilleNaissance') is-invalid @enderror" id="paysVilleNaissance" name="paysVilleNaissance" placeholder="Pays/Ville de naissance" value="{{ old('paysVilleNaissance') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleNaissance">Pays-Ville de naissance *</label>
@@ -176,7 +182,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('paysVilleResidence') is-invalid @enderror" id="paysVilleResidence" name="paysVilleResidence" placeholder="Pays/Ville de résidence" value="{{ old('paysVilleResidence') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="paysVilleResidence">Pays-Ville de résidence *</label>
@@ -188,7 +194,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('quartierResidence') is-invalid @enderror" id="quartierResidence" name="quartierResidence" placeholder="Quartier de résidence" value="{{ old('quartierResidence') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="quartierResidence">Quartier de résidence *</label>
@@ -200,7 +206,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <select class="form-control @error('statutMatrimonial') is-invalid @enderror" id="statutMatrimonial" name="statutMatrimonial">
                                         <option value="">Sélectionner le statut matrimonial</option>
@@ -219,7 +225,7 @@
                             </div>
 
                             <!-- Champ Nom & Prénoms du conjoint, caché initialement -->
-                            <div class="input-wrap m-12" id="nomPrenomsConjointDiv" style="display: none;">
+                            <div class="input-wrap m-8" id="nomPrenomsConjointDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nomPrenomsConjoint') is-invalid @enderror" id="nomPrenomsConjoint" name="nomPrenomsConjoint" placeholder="Nom & Prénoms du conjoint" value="{{ old('nomPrenomsConjoint') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPrenomsConjoint">Nom & Prénoms du conjoint</label>
@@ -231,7 +237,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="toggleable form-control @error('tel1') is-invalid @enderror" id="tel1" name="tel1" placeholder="Téléphone 1" value="{{ old('tel1') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel1">N° de téléphone 1</label>
@@ -243,7 +249,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="toggleable form-control @error('tel2') is-invalid @enderror" id="tel2" name="tel2" placeholder="Téléphone 2" value="{{ old('tel2') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="tel2">N° de téléphone 2</label>
@@ -255,7 +261,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="email" class="toggleable form-control @error('mail') is-invalid @enderror" id="mail" name="mail" placeholder="Email" value="{{ old('mail') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="mail">Mail</label>
@@ -267,7 +273,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nomPersonnePrevenir1') is-invalid @enderror" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" value="{{ old('nomPersonnePrevenir1') }}" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1 </label>
@@ -280,7 +286,7 @@
                             </div>
 
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="toggleable form-control @error('numPersonnePrevenir1') is-invalid @enderror" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 "  value="{{ old('numPersonnePrevenir1') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
@@ -292,7 +298,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nomPersonnePrevenir2') is-invalid @enderror" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" value="{{ old('nomPersonnePrevenir2') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
@@ -304,7 +310,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="tel" class="toggleable form-control @error('numPersonnePrevenir2') is-invalid @enderror" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" value="{{ old('numPersonnePrevenir2') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2</label>
@@ -316,7 +322,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('profession') is-invalid @enderror" id="profession" name="profession" placeholder="Profession" value="{{ old('profession') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession *</label>
@@ -327,7 +333,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <select class="form-control @error('secteurEmploi') is-invalid @enderror" id="secteurEmploi" name="secteurEmploi">
                                         <option value="">Sélectionner un secteur</option>
@@ -347,7 +353,7 @@
                             </div>
 
                             <!-- Champ caché qui s'affiche seulement si "Autre" est sélectionné -->
-                            <div class="input-wrap m-12" id="autreSecteurDiv" style="display: none;">
+                            <div class="input-wrap m-8" id="autreSecteurDiv" style="display: none;">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('autreSecteur') is-invalid @enderror" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" value="{{ old('autreSecteur') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur *</label>
@@ -359,7 +365,7 @@
                                 </div>
                             </div>
 
-                            <div class="input-wrap m-12">
+                            <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <select class="form-control @error('groupeSanguin') is-invalid @enderror" id="groupeSanguin" name="groupeSanguin">
                                         <option value="">Sélectionner un groupe sanguin</option>
@@ -436,7 +442,7 @@
             });
         });
     </script>
-
+<script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script>    
     <script src="{{ asset('js/AgentLogin.js') }}"></script>
     <script src="{{ asset('js/loading.js') }}"></script>
     <x-notify::notify />

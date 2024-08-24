@@ -27,6 +27,7 @@
             width: 100%;
             height: 100%;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
         }
@@ -56,11 +57,10 @@
 <body>
     <img src="{{ asset('img/idtogo.png') }}" style="width: 90px;" class="w-px-20 h-auto rounded-circle">
     
-    <div class="container">
+    <div class="container" style="margin:auto">
         
-        <div class="recipiant">
-            
-            <div class="numero">{{$id}}</div>
+        <div class="recipiant" style="margin: auto;">
+            <div class="numero">{{$id}}</div><br>
             <div class="indication" style="text-align: center; font-size: 13px; color: green;">
                 <div style="text-align: center; font-size: 13px; color: red; font-weight:bold;">ATTENTION :</div>Ce numéro est personnel et doît être jalousement gardé. Il vous sera demandé lors de votre enrôlement dans un centre. Sans celui-ci, l'enrôlement risque dêtre infaisable.
             </div>
@@ -73,7 +73,7 @@
     </div>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script>    
 </body>
 
 </html>

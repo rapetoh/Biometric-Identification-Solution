@@ -152,6 +152,7 @@
         }
     </style>
     <!-- Modal -->
+   
     <div class="modal fade show" id="myModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: block; overflow:scroll">
         <div class="modal-dialog modal-xl">
             <div class="modal-content">
@@ -318,6 +319,7 @@
             $('#myModal').modal('show');
         });
     </script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.3.2/html2canvas.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

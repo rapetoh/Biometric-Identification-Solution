@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/core.css?id=fdb5cd3f802d37d094730acf8fdcb33a" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/css/theme-default.css?id=da9b9645b9e4f480d38ea81168db36b7" />
-    <link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/css/demo.css?id=0f3ae65b84f44dbd4971231c5d97ac3b" />
-    <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
+    <link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/remixicon-CHNy0vJf.css" /><!-- Core CSS -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/core-DYhY3VUC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/theme-default-D81zB6qC.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/demo-BPAVJiNP.css" />
+<!-- Vendor Styles -->
+<link rel="preload" as="style" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" /><link rel="stylesheet" href="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/build/assets/perfect-scrollbar-urn4H3N7.css" />
+<!-- Page Styles -->    <link rel="stylesheet" href="{{ asset('css/AgentLogin.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/css/all.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/brands.css') }}" />
     <link rel="stylesheet" href="{{ asset('css/solid.css') }}" />
@@ -340,55 +341,6 @@
 
                             <div class="col-md-4">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control @error('nomPersonnePrevenir1') is-invalid @enderror" value="{{ old('nomPersonnePrevenir') }}" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1 </label>
-                                    @error('nomPersonnePrevenir1')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-4">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control @error('numPersonnePrevenir1') is-invalid @enderror" value="{{ old('numPersonnePrevenir') }}" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 " />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
-                                    @error('numPersonnePrevenir1')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control @error('nomPersonnePrevenir2') is-invalid @enderror" value="{{ old('nomPersonnePrevenir2') }}" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
-                                    @error('nomPersonnePrevenir2')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="form-control @error('numPersonnePrevenir2') is-invalid @enderror" value="{{ old('numPersonnePrevenir2') }}" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2</label>
-                                    @error('numPersonnePrevenir2')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control @error('profession') is-invalid @enderror" value="{{ old('profession') }}" id="profession" name="profession" placeholder="Profession" />
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession *</label>
                                     @error('profession')
@@ -410,19 +362,6 @@
                                     </select>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="secteurEmploi">Secteur d'emploi *</label>
                                     @error('secteurEmploi')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <!-- Champ caché qui s'affiche seulement si "Autre" est sélectionné -->
-                            <div class="col-md-4" id="autreSecteurDiv" style="display: none;">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control @error('autreSecteur') is-invalid @enderror" value="{{ old('autreSecteur') }}" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur *</label>
-                                    @error('autreSecteur')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
@@ -452,6 +391,72 @@
                                 </div>
                             </div>
 
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control @error('nomPersonnePrevenir1') is-invalid @enderror" value="{{ old('nomPersonnePrevenir') }}" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1* </label>
+                                    @error('nomPersonnePrevenir1')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="form-control @error('numPersonnePrevenir1') is-invalid @enderror" value="{{ old('numPersonnePrevenir') }}" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 " />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1*</label>
+                                    @error('numPersonnePrevenir1')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control @error('nomPersonnePrevenir2') is-invalid @enderror" value="{{ old('nomPersonnePrevenir2') }}" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2*</label>
+                                    @error('nomPersonnePrevenir2')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="form-control @error('numPersonnePrevenir2') is-invalid @enderror" value="{{ old('numPersonnePrevenir2') }}" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2*</label>
+                                    @error('numPersonnePrevenir2')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            
+
+                            <!-- Champ caché qui s'affiche seulement si "Autre" est sélectionné -->
+                            <div class="col-md-4" id="autreSecteurDiv" style="display: none;">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="form-control @error('autreSecteur') is-invalid @enderror" value="{{ old('autreSecteur') }}" id="autreSecteur" name="autreSecteur" placeholder="Précisez le secteur" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="autreSecteur">Précisez le secteur *</label>
+                                    @error('autreSecteur')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            
                             <div class="col-md-4">
                                 <h6 style="font-weight: 600; font-size: 13.5px; color: green;">Pièces Justificatives *</h6><br>
 
@@ -643,6 +648,7 @@
     </script>
     <script src="{{ asset('js/loading.js') }}"></script>
     <script src="https://kit.fontawesome.com/e00702b042.js" crossorigin="anonymous"></script>
+    <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template/demo/build/assets/bootstrap-B-W6M1Y3.js"></script>    
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/jquery/jquery.js?id=fbe6a96815d9e8795a3b5ea1d0f39782"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/libs/popper/popper.js?id=bd2c3acedf00f48d6ee99997ba90f1d8"></script>
     <script src="https://demos.themeselection.com/materio-bootstrap-html-laravel-admin-template-free/demo/assets/vendor/js/bootstrap.js?id=0a1f83aa0a6a7fd382c37453e3f11128"></script>

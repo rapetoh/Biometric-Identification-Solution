@@ -12,10 +12,10 @@ class FaceId extends Controller
     }
     public function runCommands()
     {
-        $taskName = "IDFace";
+        // $taskName = "IDFace";
 
         // Exécuter la tâche planifiée
-        $output = shell_exec('schtasks /run /tn "' . $taskName . '"');
+        $output = shell_exec('schtasks /run /tn "IDFace"');
 
 
         sleep(15);

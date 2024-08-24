@@ -204,16 +204,16 @@ class DVcontroller extends Controller
             try {
 
                 $request->validate([
-                    'nom' => 'required|string|max:255',
-                    'prenom' => 'required|string|max:255',
+                    'nom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                    'prenom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                     'sexe' => 'required|in:Masculin,Féminin',
-                    'nomJeuneFille' => 'nullable|string|max:255',
+                    'nomJeuneFille' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                     'dateNaissance' => 'required|date|before:1 years ago',
-                    'paysVilleNaissance' => 'required|string|max:255',
-                    'paysVilleResidence' => 'required|string|max:255',
-                    'quartierResidence' => 'required|string|max:255',
+                    'paysVilleNaissance' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                    'paysVilleResidence' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                    'quartierResidence' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                     'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
-                    'nomPrenomsConjoint' => 'nullable|string|max:255',
+                    'nomPrenomsConjoint' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                     'tel1' => [
                         'nullable', 
                         'string', 
@@ -230,13 +230,13 @@ class DVcontroller extends Controller
                         new CustomRule($client)
                     ],
                     'mail' => 'nullable|email|max:255|unique:donnees_demographiques,mail,' . $iddemo . ',idDDemo',
-                    'numPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-                    'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|max:255',
-                    'numPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-                    'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|max:255',
-                    'profession' => 'required|string|max:255',
+                    'numPersonnePrevenir1' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+                    'nomPersonnePrevenir1' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                    'numPersonnePrevenir2' => ['required_without_all:mail,tel1', 'string', 'max:255', new CustomRule($client)],
+                    'nomPersonnePrevenir2' => 'required_without_all:mail,tel1|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+                    'profession' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
                     'secteurEmploi' => 'required|string|in:Primaire,Secondaire,Tertiaire,Quaternaire,Autre',
-                    'autreSecteur' => 'nullable|string|max:255|required_if:secteurEmploi,Autre',
+                    'autreSecteur' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255|required_if:secteurEmploi,Autre',
                     'groupeSanguin' => 'required|string|in:A+,A-,B+,B-,AB+,AB-,O+,O-',
                 ]);
 

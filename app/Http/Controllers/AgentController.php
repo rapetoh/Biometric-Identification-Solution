@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Agent;
 use App\Models\CentreEnrolement;
+use App\Rules\CustomRuleForMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ramsey\Uuid\Uuid;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LoginMail;
+use App\Rules\CustomRule;
+
 
 class AgentController extends Controller
 {
@@ -19,28 +22,29 @@ class AgentController extends Controller
      */
     public function index()
     {
-        $agents = Agent::with('centreEnrolement')->where('idRegion', auth()->user()->idRegion)->where('exist',1)->get();
+        $agents = Agent::with('centreEnrolement')->where('idRegion', auth()->user()->idRegion)->where('exist', 1)->get();
 
         $agentRegion = Agent::with('region')->where('idAgent', auth()->user()->idAgent)->get();
 
         return response()->view('agentsViews.agentsListForAdminRegion', compact('agents', 'agentRegion'));
     }
 
-    public function searchAgent(Request $request){
+    public function searchAgent(Request $request)
+    {
 
         $search = $request->search;
 
         $agents = Agent::with('centreEnrolement')
-        ->where(function ($query) use ($search) {
-            $query->where('idAgent', 'LIKE', '%' . $search . '%')
-                  ->orWhere('nom', 'LIKE', '%' . $search . '%')
-                  ->orWhere('prenom','LIKE', '%' . $search . '%')
-                  ->orWhere('mail', 'LIKE', '%' . $search . '%');
-        })
-        ->where('idRegion', auth()->user()->idRegion)
-        ->where('exist',1)
-        ->get();
-    
+            ->where(function ($query) use ($search) {
+                $query->where('idAgent', 'LIKE', '%' . $search . '%')
+                    ->orWhere('nom', 'LIKE', '%' . $search . '%')
+                    ->orWhere('prenom', 'LIKE', '%' . $search . '%')
+                    ->orWhere('mail', 'LIKE', '%' . $search . '%');
+            })
+            ->where('idRegion', auth()->user()->idRegion)
+            ->where('exist', 1)
+            ->get();
+
 
         $agentRegion = Agent::with('region')->where('idAgent', auth()->user()->idAgent)->get();
 
@@ -59,24 +63,49 @@ class AgentController extends Controller
         return response()->view('agentsViews.addAgent', compact('centresEnrolement'));
     }
 
+    private function isConnectedToInternet()
+    {
+        $host = 'www.google.com'; // ou tout autre serveur distant
+        $port = 80; // port HTTP
+
+        $fp = @fsockopen($host, $port, $errno, $errstr, 10);
+
+        if ($fp) {
+            fclose($fp);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
+
+
     public function store(Request $request)
     {
+        $connected = $this->isConnectedToInternet();
 
         $centreEnrolement = $request->input('centreEnrolement'); // c'est comme ça on recupere les valeurs d'un dropdown
 
+        $client = new \GuzzleHttp\Client([
+            'verify' => storage_path('app/cacert.pem')  // Chemin vers le fichier cacert.pem
+        ]);
+
         $request->validate([
-            'nom' => 'required|string',
-            'prenom' => 'required|string',
-            'mail' => 'required|email|max:255|unique:agents,mail',
-            'tel1' => 'required|min:8|max:8|unique:agents,telephone',
+            'nom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'prenom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|',
+            'mail' => ['required', 'email', 'max:255', 'unique:agents,mail', new CustomRuleForMail($client)],
+            'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:agents,telephone', new CustomRule($client)],
             //            'centreEnrolement' => 'required|string',
-            'adresse' => 'required|string',
+            'adresse' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|',
         ]);
 
         $admin = $request->has('Admin');
@@ -91,30 +120,38 @@ class AgentController extends Controller
 
         try {
 
-            Agent::create(
-                [
-                    'nom' => $request->nom,
-                    'prenom' => $request->prenom,
-                    'mail' => $request->mail,
-                    'mdp' => bcrypt($mdpString),
-                    'telephone' => $request->tel1,
-                    'idCentre' => $CE->first()->idCentre,
-                    'idRegion' => auth()->user()->idRegion,
-                    'isAdmin' => $admin ? true : false,
-                    'domicile' => $request->adresse,
-                ]
-            );
+            if($connected){
 
-            Mail::to($request->mail)->send(new LoginMail($mdpString,$request->nom));
+                Agent::create(
+                    [
+                        'nom' => $request->nom,
+                        'prenom' => $request->prenom,
+                        'mail' => $request->mail,
+                        'mdp' => bcrypt($mdpString),
+                        'telephone' => $request->tel1,
+                        'idCentre' => $CE->first()->idCentre,
+                        'idRegion' => auth()->user()->idRegion,
+                        'isAdmin' => $admin ? true : false,
+                        'domicile' => $request->adresse,
+                        'exist' => 1,
+                    ]
+                );
+    
+                Mail::to($request->mail)->send(new LoginMail($mdpString, $request->nom));
+    
+                notify()->success('Utilisateur enregistré avec succès! Il est formellement exigé à tout agent de changer son mot de passe dès sa première connexion', 'Succès');
+    
+                return redirect()->back();
 
-            notify()->success('Utilisateur enregistré avec succès! Il est formellement exigé à tout agent de changer son mot de passe dès sa première connexion', 'Succès');
-
-            return redirect()->back();
+            }else{
+                throw new \Exception('Pas de connexion internet !');
+            }
+            
         } catch (\Exception $e) {
             // Log the error or handle it as per your needs
             report($e);
 
-            notify()->error('L\'enregistrement de l\'utilisateur a échoué. ' . $e->getMessage() + '.', 'Erreur');
+            notify()->error('L\'enregistrement de l\'utilisateur a échoué. ' . $e->getMessage() . '.', 'Erreur');
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
@@ -137,13 +174,15 @@ class AgentController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function editPass(){
+    public function editPass()
+    {
         $id = auth()->user()->idAgent;
         $agent = Agent::findOrFail($id);
         return view('agentsViews.editAgentPassword', compact('agent'));
     }
 
-    public function updatePass(Request $request){
+    public function updatePass(Request $request)
+    {
 
         $id = auth()->user()->idAgent;
         $request->validate([
@@ -159,7 +198,7 @@ class AgentController extends Controller
                     'mdp' => bcrypt($request->mdp),
                 ]
             );
-            
+
 
             notify()->success('Nouveau mot de passe enregistré avec succès', 'Succès');
 
@@ -191,18 +230,18 @@ class AgentController extends Controller
         $centreEnrolement = $request->input('centreEnrolement'); // c'est comme ça on recupere les valeurs d'un dropdown
 
         $request->validate([
-            'nom' => 'required|string',
-            'prenom' => 'required|string',
+            'nom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
+            'prenom' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
             'mail' => 'required|email|max:255|unique:agents,mail',
             'tel1' => 'required|min:8|max:8|unique:agents,telephone',
             //            'centreEnrolement' => 'required|string',
-            'adresse' => 'required|string',
+            'adresse' => 'required|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/',
         ]);
 
         $admin = $request->has('Admin');
 
         $CE = CentreEnrolement::where('nom', $centreEnrolement);
-        
+
         try {
 
             $agent = Agent::findOrFail($id);
@@ -256,7 +295,7 @@ class AgentController extends Controller
             $agent = Agent::findOrFail($id);
             $agent->update(
                 [
-                    'exist'=> 0
+                    'exist' => 0
                 ]
             );
             notify()->success('Agent supprimé avec succès!', 'Succès');

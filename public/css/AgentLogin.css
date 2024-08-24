@@ -38,7 +38,7 @@ input {
   align-items: center;
 }
 .spinner {
-  border: 5px solid #f3f3f3;
+  border: 5px solid rgb(255, 132, 132);
   border-radius: 50%;
   border-top: 5px solid green;
   width: 50px;

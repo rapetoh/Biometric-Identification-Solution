@@ -47,6 +47,7 @@ Route::get('/error', function () {
 })->name('errorPage');
 
 Route::get('dedoublonage', [DedoublonageController::class, 'DedoublonageView'])->middleware('auth')->name('DedoublonageView');
+Route::delete('dedoublonage/{id}', [DedoublonageController::class, 'delete'])->middleware('auth')->name('DedoublonageDeletion');
 
 Route::post('/google/auth', [GoogleController::class, 'redirectToGoogle']);
 Route::get('/google/callback', [GoogleController::class, 'handleGoogleCallback']);

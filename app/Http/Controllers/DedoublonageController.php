@@ -2,13 +2,51 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DonneesDemographiques;
 use Illuminate\Http\Request;
-use Vinkla\Hashids\Facades\Hashids;
+use App\Models\SessionEnrolement;
+use App\Models\SessionPreEnrolement;
+use App\Models\DonneesDemographiques;
+use App\Models\DonneesBiometriques;
+use App\Models\Individu;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 
 class DedoublonageController extends Controller
 {
+    public function delete($id){
+        try {
+
+            $SE = SessionEnrolement::where('ref_enrolement', $id)->first();
+            $source = 'pièces_justificatives/' . $SE->NIU;
+            $source2 = 'validated/' . $SE->NIU;
+            $source3 = 'toUpload/' . $SE->NIU;
+            if (File::exists($source)) {
+                Storage::deleteDirectory($source);
+            }
+            if (File::exists($source2)) {
+                Storage::deleteDirectory($source2);
+            }
+            if (File::exists($source3)) {
+                Storage::deleteDirectory($source3);
+            }
+            $ref_enr = $SE->getAttribute('ref_enrolement');
+            $niu = $SE->getAttribute('NIU');
+            Individu::where('NIU', $niu)->delete();
+            SessionPreEnrolement::where('ref_enrolement', $ref_enr)->delete();
+            DonneesDemographiques::where('ref_enrolement', $ref_enr)->delete();
+            DonneesBiometriques::where('ref_enrolement', $ref_enr)->delete();
+            $SE->delete();
+
+            notify()->success('Doublon supprimé avec succès!', 'Succès');
+            return redirect()->route('DedoublonageView')->with('success', 'Doublon supprimé avec succès.');
+
+        } catch (\Exception $e) {
+
+            notify()->error($e->getMessage(), 'Erreur');
+            return redirect()->back()->with('error', 'Erreur lors de la suppression du doublon.');
+        }
+    }
     public function DedoublonageView(){
 
         $people = DonneesDemographiques::all();

@@ -289,6 +289,7 @@ class SessionPreEnrolementController extends Controller
 
             notify()->error($e->getMessage(), 'Erreur');
             return redirect()->back()->with('error', 'Erreur lors de la suppression du dossier.');
+            
         }
     }
 }

@@ -6,6 +6,8 @@ use App\Models\Agent;
 use Illuminate\Support\Facades\Storage;
 
 use App\Models\SessionEnrolement;
+use Illuminate\Support\Facades\Cache;
+use Ramsey\Uuid\Uuid;
 
 use Illuminate\Http\Request;
 
@@ -13,12 +15,14 @@ class AccueilController extends Controller
 {
     public function create(){
 
-        $directory = 'validated';
+
+        $directory = 'toUpload';
 
         // Obtenir tous les fichiers du dossier
         $dir = Storage::directories($directory);
 
         // Compter le nombre de fichiers
+        
         $dircount = count($dir);
 
         $non_validated_elements = SessionEnrolement::where('est_validee',0)->where('idAgent','!=',0)->get();
