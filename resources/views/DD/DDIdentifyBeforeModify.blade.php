@@ -384,7 +384,7 @@
                                 //location.reload();
                                 //$('#myModal').modal('show');
                                 if (data.message === "L'individu identifié doit d'abord être validé pour pouvoir apparaitre ici") {
-                                    elem.textContent = data.message;
+                                    elem.textContent = "Individu non identifié !!";
                                 } else {
                                     const n = data.realNIU.toString();
                                     var ni = "NIU: " + n.substring(0, 4) + " - " + n.substring(4, 8) + " - " + n.substring(8, 12) + " - " + n.substring(12, 18);

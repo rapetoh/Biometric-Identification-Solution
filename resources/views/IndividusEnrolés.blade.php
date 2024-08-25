@@ -284,6 +284,8 @@
                                                 <br><p style="font-size: 12px;"><span style="font-weight:500;color:green">Numéro de la 1ère personne à prévenir:</span>{{ $dossier->donneesDemographiques->numero_personne_a_prevenir1 ? $dossier->donneesDemographiques->numero_personne_a_prevenir1 : 'N/A' }}</p>
                                                 <br><p style="font-size: 12px;"><span style="font-weight:500;color:green">Nom de la 2ème personne à prévenir:</span> {{ $dossier->donneesDemographiques->nom_personne_a_prevenir2 ? $dossier->donneesDemographiques->nom_personne_a_prevenir2 : 'N/A' }}</p>
                                                 <br><p style="font-size: 12px;"><span style="font-weight:500;color:green">Numéro de la 2ème personne à prévenir:</span> {{ $dossier->donneesDemographiques->numero_personne_a_prevenir2 ? $dossier->donneesDemographiques->numero_personne_a_prevenir2 : 'N/A' }}</p>
+                                                <br><p style="font-size: 12px;"><span style="font-weight:500;color:green">Date d'enrôlement:</span> {{ $dossier->created_at ? $dossier->created_at : 'N/A' }}</p>
+                                                <br><p style="font-size: 12px;"><span style="font-weight:500;color:green">Enrôlé par: </span> {{ $dossier->agent->nom ? $dossier->agent->nom.' '.$dossier->agent->prenom : 'N/A' }}</p>
                                             </div>
                                         </div>
                                     </div>

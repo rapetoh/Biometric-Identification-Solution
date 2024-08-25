@@ -14,5 +14,5 @@ window.addEventListener('beforeunload', function() {
     document.getElementById('loader').style.display = 'flex'; // Affiche le loader
     setTimeout(function() {
         document.getElementById('loader').style.display = 'none'; // Cache le loader après 500ms
-    }, 500);
+    }, 1000);
 });

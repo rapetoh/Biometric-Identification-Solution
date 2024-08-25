@@ -32,7 +32,7 @@ class PreEnrollMail extends Mailable
     public function build()
     {
         return $this->subject('Pré-enrôlement ID-TOGO')
-                    ->view('PreEnrReceipt')
+                    ->view('mails.PreEnrMail')
                     ->with([
                         'id' => $this->id,
                     ]);

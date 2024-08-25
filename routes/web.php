@@ -72,9 +72,9 @@ Route::get('pj/{ref}', [SessionPreEnrolementController::class,'pj']);
 
 Route::post('searchAgent', [AgentController::class, 'searchAgent'])->middleware('auth')->name('searchAgent');
 
-
 Route::post('searchPEFolder', [SessionPreEnrolementController::class, 'searchPEFolder'])->middleware('auth')->name('searchPEFolder');
 Route::post('searchIndividuFolder', [IndividuController::class, 'searchIndividuFolder'])->middleware('auth')->name('searchIndividuFolder');
+Route::post('searchIdentificationFolder', [IdController::class, 'searchIdentificationFolder'])->middleware('auth')->name('searchIdentificationFolder');
 
 Route::get('detect', [FaceId::class, 'runCommands'])->middleware('auth')->name('detect');
 Route::get('faceID', [FaceId::class, 'create'])->middleware('auth')->name('faceID');

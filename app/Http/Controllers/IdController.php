@@ -23,6 +23,26 @@ class IdController extends Controller
         $dossiers = Identifications::get();
         return view('identification.idList', compact('dossiers'));
     }
+    public function searchIdentificationFolder(Request $request)
+    {
+
+        $search = $request->search;
+
+        if ($search == '') {
+            return redirect()->route('id.index');
+        }
+
+
+
+        $dossiers = Identifications::where(function ($query) use ($search) {
+                $query->where('lieu_identification', 'LIKE', '%' . $search . '%')
+                ->orWhere('nom', 'LIKE', '%' . $search . '%')
+                    ->orWhere('prenom', 'LIKE', '%' . $search . '%');
+            })
+            ->get();
+
+        return response()->view('identification.idList', compact('dossiers', 'search'));
+    }
 
     /**
      * Show the form for creating a new resource.

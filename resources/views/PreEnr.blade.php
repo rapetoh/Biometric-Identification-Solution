@@ -107,7 +107,7 @@
                             <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('nom') is-invalid @enderror" id="nom" name="nom" placeholder="Nom" value="{{ old('nom') }}" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom *</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nom">Nom(s) *</label>
                                     @error('nom')
                                     <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
                                         <i class="fas fa-exclamation-circle"></i>
@@ -119,7 +119,7 @@
                             <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('prenom') is-invalid @enderror" id="prenom" name="prenom" placeholder="Prénom" value="{{ old('prenom') }}" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom *</label>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="prenom">Prénom(s) *</label>
                                     @error('prenom')
                                     <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
                                         <i class="fas fa-exclamation-circle"></i>
@@ -275,55 +275,6 @@
 
                             <div class="input-wrap m-8">
                                 <div class="form-floating form-floating-outline">
-                                    <input type="text" class="toggleable form-control @error('nomPersonnePrevenir1') is-invalid @enderror" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" value="{{ old('nomPersonnePrevenir1') }}" />
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1 </label>
-                                    @error('nomPersonnePrevenir1')
-                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-                            <div class="input-wrap m-8">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="toggleable form-control @error('numPersonnePrevenir1') is-invalid @enderror" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 "  value="{{ old('numPersonnePrevenir1') }}"/>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
-                                    @error('numPersonnePrevenir1')
-                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="input-wrap m-8">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="text" class="toggleable form-control @error('nomPersonnePrevenir2') is-invalid @enderror" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" value="{{ old('nomPersonnePrevenir2') }}"/>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
-                                    @error('nomPersonnePrevenir2')
-                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="input-wrap m-8">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="tel" class="toggleable form-control @error('numPersonnePrevenir2') is-invalid @enderror" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" value="{{ old('numPersonnePrevenir2') }}"/>
-                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2</label>
-                                    @error('numPersonnePrevenir2')
-                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
-                                        <i class="fas fa-exclamation-circle"></i>
-                                    </div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="input-wrap m-8">
-                                <div class="form-floating form-floating-outline">
                                     <input type="text" class="toggleable form-control @error('profession') is-invalid @enderror" id="profession" name="profession" placeholder="Profession" value="{{ old('profession') }}"/>
                                     <label style="font-weight: 600; font-size: 13.5px; color: green;" for="profession">Profession *</label>
                                     @error('profession')
@@ -387,6 +338,57 @@
                                 </div>
                             </div>
 
+
+                            <div class="input-wrap m-8">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="toggleable form-control @error('nomPersonnePrevenir1') is-invalid @enderror" id="nomPersonnePrevenir1" name="nomPersonnePrevenir1" placeholder="Nom de la personne à prévenir 1" value="{{ old('nomPersonnePrevenir1') }}" />
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir1">Nom personne à prévenir 1 </label>
+                                    @error('nomPersonnePrevenir1')
+                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+                            <div class="input-wrap m-8">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="toggleable form-control @error('numPersonnePrevenir1') is-invalid @enderror" id="numPersonnePrevenir1" name="numPersonnePrevenir1" placeholder="N° de la personne à prévenir 1 "  value="{{ old('numPersonnePrevenir1') }}"/>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir1">Numéro personne à prévenir 1</label>
+                                    @error('numPersonnePrevenir1')
+                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="input-wrap m-8">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="text" class="toggleable form-control @error('nomPersonnePrevenir2') is-invalid @enderror" id="nomPersonnePrevenir2" name="nomPersonnePrevenir2" placeholder="Nom de la personne à prévenir 2" value="{{ old('nomPersonnePrevenir2') }}"/>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="nomPersonnePrevenir2">Nom personne à prévenir 2</label>
+                                    @error('nomPersonnePrevenir2')
+                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="input-wrap m-8">
+                                <div class="form-floating form-floating-outline">
+                                    <input type="tel" class="toggleable form-control @error('numPersonnePrevenir2') is-invalid @enderror" id="numPersonnePrevenir2" name="numPersonnePrevenir2" placeholder="N° de la personne à prévenir 2" value="{{ old('numPersonnePrevenir2') }}"/>
+                                    <label style="font-weight: 600; font-size: 13.5px; color: green;" for="numPersonnePrevenir2">Numéro personne à prévenir 2</label>
+                                    @error('numPersonnePrevenir2')
+                                    <div class="invalid-feedback position-absolute top-0 end-0" data-toggle="tooltip" data-placement="top" title="{{ $message }}">
+                                        <i class="fas fa-exclamation-circle"></i>
+                                    </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            
 
                             <button style="background-color: green;" type="submit" value="Sign In" class="sign-btn" onclick="return confirm('1 - SI VOUS AVEZ SOUMIS UN MAIL: Vous allez soumettre vos données et recevoir un mail contenant un numéro de référence\n 2 - Le numéro de référence est obligatoire à présenter pour vous faire enrôler\nUn aperçu vous sera montré sur la page qui va suivre.\nContinuer ?');">Soumettre le formulaire de pré-enrôlement</button>
                             <!-- 

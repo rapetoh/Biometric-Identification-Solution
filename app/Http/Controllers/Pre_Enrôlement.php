@@ -94,7 +94,7 @@ class Pre_Enrôlement extends Controller
             'dateNaissance' => 'required|date|before:1 years ago',
             'paysVilleNaissance' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'paysVilleResidence' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
-            'quartierResidence' => 'required|string|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
+            'quartierResidence' => 'required|string|max:255',
             'statutMatrimonial' => 'required|in:Célibataire,Marié(e),Divorcé(e),Veuf(ve)',
             'nomPrenomsConjoint' => 'nullable|string|min:3|regex:/^[a-zA-ZÀ-ÿ\s-]+$/|max:255',
             'tel1' => ['nullable', 'string', 'min:8', 'max:15', 'unique:donnees_demographiques,tel1', new CustomRule($client)],
