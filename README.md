@@ -1,3 +1,21 @@
+![Capture d'écran 2024-08-05 105449](https://github.com/user-attachments/assets/2d7d9dca-40fe-4cce-9927-ad9443776e70)
+![image](https://github.com/user-attachments/assets/ca35b745-70a4-4a49-a315-675316016344)
+![image](https://github.com/user-attachments/assets/f8fa7c2b-50ff-442c-9193-0517f5695baa)
+![image](https://github.com/user-attachments/assets/8cda5059-6edd-41cf-b963-456d79f0c732)
+![image](https://github.com/user-attachments/assets/7ca76f31-f861-492b-9bdd-b07c2634644c)
+![image](https://github.com/user-attachments/assets/39a5403d-7c4f-4db9-9553-83f80708fae3)
+![image](https://github.com/user-attachments/assets/c3db5a46-fd7b-40f1-b1fd-3b62cc5c6cc1)
+![Capture d'écran 2024-09-15 162907](https://github.com/user-attachments/assets/bc0f2a72-22d8-4460-89ba-3623d9a5ea5e)
+![Capture d'écran 2024-08-13 164855](https://github.com/user-attachments/assets/23908f20-a34e-44e1-be02-bc234c29b4f2)
+![image](https://github.com/user-attachments/assets/bfff435d-400f-40d9-86b5-baab4e8edd0c)
+![Capture d'écran 2024-08-13 161146](https://github.com/user-attachments/assets/c3b89a66-b705-4b9d-816c-b106d6cc55c9)
+![image](https://github.com/user-attachments/assets/725dcd90-5bcd-4edf-9374-e73c28f75d2d)
+![Capture d'écran 2024-08-05 150630](https://github.com/user-attachments/assets/60d758fd-65a1-46d6-8744-4852e74ef06c)
+![image](https://github.com/user-attachments/assets/5b5031d4-e289-407c-a2e2-dad44ba283d1)
+![image](https://github.com/user-attachments/assets/6e411d4a-baee-4295-8271-db6bdf29de0c)
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
