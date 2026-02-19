@@ -1,4 +1,9 @@
 For PRIVACY reasons, the live version of this project cannot be shared publicly. However, here are some screenshots of the interfaces illustrating the results of the work.
+Also see attached a comprehensive documentation of the work done.
+
+# [MEMOIRE APETOH D. ROCH.pdf](https://github.com/user-attachments/files/25405362/MEMOIRE.APETOH.D.ROCH.pdf)
+
+
 
 ![ID TOGO image](https://github.com/user-attachments/assets/b35e35ae-2f30-49a7-ad87-848efa34115b)
 ![Capture d'écran 2024-08-05 105449](https://github.com/user-attachments/assets/2d7d9dca-40fe-4cce-9927-ad9443776e70)
